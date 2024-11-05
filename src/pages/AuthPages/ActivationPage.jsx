@@ -4,15 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
-import _, { reverse } from "lodash";
+import _ from "lodash";
 
-import logo from "../assets/images/logo.png";
-import { activate } from "../http/auth";
-import { activationActions } from "../store/activationCodeSlice";
-import { alertActions } from "../store/alertSlice";
-import { errorHandlingActions } from "../store/errorHandlingSlice";
-import { getDirection, getLanguage } from "../util/lang";
-import SmallLogoImage from "../components/header-components/SmallLogoImage";
+import { activate } from "../../http/auth";
+import { activationActions } from "../../store/activationCodeSlice";
+import { alertActions } from "../../store/alertSlice";
+import { errorHandlingActions } from "../../store/errorHandlingSlice";
+import { getDirection } from "../../util/lang";
+import SmallLogoImage from "../../components/header-components/SmallLogoImage";
 
 export default function ActivationPage() {
   const { email } = useSelector((state) => state.activation);

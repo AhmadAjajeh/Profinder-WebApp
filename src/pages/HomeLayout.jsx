@@ -6,9 +6,9 @@ import SideNavigation from "../components/genera-ui/SideNavigation";
 
 export default function HomeLayout() {
   return (
-    <div className="mx-auto pt-24 p-6 flex flex-row md:space-x-4 rtl:space-x-reverse lg:px-10 xl:px-32 transition-all duration-300 ">
+    <div className="mx-auto pt-24 p-6 flex flex-row md:space-x-4 rtl:space-x-reverse lg:px-10 xl:px-28 transition-all duration-300 ">
       {/* far left section */}
-      <div className="hidden md:flex md:w-[210px] lg:min-w-fit ">
+      <div className="hidden md:flex md:w-[220px] lg:min-w-fit ">
         <SideNavigation />
       </div>
       {/* middle section */}
@@ -17,7 +17,7 @@ export default function HomeLayout() {
         <Outlet />
       </div>
       {/* far right section */}
-      <div className="hidden lg:flex lg:w-4/12 xl:w-[364px]  shadow-sm">
+      <div className="hidden lg:flex lg:w-4/12 xl:w-[380px]  shadow-sm">
         <ComingSoon title={"chat"} />
       </div>
     </div>

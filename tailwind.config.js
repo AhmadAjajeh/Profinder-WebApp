@@ -14,8 +14,9 @@ module.exports = {
         elementBlack: "#121212",
         elementGray: "#1d1e20",
         elementLightGray: "#f9fafb",
+        darkBorder: "#333333",
         darkBackground: "#262626",
-        lightBackground: "#f0f0f0",
+        lightBackground: "#ebebeb",
       },
     },
     screens: {

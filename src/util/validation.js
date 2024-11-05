@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 export function notEmpty(token) {
   return token !== null && token !== undefined && token.trim().length !== 0;
 }
@@ -11,4 +13,8 @@ export function range(token, min, max) {
 
 export function regexp(token, exp) {
   return token.match(exp);
+}
+
+export function uniqueArrayValues(array) {
+  return _.uniq(array).length === array.length;
 }

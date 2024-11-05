@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import GoogleButton from "../components/auth-forms/GoogleButton";
-import LoginForm from "../components/auth-forms/LoginForm";
-import logo from "../assets/images/logo.png";
-import SmallLogoImage from "../components/header-components/SmallLogoImage";
+import GoogleButton from "../../components/auth-forms/GoogleButton";
+import LoginForm from "../../components/auth-forms/LoginForm";
+import SmallLogoImage from "../../components/header-components/SmallLogoImage";
 
 export default function LoginPage() {
   const { t } = useTranslation();

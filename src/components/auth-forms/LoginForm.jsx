@@ -10,7 +10,7 @@ import { validateEmail, validatePassword } from "../../validation/auth";
 import { loginMutation } from "../../http/auth";
 import { authActions } from "../../store/authSlice";
 import { errorHandlingActions } from "../../store/errorHandlingSlice";
-import { setToken } from "../../util/http";
+import { setToken, setUser } from "../../util/http";
 
 export default function LoginForm() {
   const { t } = useTranslation();
@@ -28,6 +28,7 @@ export default function LoginForm() {
         authActions.refreshAuth({ token: response.token, user: response.user })
       );
       setToken(response.token);
+      setUser(response.user);
       navigate("/");
     },
     onError: (error) => {
@@ -49,12 +50,8 @@ export default function LoginForm() {
     // validate the email and password and show the messages .
     const validEmail = validateEmail(email);
     const validPassword = validatePassword(password);
-    if (validEmail) {
-      setEmailValidation(validEmail);
-    }
-    if (validPassword) {
-      setPasswordValidation(validPassword);
-    }
+    setEmailValidation(validEmail);
+    setPasswordValidation(validPassword);
 
     // if there is errors , do not send the request .
     if (validEmail || validPassword) return;

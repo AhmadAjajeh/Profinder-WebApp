@@ -26,7 +26,7 @@ export default function UserImageButton() {
       <div className="flex relative">
         <button className="rounded-full text-white" onClick={handleShowList}>
           {/* user image */}
-          <UserImage />
+          <UserImage className="w-10 h-10 rounded-full" />
           {/* down arrow svg */}
           <div className="absolute bottom-0 flex items-center justify-center bg-slate-500 border border-white rounded-full w-4 h-4">
             <svg
@@ -52,7 +52,7 @@ export default function UserImageButton() {
             animate="visible"
             exit="hidden"
             open
-            className="absolute  bg-white dark:bg-elementBlack md:rtl:-right-6 md:ltr:-left-6 lg:rtl:right-0 lg:ltr:left-0   flex flex-col space-y-5 p-4 rounded-md text-xs text-right text-black dark:text-white  w-40 font-light"
+            className="absolute  bg-white dark:bg-elementBlack rtl:-right-24 ltr:-left-24 md:rtl:-right-6 md:ltr:-left-6 lg:rtl:right-0 lg:ltr:left-0   flex flex-col space-y-5 p-4 rounded-md text-xs text-right text-black dark:text-white  w-40 font-light"
           >
             <NavigationButton
               textKey="home_page"

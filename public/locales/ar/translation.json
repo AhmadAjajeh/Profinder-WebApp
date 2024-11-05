@@ -43,5 +43,13 @@
   "hashtags": "الهاشتاجات",
   "projects": "المشاريع",
   "jobs": "الوظائف",
-  "explorer": "استكشاف"
+  "explorer": "استكشاف",
+  "share_something_beneficial": "#شارك شيئًا مفيدًا في مجال عملك!",
+  "create_post": "إنشاء منشور",
+  "topics": "الموضوعات",
+  "publish": "نشر",
+  "no_more_than_five_topics": "لا يُسمح بأكثر من خمسة مواضيع",
+  "topic_not_in_range": "يجب أن يكون الموضوع بين 2 و 16 حرفًا",
+  "topic_already_exists": "الموضوع موجود بالفعل",
+  "text_not_in_range": "يجب أن يكون النص بين 16 و 4096 حرفًا"
 }

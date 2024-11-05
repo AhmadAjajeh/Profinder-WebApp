@@ -1,14 +1,14 @@
 import { Outlet, useLocation } from "react-router-dom";
 import i18n from "i18next";
 
-import AuthSideImage from "../components/auth-forms/AuthSideImage";
-import ErrorModal from "../components/error-handling/ErrorModal";
+import AuthSideImage from "../../components/auth-forms/AuthSideImage";
+import ErrorModal from "../../components/error-handling/ErrorModal";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
-import AlertModal from "../components/alert/AlertModal";
-import { errorHandlingActions } from "../store/errorHandlingSlice";
-import { alertActions } from "../store/alertSlice";
+import AlertModal from "../../components/alert/AlertModal";
+import { errorHandlingActions } from "../../store/errorHandlingSlice";
+import { alertActions } from "../../store/alertSlice";
 
 export default function AuthLayout() {
   const error = useSelector((state) => state.error);

@@ -43,5 +43,13 @@
   "hashtags": "Hashtags",
   "projects": "Projects",
   "jobs": "Jobs",
-  "explorer": "Explorer"
+  "explorer": "Explorer",
+  "share_something_beneficial": "#Share something beneficial!",
+  "create_post": "New Post",
+  "topics": "topics",
+  "publish": "publish",
+  "no_more_than_five_topics": "No more than five topics are allowed",
+  "topic_not_in_range": "Topic must be between 2 and 16 characters",
+  "topic_already_exists": "Topic already exists",
+  "text_not_in_range": "Text must be between 16 and 4096 characters"
 }

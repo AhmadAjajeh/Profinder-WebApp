@@ -1,11 +1,12 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 
-import AuthLayout from "../pages/AuthLayout";
-import LoginPage from "../pages/LoginPage";
-import SignupPage from "../pages/SignupPage";
-import ActivationPage from "../pages/ActivationPage";
+import AuthLayout from "../pages/AuthPages/AuthLayout";
+import LoginPage from "../pages/AuthPages/LoginPage";
+import SignupPage from "../pages/AuthPages/SignupPage";
+import ActivationPage from "../pages/AuthPages/ActivationPage";
 import MainLayout, { mainLoader } from "../pages/MainLayout";
 import HomeLayout from "../pages/HomeLayout";
+import ExplorePage from "../pages/HomePages/ExplorePage";
 
 export default createBrowserRouter([
   {
@@ -32,11 +33,8 @@ export default createBrowserRouter([
       {
         path: "home",
         element: <HomeLayout />,
-        loader: async () => {
-          return null;
-        },
         children: [
-          { index: true, element: <div>index</div> },
+          { index: true, element: <ExplorePage /> },
           {
             path: "jobs",
             element: <div>jobs</div>,

@@ -13,11 +13,11 @@ import {
 
 export default function SideNavigation() {
   return (
-    <div class="flex flex-col space-y-6 bg-white dark:bg-elementBlack transition-all duration-300 font-light rounded-md p-5 border border-slate-300 dark:border-gray-700 h-fit w-full ">
+    <div class="flex flex-col space-y-6 bg-white dark:bg-elementBlack transition-all duration-300 font-light rounded-md p-5 border border-slate-300 dark:border-darkBorder h-fit w-full ">
       {/* <!-- user identity --> */}
       <div class="flex flex-col items-center jusitfy-center text-center">
         <div className="mb-3">
-          <UserImage />
+          <UserImage className="w-12 h-12 rounded-full" />
         </div>
         <div class="text-sm font-semibold dark:text-white">User Full name</div>
         <div class="text-sm text-gray-500 dark:text-slate-300 font-semibold">
@@ -26,7 +26,7 @@ export default function SideNavigation() {
       </div>
 
       {/* <!-- side bar navigation --> */}
-      <div class="flex flex-col space-y-5 px-2 text-xs text-right">
+      <div class="flex flex-col space-y-5 px-2 text-sm text-right">
         <SideNavElement
           icon={<HomeIcon style="w-6 fill-current" />}
           text="home_page"

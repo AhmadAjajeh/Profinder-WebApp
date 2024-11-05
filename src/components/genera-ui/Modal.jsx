@@ -1,20 +1,27 @@
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
-export default function Modal({ children, onClose, animation, style }) {
+export default function Modal({
+  children,
+  onClose,
+  animation,
+  className,
+  bgDiv,
+}) {
   return createPortal(
     <>
-      {/* <div
-        class="absolute w-full h-screen bg-slate-300 opacity-30 top-0 left-0 z-10"
-        onClick={onClose}
-      ></div> */}
-
+      {bgDiv && (
+        <div
+          onClick={onClose}
+          className="absolute z-30 w-full h-full bg-black opacity-70 dark:opacity-50"
+        ></div>
+      )}
       <motion.dialog
         // variants={animation}
         variants={animation}
         initial="hidden"
         animate="visible"
         exit="hidden"
-        class="rounded-lg"
+        class={"z-30 " + className}
         onClose={onClose}
         open
       >

@@ -1,11 +1,8 @@
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import GoogleButton from "../components/auth-forms/GoogleButton";
-import logo from "../assets/images/logo.png";
-import SignupForm from "../components/auth-forms/SignupForm";
-import { getLanguage } from "../util/lang";
-import SmallLogoImage from "../components/header-components/SmallLogoImage";
+import GoogleButton from "../../components/auth-forms/GoogleButton";
+import SignupForm from "../../components/auth-forms/SignupForm";
+import SmallLogoImage from "../../components/header-components/SmallLogoImage";
 
 export default function SignupPage() {
   const { t } = useTranslation();

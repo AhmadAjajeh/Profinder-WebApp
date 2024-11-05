@@ -65,8 +65,8 @@ export default function SignupForm() {
         password === confirmPassword ? null : "passwords_must_match",
     };
 
+    setValidation(validationObj);
     if (!_.isEqual(validationObj, initialValidationState)) {
-      setValidation(validationObj);
       return;
     }
     dispatch(activationActions.setEmail(email));

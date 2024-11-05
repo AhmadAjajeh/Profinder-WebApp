@@ -1,33 +1,9 @@
 import { QueryClient } from "@tanstack/react-query";
 
-import { getApiBaseUrl } from "../util/http";
+import { getApiBaseUrl, handlerFunction } from "../util/http";
 import { getLanguage } from "../util/lang";
 
 export const queryClient = new QueryClient();
-
-const handlerFunction = async (url, configuration, errorMessage) => {
-  let response;
-  try {
-    response = await fetch(url, configuration);
-  } catch (error) {
-    const err = new Error(
-      getLanguage() === "ar"
-        ? "حدث خطأ أثناء الوصول للسيرفر"
-        : "An error occurred while trying to reach the server"
-    );
-    err.code = 1;
-    throw err;
-  }
-
-  if (!response.ok) {
-    const error = new Error(errorMessage);
-    error.code = response.status;
-    error.info = await response.json();
-    throw error;
-  }
-
-  return await response.json();
-};
 
 export async function loginMutation(formData) {
   const url = getApiBaseUrl() + "users/login";
