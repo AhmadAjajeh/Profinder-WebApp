@@ -7,6 +7,7 @@ import ActivationPage from "../pages/AuthPages/ActivationPage";
 import MainLayout, { mainLoader } from "../pages/MainLayout";
 import HomeLayout from "../pages/HomeLayout";
 import ExplorePage from "../pages/HomePages/ExplorePage";
+import { destroyAuthInfo } from "../util/http";
 
 export default createBrowserRouter([
   {

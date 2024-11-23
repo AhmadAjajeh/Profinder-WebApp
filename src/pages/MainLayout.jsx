@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Outlet, redirect } from "react-router-dom";
+import { Outlet, redirect, useLoaderData } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -27,11 +27,9 @@ export default function MainLayout() {
     };
   }, []);
 
-  useEffect(() => {
-    dispatch(
-      authActions.refreshAuth({ token: getToken().token, user: getUser() })
-    );
-  }, []);
+  dispatch(
+    authActions.refreshAuth({ token: getToken().token, user: getUser() })
+  );
 
   useEffect(() => {
     if (error.code !== 0) {
@@ -80,9 +78,8 @@ export function mainLoader() {
     if (!token || !expires_at || new Date(expires_at) < new Date()) {
       return redirect("/auth/login");
     }
-    return null;
+    return { token, expires_at, user: getUser() };
   } catch (error) {
-    console.error("Error loading token:", error);
     return redirect("/auth/login");
   }
 }

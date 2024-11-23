@@ -3,6 +3,7 @@ import authSlice from "./authSlice";
 import errorHandlingSlice from "./errorHandlingSlice";
 import alertSlice from "./alertSlice";
 import activationCodeSlice from "./activationCodeSlice";
+import eventSlice from "./dataSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     error: errorHandlingSlice.reducer,
     alert: alertSlice.reducer,
     activation: activationCodeSlice.reducer,
+    event: eventSlice.reducer,
   },
 });
 

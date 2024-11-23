@@ -10,10 +10,10 @@ export default function MediumScreenHeader() {
   const { t } = useTranslation();
 
   return (
-    <div className="hidden md:flex flex-row-reverse items-center justify-between w-full  p-3 px-6 lg:px-12  dark:text-slate-300 h-16">
+    <div className="hidden md:flex flex-row-reverse items-center justify-between w-full  p-3 px-6 lg:px-16 xl:px-24  dark:text-slate-300 h-16">
       {/* <!-- user image and notification and light/dark mode--> */}
       <div className="flex items-center">
-        <ul className="flex flex-row items-center space-x-5 lg:space-x-7 rtl:space-x-reverse">
+        <ul className="flex flex-row items-center space-x-5 lg:space-x-5 rtl:space-x-reverse">
           <li>
             <UserImageButton />
           </li>
@@ -29,7 +29,7 @@ export default function MediumScreenHeader() {
       {/* search for companies bar */}
       <div>
         <form>
-          <div className="group relative flex space-x-2 rtl:space-x-reverse items-center border focus-within:border-2 border-slate-300 dark:border-gray-700 rounded-md px-2 py-2 shadow-sm">
+          <div className="group relative flex space-x-2 rtl:space-x-reverse items-center border focus-within:border-2 border-gray-300 dark:border-darkBorder rounded-md px-2 py-2 shadow-sm">
             <div>
               <svg
                 className="w-4 h-4 text-gray-500 dark:text-slate-200 font-light"

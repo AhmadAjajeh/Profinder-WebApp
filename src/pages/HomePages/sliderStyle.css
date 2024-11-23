@@ -1,0 +1,35 @@
+/* Custom styles for the slick slider buttons */
+.slick-prev-c,
+.slick-next-c {
+  font-size: 24px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1; /* Ensure it’s above other elements */
+}
+
+.slick-prev-c {
+  left: 100px; /* Position from the left */
+  top: 50%;
+}
+
+.slick-next-c {
+  right: 10px; /* Position from the right */
+}
+
+/* Hover effects */
+.slick-prev-c:hover,
+.slick-next-c:hover {
+  background-color: rgba(
+    255,
+    165,
+    0,
+    0.8
+  ); /* Change background color on hover */
+  color: black; /* Change text color on hover */
+}

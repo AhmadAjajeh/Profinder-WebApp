@@ -1,3 +1,5 @@
+import { jwtDecode } from "jwt-decode";
+
 import store from "../store/index";
 import { getLanguage } from "./lang";
 
@@ -6,7 +8,6 @@ export const handlerFunction = async (url, configuration, errorMessage) => {
   try {
     response = await fetch(url, configuration);
   } catch (error) {
-    console.log(error);
     const err = new Error(
       getLanguage() === "ar"
         ? "حدث خطأ أثناء الوصول للسيرفر"
@@ -32,8 +33,13 @@ export const getApiBaseUrl = () => {
     : process.env.REACT_APP_API_URL_DEV;
 };
 
+export const getBaseUrl = () => {
+  return process.env.NODE_ENV === "production"
+    ? process.env.REACT_APP_URL_PROD
+    : process.env.REACT_APP_URL_DEV;
+};
+
 export const getStateToken = () => {
-  console.log("here", store.getState().auth.token);
   return store.getState().auth.token;
 };
 
@@ -51,13 +57,18 @@ export const getToken = () => {
 };
 
 export const setToken = (token) => {
-  const currentDate = new Date();
-  const expiers_at = new Date(currentDate);
-  expiers_at.setSeconds(
-    currentDate.getSeconds() + process.env.REACT_APP_TOKEN_EXPIRE_TIME
-  );
+  const decoded = jwtDecode(token);
+  if (decoded.exp) {
+    const expiers_at = new Date(decoded.exp * 1000);
+    localStorage.setItem("expires_at", JSON.stringify(expiers_at));
+  }
   localStorage.setItem("token", JSON.stringify(token));
-  localStorage.setItem("expires_at", JSON.stringify(expiers_at));
+};
+
+export const destroyAuthInfo = (token) => {
+  localStorage.removeItem("expires_at");
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
 };
 
 export const setUser = (user) => {
@@ -66,4 +77,25 @@ export const setUser = (user) => {
 
 export const getUser = () => {
   return JSON.parse(localStorage.getItem("user"));
+};
+
+export const errorHandlingFunction = (
+  dispatch,
+  errorHandlingActions,
+  navigate
+) => {
+  return (error) => {
+    console.log(error.info);
+    let messages = error.info?.message || error.info.messgae || [error.message];
+
+    if (typeof messages !== "object") messages = [messages];
+
+    dispatch(
+      errorHandlingActions.throwError({
+        code: error.code,
+        messages,
+      })
+    );
+    if (error.code === 403) navigate("/auth/login");
+  };
 };

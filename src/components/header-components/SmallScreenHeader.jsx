@@ -11,9 +11,9 @@ export default function SmallScreenHeader() {
       <UserImageButton />
 
       {/* <!-- logo image --> */}
-      <div className="flex items-center shadow-sm">
+      {/* <div className="flex items-center shadow-sm">
         <SmallLogoImage style="w-9" />
-      </div>
+      </div> */}
 
       {/* <!-- notification and light/dark mode--> */}
       <div>

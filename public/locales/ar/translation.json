@@ -51,5 +51,22 @@
   "no_more_than_five_topics": "لا يُسمح بأكثر من خمسة مواضيع",
   "topic_not_in_range": "يجب أن يكون الموضوع بين 2 و 16 حرفًا",
   "topic_already_exists": "الموضوع موجود بالفعل",
-  "text_not_in_range": "يجب أن يكون النص بين 16 و 4096 حرفًا"
+  "text_not_in_range": "يجب أن يكون النص بين 16 و 4096 حرفًا",
+  "upload_images": "أضف صوراََ",
+  "choose": "اختر",
+  "no_more_than_5_images": "لا يُسمح بأكثر من 5 صور",
+  "year": "سنة",
+  "month": "شهر",
+  "day": "يوم",
+  "hour": "ساعة",
+  "minute": "دقيقة",
+  "just_now": "الآن",
+  "years": "سنوات",
+  "months": "شهور",
+  "days": "أيام",
+  "hours": "ساعات",
+  "minutes": "دقائق",
+  "comments": "تعليقات",
+  "leave_a_comment": "اترك تعليقًا",
+  "the_comment_should_be_between_1_and_2048_chars": "يجب أن يكون التعليق بين 1 و 2048 حرفًا"
 }

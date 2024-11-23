@@ -51,5 +51,21 @@
   "no_more_than_five_topics": "No more than five topics are allowed",
   "topic_not_in_range": "Topic must be between 2 and 16 characters",
   "topic_already_exists": "Topic already exists",
-  "text_not_in_range": "Text must be between 16 and 4096 characters"
+  "text_not_in_range": "Text must be between 16 and 4096 characters",
+  "upload_images": "Upload images",
+  "no_more_than_5_images": "No more than 5 images are allowed",
+  "year": "Year",
+  "month": "Month",
+  "day": "Day",
+  "hour": "Hour",
+  "minute": "Minute",
+  "just_now": "Just now",
+  "years": "Years",
+  "months": "Months",
+  "days": "Days",
+  "hours": "Hours",
+  "minutes": "Minutes",
+  "comments": "Comments",
+  "leave_a_comment": "Leave a comment",
+  "the_comment_should_be_between_1_and_2048_chars": "The comment should be between 1 and 2048 characters"
 }

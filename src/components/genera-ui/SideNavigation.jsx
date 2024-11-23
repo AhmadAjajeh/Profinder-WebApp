@@ -10,23 +10,26 @@ import {
   SettingsIcon,
   WalletIcon,
 } from "./IconsSvg";
+import { useSelector } from "react-redux";
 
 export default function SideNavigation() {
+  const user = useSelector((state) => state.auth.user);
+
   return (
-    <div class="flex flex-col space-y-6 bg-white dark:bg-elementBlack transition-all duration-300 font-light rounded-md p-5 border border-slate-300 dark:border-darkBorder h-fit w-full ">
+    <div class="flex flex-col space-y-6 bg-white dark:bg-elementBlack transition-all duration-300 font-light rounded-md p-5 border border-gray-300 dark:border-darkBorder h-fit w-full  ">
       {/* <!-- user identity --> */}
       <div class="flex flex-col items-center jusitfy-center text-center">
         <div className="mb-3">
           <UserImage className="w-12 h-12 rounded-full" />
         </div>
-        <div class="text-sm font-semibold dark:text-white">User Full name</div>
+        <div class="text-sm font-semibold dark:text-white">{user.username}</div>
         <div class="text-sm text-gray-500 dark:text-slate-300 font-semibold">
-          @username
+          {user.email}
         </div>
       </div>
 
       {/* <!-- side bar navigation --> */}
-      <div class="flex flex-col space-y-5 px-2 text-sm text-right">
+      <div class="flex  flex-col space-y-4 px-2 text-[13px]  text-right">
         <SideNavElement
           icon={<HomeIcon style="w-6 fill-current" />}
           text="home_page"
@@ -68,13 +71,13 @@ function SideNavElement({ icon, text, path }) {
     <NavLink
       to={path}
       className={({ isActive }) =>
-        `flex flex-row space-x-3 rtl:space-x-reverse items-center ${
+        `flex flex-row space-x-3 rtl:space-x-reverse items-center hover:text-logoOrange dark:hover:text-logoOrange ${
           isActive ? "text-logoOrange" : "text-black dark:text-white"
         }`
       }
     >
       {icon}
-      <div>{t(text)}</div>
+      <div className="">{t(text)}</div>
     </NavLink>
   );
 }

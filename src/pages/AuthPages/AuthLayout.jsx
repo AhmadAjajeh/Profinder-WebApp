@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import i18n from "i18next";
 
 import AuthSideImage from "../../components/auth-forms/AuthSideImage";
@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import AlertModal from "../../components/alert/AlertModal";
 import { errorHandlingActions } from "../../store/errorHandlingSlice";
 import { alertActions } from "../../store/alertSlice";
+import { destroyAuthInfo } from "../../util/http";
 
 export default function AuthLayout() {
   const error = useSelector((state) => state.error);
@@ -24,6 +25,10 @@ export default function AuthLayout() {
       document.body.classList.remove("dark:bg-deepBlue");
       document.documentElement.classList.remove("dark");
     };
+  }, []);
+
+  useEffect(() => {
+    destroyAuthInfo();
   }, []);
 
   useEffect(() => {
@@ -60,12 +65,12 @@ export default function AuthLayout() {
       </AnimatePresence>
       <div class="w-full  absolute -z-20">
         <div
-          class={`mx-auto flex flex-row items-center justify-center p-10 lg:p-20 max-h-screen lg:space-x-20 ${
+          class={`mx-auto flex flex-row items-center justify-center p-10 lg:p-20 max-h-screen xl:space-x-20 ${
             i18n.dir() === "rtl" ? "lg:space-x-reverse" : ""
           }`}
         >
           <AuthSideImage />
-          <div class="w-full lg:w-3/5 max-w-lg relative">
+          <div class="w-full xl:w-3/5 max-w-lg relative">
             <Outlet class="w-full" />
           </div>
         </div>
