@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Outlet, redirect, useLoaderData } from "react-router-dom";
+import { Outlet, redirect, useLoaderData, useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,11 +11,45 @@ import { errorHandlingActions } from "../store/errorHandlingSlice";
 import { alertActions } from "../store/alertSlice";
 import { authActions } from "../store/authSlice";
 import { getToken, getUser } from "../util/http";
+import { useQuery } from "@tanstack/react-query";
+import { myProfileQuery } from "../http/profile";
+import { profileActions } from "../store/profileSlice";
+import { queryClient } from "../http/auth";
 
 export default function MainLayout() {
   const error = useSelector((state) => state.error);
   const alert = useSelector((state) => state.alert);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  dispatch(
+    authActions.refreshAuth({ token: getToken().token, user: getUser() })
+  );
+
+  useQuery({
+    queryKey: ["my-profile"],
+    queryFn: myProfileQuery,
+    onSuccess: (data) => {
+      console.log(data);
+      dispatch(profileActions.set({ profile: data.profile }));
+    },
+    onError: (error) => {
+      let messages = error.info?.message ||
+        error.info?.messgae || [error.message];
+
+      if (typeof messages !== "object") messages = [messages];
+
+      dispatch(
+        errorHandlingActions.throwError({
+          code: error.code,
+          messages,
+        })
+      );
+
+      if (error.code !== 1) navigate("/auth/login");
+      else queryClient.cancelQueries();
+    },
+  });
 
   useEffect(() => {
     document.body.classList.add("dark:bg-darkBackground");
@@ -26,10 +60,6 @@ export default function MainLayout() {
       document.body.classList.remove("bg-lightBackground");
     };
   }, []);
-
-  dispatch(
-    authActions.refreshAuth({ token: getToken().token, user: getUser() })
-  );
 
   useEffect(() => {
     if (error.code !== 0) {

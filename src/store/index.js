@@ -4,6 +4,7 @@ import errorHandlingSlice from "./errorHandlingSlice";
 import alertSlice from "./alertSlice";
 import activationCodeSlice from "./activationCodeSlice";
 import eventSlice from "./dataSlice";
+import profileSlice from "./profileSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     alert: alertSlice.reducer,
     activation: activationCodeSlice.reducer,
     event: eventSlice.reducer,
+    profile: profileSlice.reducer,
   },
 });
 

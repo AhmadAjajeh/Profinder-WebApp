@@ -13,8 +13,8 @@ import {
   EmptySavedIcon,
   XIcon,
   SendIcon,
-} from "../../components/genera-ui/IconsSvg";
-import ImageSlider from "../../components/genera-ui/ImageSlider";
+} from "../genera-ui/IconsSvg";
+import ImageSlider from "../genera-ui/ImageSlider";
 import MixedText from "../genera-ui/MixedText";
 import { timeAgo } from "../../util/date";
 import { errorHandlingFunction, getBaseUrl } from "../../util/http";

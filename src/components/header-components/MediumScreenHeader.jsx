@@ -5,6 +5,9 @@ import UserImageButton from "./UserImageButton";
 import FullLogoImage from "../../assets/images/full-logo-image.png";
 import FullLogoImageWhite from "../../assets/images/full-logo-image-white.png";
 import { useTranslation } from "react-i18next";
+import SmallLogoImage from "./SmallLogoImage";
+import { getDirection } from "../../util/lang";
+import i18next from "i18next";
 
 export default function MediumScreenHeader() {
   const { t } = useTranslation();
@@ -60,8 +63,18 @@ export default function MediumScreenHeader() {
 
       {/* logo */}
       <div className="flex items-center">
-        <img className="w-40 hidden dark:inline" src={FullLogoImageWhite} />
-        <img className="w-40 dark:hidden" src={FullLogoImage} />
+        {/* <SmallLogoImage style="w-10 h-10 rtl:scale-x-[-1]" /> */}
+        {i18next.dir() === "ltr" ? (
+          <>
+            <img className="w-40 hidden dark:inline" src={FullLogoImageWhite} />
+            <img className="w-40 dark:hidden" src={FullLogoImage} />
+          </>
+        ) : (
+          <div className="font-extrabold text-2xl tracking-wider">
+            <span className="text-logoOrange">برو</span>
+            <span className="text-deepBlue">فايندر</span>
+          </div>
+        )}
       </div>
     </div>
   );

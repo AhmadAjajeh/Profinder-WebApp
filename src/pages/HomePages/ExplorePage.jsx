@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-import NewPost from "../../components/Explore/NewPost";
-import PostScroll from "../../components/Explore/PostScroll";
+import NewPost from "../../components/explore/NewPost";
+import PostScroll from "../../components/explore/PostScroll";
 import ComingSoon from "../../components/genera-ui/ComingSoon";
 import HomeNavigation from "../../components/HomeComponents/HomeNavigation";
 

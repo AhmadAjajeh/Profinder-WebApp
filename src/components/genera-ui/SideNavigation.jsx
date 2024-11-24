@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 
 export default function SideNavigation() {
   const user = useSelector((state) => state.auth.user);
+  const profile = useSelector((state) => state.profile.profile);
 
   return (
     <div class="flex flex-col space-y-6 bg-white dark:bg-elementBlack transition-all duration-300 font-light rounded-md p-5 border border-gray-300 dark:border-darkBorder h-fit w-full  ">
@@ -22,9 +23,11 @@ export default function SideNavigation() {
         <div className="mb-3">
           <UserImage className="w-12 h-12 rounded-full" />
         </div>
-        <div class="text-sm font-semibold dark:text-white">{user.username}</div>
+        <div class="text-sm font-semibold dark:text-white">
+          {profile?.full_name || "Full Name"}
+        </div>
         <div class="text-sm text-gray-500 dark:text-slate-300 font-semibold">
-          {user.email}
+          @{user.username}
         </div>
       </div>
 

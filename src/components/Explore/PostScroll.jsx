@@ -75,7 +75,7 @@ export default function PostScroll() {
         }
         return <Post key={post._id} post={post} />;
       })}
-      {(isFetching || error) && (
+      {isFetching && (
         <>
           <PostShimmer />
           <PostShimmer />
