@@ -1,11 +1,11 @@
-import { useDispatch } from "react-redux";
-import { useTranslation } from "react-i18next";
+import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
-import Modal from "../genera-ui/Modal";
-import { alertActions } from "../../store/alertSlice";
-import doneAnimation from "../../assets/lottie/done.json";
-import { useEffect, useRef } from "react";
-import Lottie from "lottie-web";
+import Modal from '../general-ui/Modal';
+import { alertActions } from '../../store/alertSlice';
+import doneAnimation from '../../assets/lottie/done.json';
+import { useEffect, useRef } from 'react';
+import Lottie from 'lottie-web';
 
 export default function AlertModal({ alert, color }) {
   const dispatch = useDispatch();
@@ -18,13 +18,13 @@ export default function AlertModal({ alert, color }) {
   useEffect(() => {
     const animation = Lottie.loadAnimation({
       container: animationContainer.current,
-      renderer: "svg",
+      renderer: 'svg',
       loop: false,
       autoplay: true,
       animationData: doneAnimation, // path to your animation
     });
 
-    animation.addEventListener("complete", () => {
+    animation.addEventListener('complete', () => {
       animation.goToAndStop(animation.totalFrames - 1, true);
     });
 
@@ -45,7 +45,7 @@ export default function AlertModal({ alert, color }) {
         visible: { opacity: 1, y: 200 },
       }}
     >
-      <div class={" rounded-lg border-2 border-slate-400 px-12 pb-6  " + color}>
+      <div class={' rounded-lg border-2 border-slate-400 px-12 pb-6  ' + color}>
         <div class="flex flex-col items-center justify-center ">
           <div ref={animationContainer} class="w-[120px] h-[120px]"></div>
           <div class="dark:text-slate-200 font-light text-slate-500 max-w-lg text-center mb-5">

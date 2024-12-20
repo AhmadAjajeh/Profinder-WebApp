@@ -8,7 +8,7 @@ export function range(token, min, max) {
   if (typeof token === "string") {
     return token.trim().length >= min && token.trim().length <= max;
   }
-  return token <= min && token >= max;
+  return token >= min && token <= max;
 }
 
 export function regexp(token, exp) {

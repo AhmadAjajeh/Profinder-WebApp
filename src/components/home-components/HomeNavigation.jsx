@@ -1,12 +1,12 @@
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 import {
   ExpolrerIcon,
   HashtagsIcon,
   JobsIcon,
   ProjectsIcon,
-} from "../genera-ui/IconsSvg";
-import { matchPath, NavLink, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+} from '../general-ui/IconsSvg';
+import { matchPath, NavLink, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 
 function NavElement({ title, icon, path, seperator, style }) {
   const { t } = useTranslation();
@@ -19,8 +19,8 @@ function NavElement({ title, icon, path, seperator, style }) {
       to={path}
       end
       className={({ isActive }) =>
-        "w-1/4 flex transition-all duration-300   " +
-        (isActive ? "text-logoOrange bg-white dark:bg-elementBlack " : " ") +
+        'w-1/4 flex transition-all duration-300   ' +
+        (isActive ? 'text-logoOrange bg-white dark:bg-elementBlack ' : ' ') +
         style
       }
     >
@@ -57,7 +57,7 @@ export default function HomeNavigation() {
         path="/home/jobs"
         style="border-r-2 dark:border-darkBorder"
         title="jobs"
-        icon={<JobsIcon style="w-5 fill-current mb-[6px] " />}
+        icon={<JobsIcon style="w-5 mb-[4px] mt-[2px]" />}
         seperator
       />
       <NavElement

@@ -1,10 +1,10 @@
 export default function NotificationButton() {
   return (
     <>
-      <div className=" p-[6px] bg-elementLightGray dark:bg-elementGray border border-gray-300 dark:border-darkBorder rounded-full transition-colors duration-300">
+      <div className=" p-[6px]  bg-elementLightGray dark:bg-elementGray border border-gray-300 dark:border-darkBorder rounded-full transition-colors duration-300">
         <button class="flex items-center">
           <svg
-            class="w-5 fill-current"
+            class="w-5 m-[2px] fill-current"
             xmlns="http://www.w3.org/2000/svg"
             version="1.0"
             viewBox="0 0 512 512"

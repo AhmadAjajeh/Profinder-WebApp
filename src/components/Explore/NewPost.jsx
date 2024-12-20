@@ -1,19 +1,19 @@
-import { useRef, useState } from "react";
-import { AnimatePresence } from "framer-motion";
-import { useMutation } from "@tanstack/react-query";
-import { useDispatch } from "react-redux";
+import { useRef, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import { useMutation } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
 
-import Modal from "../genera-ui/Modal";
-import UserImage from "../genera-ui/UserImage";
-import { useTranslation } from "react-i18next";
-import { XIcon } from "../genera-ui/IconsSvg";
-import { range } from "../../util/validation";
-import { createPostMutation } from "../../http/home";
-import { alertActions } from "../../store/alertSlice";
-import { errorHandlingActions } from "../../store/errorHandlingSlice";
-import TopicsInput from "../genera-ui/TopicsInput";
-import ImagesUpload from "../genera-ui/ImagesUpload";
-import { eventActions } from "../../store/dataSlice";
+import Modal from '../general-ui/Modal';
+import UserImage from '../general-ui/UserImage';
+import { useTranslation } from 'react-i18next';
+import { XIcon } from '../general-ui/IconsSvg';
+import { range } from '../../util/validation';
+import { createPostMutation } from '../../http/home';
+import { alertActions } from '../../store/alertSlice';
+import { errorHandlingActions } from '../../store/errorHandlingSlice';
+import TopicsInput from '../general-ui/TopicsInput';
+import ImagesUpload from '../general-ui/ImagesUpload';
+import { eventActions } from '../../store/dataSlice';
 
 export default function NewPost() {
   const { t } = useTranslation();
@@ -36,7 +36,7 @@ export default function NewPost() {
           onClick={handleShowNewPost}
           className="w-full bg-gray-100 dark:bg-elementGray rounded-full text-gray-500 font-light text-sm focus:outline-none flex items-center px-3"
         >
-          <span>{t("share_something_beneficial")}</span>
+          <span>{t('share_something_beneficial')}</span>
         </button>
         <AnimatePresence>
           {showModal && (
@@ -78,7 +78,7 @@ function NewPostModal({ onClose }) {
           messages: [response.message],
         })
       );
-      dispatch(eventActions.set({ data: response.post, type: "new-post" }));
+      dispatch(eventActions.set({ data: response.post, type: 'new-post' }));
       onClose();
     },
     onError: (error) => {
@@ -95,7 +95,7 @@ function NewPostModal({ onClose }) {
   const autoResize = () => {
     const textarea = textareaRef.current;
     if (textarea) {
-      textarea.style.height = "auto";
+      textarea.style.height = 'auto';
       textarea.style.height = `${textarea.scrollHeight + 4}px`;
     }
   };
@@ -107,20 +107,20 @@ function NewPostModal({ onClose }) {
     let { text } = Object.fromEntries(formData);
 
     if (!range(text, 16, 4096)) {
-      setTextValidation("text_not_in_range");
+      setTextValidation('text_not_in_range');
       return;
     }
     setTextValidation(null);
 
     if (selectedImages.length > 0) {
       selectedImages.forEach((image) => {
-        formData.append("images", image);
+        formData.append('images', image);
       });
     }
 
     if (topics.length > 0) {
       topics.forEach((topic) => {
-        formData.append("topics", topic);
+        formData.append('topics', topic);
       });
     }
     mutate(formData);
@@ -130,7 +130,7 @@ function NewPostModal({ onClose }) {
     <div className="w-[400px] md:w-[550px] dark:bg-elementBlack dark:text-white flex flex-col py-3 px-4  rounded-md dark:border dark:border-darkBorder">
       {/* // Header */}
       <div className="w-full flex flex-row items-center justify-between mb-4 ">
-        <div className="font-medium ">{t("create_post")}</div>
+        <div className="font-medium ">{t('create_post')}</div>
         <button type="button" className="text-gray-500" onClick={onClose}>
           <XIcon style="w-3 h-3" />
         </button>
@@ -146,7 +146,7 @@ function NewPostModal({ onClose }) {
               rows="1"
               name="text"
               className="bg-inherit outline-none text-sm text-black dark:text-white w-full resize-none my-auto mt-[14px]"
-              placeholder={t("share_something_beneficial")}
+              placeholder={t('share_something_beneficial')}
               onInput={autoResize}
             ></textarea>
           </div>
@@ -187,7 +187,7 @@ function NewPostModal({ onClose }) {
         {/* submit button */}
         <div className="w-full flex justify-end mb-2 mt-4">
           <button className="text-white text-sm bg-logoOrange hover:bg-orange-400 px-4 py-2 rounded-lg shadow-sm hover:-translate-y-0.5 hover:shadow-md transition-transform focus:outline-none">
-            {t("publish")}
+            {t('publish')}
           </button>
         </div>
       </form>

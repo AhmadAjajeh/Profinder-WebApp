@@ -1,15 +1,18 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 
-import NewPost from '../../components/explore/NewPost';
-import PostScroll from '../../components/explore/PostScroll';
-import ComingSoon from '../../components/general-ui/ComingSoon';
 import HomeNavigation from '../../components/home-components/HomeNavigation';
+import JobScroll from '../../components/job/JobScroll';
+import ComingSoon from '../../components/general-ui/ComingSoon';
+import { PlusIcon } from '../../components/general-ui/IconsSvg';
 
-export default function ExplorePage() {
+export default function JobPage() {
+  const [jobId, setJobId] = useState(null);
+
   return (
     <>
       {/* middle section */}
-      <div className="w-full md:w-9/12 lg:w-6/12 flex flex-col item-center ">
+      <div className="w-full md:w-9/12 lg:w-6/12 flex flex-col item-center">
         {/* <HomeNavigation /> */}
         <HomeNavigation />
 
@@ -24,15 +27,17 @@ export default function ExplorePage() {
           animate="animate"
           exit="hidden"
         >
-          <NewPost />
-          <PostScroll />
+          <JobScroll onSelect={setJobId} />
         </motion.div>
       </div>
 
       {/* far right section */}
       <div className="hidden h-fit lg:flex  lg:w-4/12 xl:w-[468px]">
-        <ComingSoon title={'chat'} />
+        <ComingSoon />
       </div>
+      <button className="w-12 h-12 rounded-full bg-logoOrange text-white  fixed bottom-4 rtl:left-4 ltr:right-4 flex items-center justify-center ">
+        <PlusIcon style="w-5 h-5 " />
+      </button>
     </>
   );
 }

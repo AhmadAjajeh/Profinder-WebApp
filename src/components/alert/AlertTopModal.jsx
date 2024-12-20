@@ -1,6 +1,6 @@
-import { useTranslation } from "react-i18next";
-import { TickIcon } from "../genera-ui/IconsSvg";
-import TopSideModal from "../genera-ui/TopSideModal";
+import { useTranslation } from 'react-i18next';
+import { TickIcon } from '../general-ui/IconsSvg';
+import TopSideModal from '../general-ui/TopSideModal';
 
 export default function AlertTopModal({ alert, color }) {
   const { t } = useTranslation();

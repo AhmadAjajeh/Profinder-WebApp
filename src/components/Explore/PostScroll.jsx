@@ -68,7 +68,7 @@ export default function PostScroll() {
   );
 
   return (
-    <div className="flex flex-col items-center space-y-3">
+    <div className="flex flex-col items-center space-y-1">
       {posts.map((post, index) => {
         if (posts.length === index + 1) {
           return <Post post={post} key={post._id} ref={lastPostRef} />;

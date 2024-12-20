@@ -1,4 +1,5 @@
 import {
+  buildSearchParams,
   getApiBaseUrl,
   getStateToken,
   getToken,
@@ -101,6 +102,25 @@ export function createCommentMutation(formData) {
   };
 
   const errorMessage = "An error occurred while creating the comment";
+
+  return handlerFunction(url, configuration, errorMessage);
+}
+
+export function getJobsQuery({ title, location, page }) {
+  const url =
+    getApiBaseUrl() +
+    "explore/jobs/search?" +
+    buildSearchParams({ title, location, page });
+
+  const configuration = {
+    method: "GET",
+    headers: {
+      "Accept-Language": getLanguage(),
+      authorization: "Bearer " + getStateToken(),
+    },
+  };
+
+  const errorMessage = "An error occurred while fetching the jobs!";
 
   return handlerFunction(url, configuration, errorMessage);
 }

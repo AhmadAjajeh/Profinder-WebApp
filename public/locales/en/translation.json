@@ -67,5 +67,11 @@
   "minutes": "Minutes",
   "comments": "Comments",
   "leave_a_comment": "Leave a comment",
-  "the_comment_should_be_between_1_and_2048_chars": "The comment should be between 1 and 2048 characters"
+  "the_comment_should_be_between_1_and_2048_chars": "The comment should be between 1 and 2048 characters",
+  "title": "Title",
+  "location": "Location",
+  "search": "search",
+  "the_title_should_be_at_least_two_characters": "The title should be at least two characters",
+  "no_result_found_for_your_search": "No results found for your search",
+  "please_try_another_keys": "Please try different keywords"
 }

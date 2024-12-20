@@ -1,5 +1,5 @@
-import { useTranslation } from "react-i18next";
-import TopSideModal from "../genera-ui/TopSideModal";
+import { useTranslation } from 'react-i18next';
+import TopSideModal from '../general-ui/TopSideModal';
 
 export default function ErrorModal({ error, color }) {
   const { t } = useTranslation();

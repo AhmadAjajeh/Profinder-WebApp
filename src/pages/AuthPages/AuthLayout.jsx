@@ -64,11 +64,7 @@ export default function AuthLayout() {
         )}
       </AnimatePresence>
       <div class="w-full  absolute -z-20">
-        <div
-          class={`mx-auto flex flex-row items-center justify-center p-10 lg:p-20 max-h-screen xl:space-x-20 ${
-            i18n.dir() === "rtl" ? "lg:space-x-reverse" : ""
-          }`}
-        >
+        <div class="mx-auto flex flex-row items-center justify-center p-10 lg:p-20 max-h-screen xl:space-x-20 rtl:space-x-reverse">
           <AuthSideImage />
           <div class="w-full xl:w-3/5 max-w-lg relative">
             <Outlet class="w-full" />

@@ -68,5 +68,11 @@
   "minutes": "دقائق",
   "comments": "تعليقات",
   "leave_a_comment": "اترك تعليقًا",
-  "the_comment_should_be_between_1_and_2048_chars": "يجب أن يكون التعليق بين 1 و 2048 حرفًا"
+  "the_comment_should_be_between_1_and_2048_chars": "يجب أن يكون التعليق بين 1 و 2048 حرفًا",
+  "title": "العنوان",
+  "location": "الموقع",
+  "search": "بحث",
+  "the_title_should_be_at_least_two_characters": "يجب أن يكون العنوان مكوناََ من حرفين على الأقل",
+  "no_result_found_for_your_search": "لم يتم العثور على نتائج لبحثك",
+  "please_try_another_keys": "يرجى تجربة كلمات مفتاحية أخرى"
 }

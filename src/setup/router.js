@@ -8,6 +8,7 @@ import MainLayout, { mainLoader } from "../pages/MainLayout";
 import HomeLayout from "../pages/HomeLayout";
 import ExplorePage from "../pages/HomePages/ExplorePage";
 import { destroyAuthInfo } from "../util/http";
+import JobPage from "../pages/HomePages/JobPage";
 
 export default createBrowserRouter([
   {
@@ -38,8 +39,7 @@ export default createBrowserRouter([
           { index: true, element: <ExplorePage /> },
           {
             path: "jobs",
-            element: <div>jobs</div>,
-            children: [{ index: true, element: <div>ahmad</div> }],
+            element: <JobPage />,
           },
           {
             path: "projects",

@@ -10,7 +10,7 @@ import AlertTopModal from "../components/alert/AlertTopModal";
 import { errorHandlingActions } from "../store/errorHandlingSlice";
 import { alertActions } from "../store/alertSlice";
 import { authActions } from "../store/authSlice";
-import { getToken, getUser } from "../util/http";
+import { buildSearchParams, getToken, getUser } from "../util/http";
 import { useQuery } from "@tanstack/react-query";
 import { myProfileQuery } from "../http/profile";
 import { profileActions } from "../store/profileSlice";
@@ -25,12 +25,10 @@ export default function MainLayout() {
   dispatch(
     authActions.refreshAuth({ token: getToken().token, user: getUser() })
   );
-
   useQuery({
     queryKey: ["my-profile"],
     queryFn: myProfileQuery,
     onSuccess: (data) => {
-      console.log(data);
       dispatch(profileActions.set({ profile: data.profile }));
     },
     onError: (error) => {

@@ -46,7 +46,7 @@ export default function TopicsInput({ topics, setTopics }) {
         <div className="w-full relative">
           <input
             ref={topicRef}
-            className="bg-inherit w-full outline-none border border-gray-300 dark:border-darkBorder px-4 py-2 rounded-md"
+            className="bg-elementLightGray dark:bg-elementGray w-full outline-none border border-gray-300 dark:border-darkBorder px-4 py-2 rounded-md"
           />
           <button
             onClick={handleAddTopic}

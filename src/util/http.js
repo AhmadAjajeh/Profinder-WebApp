@@ -99,3 +99,14 @@ export const errorHandlingFunction = (
     if (error.code === 403) navigate("/auth/login");
   };
 };
+
+export function buildSearchParams(params) {
+  const keys = Object.keys(params);
+  let string = "";
+  for (let key of keys) {
+    if (!params[key]) continue;
+    string +=
+      string.length === 0 ? `${key}=${params[key]}` : `&${key}=${params[key]}`;
+  }
+  return string;
+}

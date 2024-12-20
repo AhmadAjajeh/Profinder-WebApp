@@ -1,13 +1,14 @@
+import i18next from "i18next";
+import { useTranslation } from "react-i18next";
+
 import DarkLightModeButton from "./DarkLightModeButton";
 import NotificationButton from "./NotificationButton";
 import UserImageButton from "./UserImageButton";
 
 import FullLogoImage from "../../assets/images/full-logo-image.png";
 import FullLogoImageWhite from "../../assets/images/full-logo-image-white.png";
-import { useTranslation } from "react-i18next";
-import SmallLogoImage from "./SmallLogoImage";
-import { getDirection } from "../../util/lang";
-import i18next from "i18next";
+import FullLogoImageArabic from "../../assets/images/full-logo-image-arabic.png";
+import FullLogoImageArabicWhite from "../../assets/images/full-logo-image-arabic-white.png";
 
 export default function MediumScreenHeader() {
   const { t } = useTranslation();
@@ -71,8 +72,11 @@ export default function MediumScreenHeader() {
           </>
         ) : (
           <div className="font-extrabold text-2xl tracking-wider">
-            <span className="text-logoOrange">برو</span>
-            <span className="text-deepBlue">فايندر</span>
+            <img
+              className="w-40 hidden dark:inline"
+              src={FullLogoImageArabicWhite}
+            />
+            <img className="w-40 dark:hidden" src={FullLogoImageArabic} />
           </div>
         )}
       </div>

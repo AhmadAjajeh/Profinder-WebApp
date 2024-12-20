@@ -1,8 +1,8 @@
-import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import {
   ClockIcon,
@@ -13,22 +13,22 @@ import {
   EmptySavedIcon,
   XIcon,
   SendIcon,
-} from "../genera-ui/IconsSvg";
-import ImageSlider from "../genera-ui/ImageSlider";
-import MixedText from "../genera-ui/MixedText";
-import { timeAgo } from "../../util/date";
-import { errorHandlingFunction, getBaseUrl } from "../../util/http";
+} from '../general-ui/IconsSvg';
+import ImageSlider from '../general-ui/ImageSlider';
+import MixedText from '../general-ui/MixedText';
+import { timeAgo } from '../../util/date';
+import { errorHandlingFunction, getBaseUrl } from '../../util/http';
 import {
   createCommentMutation,
   likePostMutaiton,
   postWithCommentsQuery,
   savePostMutation,
-} from "../../http/home";
-import { errorHandlingActions } from "../../store/errorHandlingSlice";
-import { AnimatePresence } from "framer-motion";
-import Modal from "../genera-ui/Modal";
-import { range } from "../../util/validation";
-import { alertActions } from "../../store/alertSlice";
+} from '../../http/home';
+import { errorHandlingActions } from '../../store/errorHandlingSlice';
+import { AnimatePresence } from 'framer-motion';
+import Modal from '../general-ui/Modal';
+import { range } from '../../util/validation';
+import { alertActions } from '../../store/alertSlice';
 
 const Post = forwardRef(({ post }, ref) => {
   const dispatch = useDispatch();
@@ -102,23 +102,27 @@ const Post = forwardRef(({ post }, ref) => {
       className="bg-white min-w-full dark:bg-elementBlack dark:text-white border border-gray-300 dark:border-darkBorder shadow-sm p-4 rounded-md flex flex-col space-y-3"
     >
       {/* userimage, name, and time posted */}
-      <div className="flex flex-row space-x-2 rtl:space-x-reverse">
-        <img
-          src={getBaseUrl() + post.publisher_id.profile_image}
-          className="w-12 h-12 rounded-full"
-        />
-        <div className="mt-2 md:mt-1">
-          <div className="text-sm md:text-md font-normal">
-            {post.publisher_id.username}
-          </div>
-          <div className="flex flex-row items-center text-slate-500 dark:text-slate-300 space-x-1 rtl:space-x-reverse text-xs  mt-1">
-            <div>
-              <ClockIcon style="w-3" />
+      <div className="flex flex-row justify-between">
+        <div className="flex flex-row space-x-2 rtl:space-x-reverse">
+          <img
+            src={getBaseUrl() + post.publisher_id.profile_image}
+            className="w-12 h-12 rounded-full"
+          />
+          <div className="mt-2 md:mt-1">
+            <div className="text-sm md:text-md font-normal">
+              {post.publisher_id.username}
             </div>
-            <div>{timeAgo(post.created_at)}</div>
+            <div className="flex flex-row items-center text-slate-500 dark:text-slate-300 space-x-1 rtl:space-x-reverse text-xs  mt-1">
+              <div>
+                <ClockIcon style="w-3" />
+              </div>
+              <div>{timeAgo(post.created_at)}</div>
+            </div>
           </div>
         </div>
+        <div>ahmad</div>
       </div>
+
       {/* post text */}
       <div>
         <MixedText
@@ -134,9 +138,9 @@ const Post = forwardRef(({ post }, ref) => {
       )}
 
       {/* interactions  */}
-      <div className="w-full mt-1 bg-gray-300 dark:bg-darkBorder h-[1px]"></div>
-      <div className="w-full flex flex-row items-center justify-between text-gray-600 h-6">
-        <div className=" grid grid-cols-2 gap-7 rtl:space-x-reverse">
+      <div className="w-full mt-1 bg-gray-300  dark:bg-gray-500 h-[1px]"></div>
+      <div className="w-full flex flex-row items-center justify-between text-gray-500 h-6">
+        <div className=" grid grid-cols-2 gap-5 rtl:space-x-reverse">
           <button
             disabled={likeBtnDisabled}
             className="flex flex-row space-x-2 rtl:space-x-reverse items-center justify-center"
@@ -147,14 +151,14 @@ const Post = forwardRef(({ post }, ref) => {
             ) : (
               <EmptyLikeIcon style="w-5 hover:text-logoOrange" />
             )}
-            <span>{likesCount}</span>
+            <span className="w-3">{likesCount}</span>
           </button>
           <button
             onClick={() => setShowComments(true)}
             className="flex flex-row space-x-2 rtl:space-x-reverse items-center justify-center "
           >
-            <CommentIcon style="w-5 hover:text-logoOrange mt-[4px]" />
-            <span>{post.comments_count}</span>
+            <CommentIcon style="w-5 hover:text-logoOrange mt-[6px]" />
+            <span className="w-3">{post.comments_count}</span>
           </button>
         </div>
         <div>
@@ -235,7 +239,7 @@ function CommentsModal({ postId, onClose }) {
   const observer = useRef(null);
 
   const { isFetching } = useQuery({
-    queryKey: ["posts", "comments", postId, page],
+    queryKey: ['posts', 'comments', postId, page],
     queryFn: () => postWithCommentsQuery({ postId, page }),
     onSuccess: (data) => {
       setMorePagesExist(
@@ -271,7 +275,7 @@ function CommentsModal({ postId, onClose }) {
         },
         ...prevComments,
       ]);
-      textArea.current.value = "";
+      textArea.current.value = '';
     },
     onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
   });
@@ -299,7 +303,8 @@ function CommentsModal({ postId, onClose }) {
     let { text } = Object.fromEntries(formData);
 
     if (!range(text, 1, 2048)) {
-      setCommentValidation("the_comment_should_be_between_1_and_2048_chars");
+      setCommentValidation('the_comment_should_be_between_1_and_2048_chars');
+      return;
     }
     setCommentValidation(null);
 
@@ -321,8 +326,8 @@ function CommentsModal({ postId, onClose }) {
         {/* header */}
         <div className="w-full flex flex-row items-center justify-between mb-4">
           <div className="font-medium">
-            {t("comments")}
-            <span className="text-xs">{" ( " + totalComments + " ) "}</span>
+            {t('comments')}
+            <span className="text-xs">{' ( ' + totalComments + ' ) '}</span>
           </div>
           <button type="button" className="text-gray-500" onClick={onClose}>
             <XIcon style="w-3 h-3" />
@@ -349,7 +354,7 @@ function CommentsModal({ postId, onClose }) {
             <textarea
               ref={textArea}
               name="text"
-              placeholder={t("leave_a_comment")}
+              placeholder={t('leave_a_comment')}
               className="bg-gray-200 dark:bg-elementGray font-light text-sm outline-none w-full h-16 max-h-16 min-h-16 p-2 rounded-lg dark:text-white"
             ></textarea>
             <button className="hover:text-logoOrange">
