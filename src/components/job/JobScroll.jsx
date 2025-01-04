@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useRef, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -75,6 +75,15 @@ export default function JobScroll({ onSelect }) {
     [isFetching, morePagesExists]
   );
 
+  useEffect(() => {
+    if (!isFetching && jobs.length < 6)
+      document.body.classList.add('no-scroll');
+    else document.body.classList.remove('no-scroll');
+    return () => {
+      document.body.classList.remove('no-scroll');
+    };
+  }, [isFetching, jobs]);
+
   function handleSearch(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -91,7 +100,6 @@ export default function JobScroll({ onSelect }) {
     setPage(1);
     setJobs([]);
     setMorePagesExist(true);
-    console.log(title, location, page, jobs);
   }
 
   return (
@@ -193,14 +201,14 @@ const ScrollJob = forwardRef(({ job, onSelect, rounded }, ref) => {
       onClick={onSelect}
     >
       {/* company image */}
-      <div className="flex flex-row space-x-3 rtl:space-x-reverse">
+      <div className="flex flex-row items-center justify-center">
         {job.company.image_url ? (
           <img
-            className="w-14 h-14"
+            className="w-14 h-14 object-cover"
             src={getBaseUrl() + job.company.image_url}
           />
         ) : (
-          <div className="bg-gray-300 dark:bg-gray-500 p-2">
+          <div className="bg-gray-300 dark:bg-gray-500 p-2 w-14 h-14">
             <SingleCompany style="w-12 h-12 text-gray-500 dark:text-gray-700" />
           </div>
         )}

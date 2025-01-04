@@ -4,104 +4,120 @@ import {
   getStateToken,
   getToken,
   handlerFunction,
-} from "../util/http";
-import { getLanguage } from "../util/lang";
+} from '../util/http';
+import { getLanguage } from '../util/lang';
 
 export function createPostMutation(formData) {
-  const url = getApiBaseUrl() + "users/posts?publisher=true";
+  const url = getApiBaseUrl() + 'users/posts?publisher=true';
   const configuration = {
-    method: "POST",
+    method: 'POST',
     body: formData,
     headers: {
-      "Accept-Language": getLanguage(),
-      authorization: "Bearer " + getStateToken(),
+      'Accept-Language': getLanguage(),
+      authorization: 'Bearer ' + getStateToken(),
     },
   };
 
-  const errorMessage = "An error occurred while trying to publish the post";
+  const errorMessage = 'An error occurred while trying to publish the post';
+
+  return handlerFunction(url, configuration, errorMessage);
+}
+
+export function updatePostMutation({ formData, id }) {
+  const url = getApiBaseUrl() + `users/posts/${id}?publisher=true`;
+  const configuration = {
+    method: 'PUT',
+    body: formData,
+    headers: {
+      'Accept-Language': getLanguage(),
+      authorization: 'Bearer ' + getStateToken(),
+    },
+  };
+
+  const errorMessage = 'An error occurred while trying to edit the post';
 
   return handlerFunction(url, configuration, errorMessage);
 }
 
 export function getPostQuery(page) {
-  const url = getApiBaseUrl() + "public/posts?publisher=true&page=" + page;
+  const url = getApiBaseUrl() + 'public/posts?publisher=true&page=' + page;
   const configuration = {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Accept-Language": getLanguage(),
-      authorization: "Bearer " + getStateToken(),
+      'Accept-Language': getLanguage(),
+      authorization: 'Bearer ' + getStateToken(),
     },
   };
 
-  const errorMessage = "An error occurred while getting the post";
+  const errorMessage = 'An error occurred while getting the post';
 
   return handlerFunction(url, configuration, errorMessage);
 }
 
 export function likePostMutaiton({ like, postId }) {
-  const url = getApiBaseUrl() + "users/likes" + (like ? "" : `/${postId}`);
+  const url = getApiBaseUrl() + 'users/likes' + (like ? '' : `/${postId}`);
   const configuration = {
-    method: like ? "POST" : "DELETE",
+    method: like ? 'POST' : 'DELETE',
     body: JSON.stringify({ post_id: postId }),
     headers: {
-      "Content-Type": "application/json",
-      "Accept-language": getLanguage(),
-      authorization: "Bearer " + getStateToken(),
+      'Content-Type': 'application/json',
+      'Accept-language': getLanguage(),
+      authorization: 'Bearer ' + getStateToken(),
     },
   };
 
-  const errorMessage = "An error occurred while like/unlike the post";
+  const errorMessage = 'An error occurred while like/unlike the post';
 
   return handlerFunction(url, configuration, errorMessage);
 }
 
 export function savePostMutation({ save, postId }) {
-  const url = getApiBaseUrl() + "users/saved-post" + (save ? "" : `/${postId}`);
+  const url = getApiBaseUrl() + 'users/saved-post' + (save ? '' : `/${postId}`);
   const configuration = {
-    method: save ? "POST" : "DELETE",
+    method: save ? 'POST' : 'DELETE',
     body: JSON.stringify({ post_id: postId }),
     headers: {
-      "Content-Type": "application/json",
-      "Accept-language": getLanguage(),
-      authorization: "Bearer " + getStateToken(),
+      'Content-Type': 'application/json',
+      'Accept-language': getLanguage(),
+      authorization: 'Bearer ' + getStateToken(),
     },
   };
 
-  const errorMessage = "An error occurred while save/unsave the post";
+  const errorMessage = 'An error occurred while save/unsave the post';
 
   return handlerFunction(url, configuration, errorMessage);
 }
 
 export function postWithCommentsQuery({ postId, page }) {
   const url =
-    getApiBaseUrl() + "public/posts/" + postId + "/comments?page=" + page;
+    getApiBaseUrl() + 'public/posts/' + postId + '/comments?page=' + page;
   const configuration = {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Accept-Language": getLanguage(),
-      authorization: "Bearer " + getStateToken(),
+      'Accept-Language': getLanguage(),
+      authorization: 'Bearer ' + getStateToken(),
     },
   };
 
-  const errorMessage = "An error occurred while fetching comments";
+  const errorMessage = 'An error occurred while fetching comments';
 
   return handlerFunction(url, configuration, errorMessage);
 }
 
 export function createCommentMutation(formData) {
-  const url = getApiBaseUrl() + "users/comments";
+  const url = getApiBaseUrl() + 'users/comments';
 
   const configuration = {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
-      "Accept-Language": getLanguage(),
-      authorization: "Bearer " + getStateToken(),
+      'Content-Type': 'application/json',
+      'Accept-Language': getLanguage(),
+      authorization: 'Bearer ' + getStateToken(),
     },
     body: JSON.stringify(formData),
   };
 
-  const errorMessage = "An error occurred while creating the comment";
+  const errorMessage = 'An error occurred while creating the comment';
 
   return handlerFunction(url, configuration, errorMessage);
 }
@@ -109,18 +125,18 @@ export function createCommentMutation(formData) {
 export function getJobsQuery({ title, location, page }) {
   const url =
     getApiBaseUrl() +
-    "explore/jobs/search?" +
+    'explore/jobs/search?' +
     buildSearchParams({ title, location, page });
 
   const configuration = {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Accept-Language": getLanguage(),
-      authorization: "Bearer " + getStateToken(),
+      'Accept-Language': getLanguage(),
+      authorization: 'Bearer ' + getStateToken(),
     },
   };
 
-  const errorMessage = "An error occurred while fetching the jobs!";
+  const errorMessage = 'An error occurred while fetching the jobs!';
 
   return handlerFunction(url, configuration, errorMessage);
 }

@@ -74,5 +74,20 @@
   "search": "بحث",
   "the_title_should_be_at_least_two_characters": "يجب أن يكون العنوان مكوناََ من حرفين على الأقل",
   "no_result_found_for_your_search": "لم يتم العثور على نتائج لبحثك",
-  "please_try_another_keys": "يرجى تجربة كلمات مفتاحية أخرى"
+  "please_try_another_keys": "يرجى تجربة كلمات مفتاحية أخرى",
+  "edit": "تعديل",
+  "delete": "حذف",
+  "edit_post": "تعديل المنشور",
+  "logout": "تسجيل الخروج",
+  "profile_link": "رابط ملفك الشخصي",
+  "share_your_profile": "شارك ملفك الشخصي",
+  "complaint": "شكوى",
+  "suggestion": "اقتراح",
+  "i_have": "لدي",
+  "details": "التفاصيل",
+  "subject": "الموضوع",
+  "only_one_image": "يُسمح بصورة واحدة فقط",
+  "upload_an_image": "قم بتحميل صورة",
+  "select_image": "اختر صورة",
+  "send": "إرسال"
 }

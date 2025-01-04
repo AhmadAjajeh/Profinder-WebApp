@@ -73,5 +73,20 @@
   "search": "search",
   "the_title_should_be_at_least_two_characters": "The title should be at least two characters",
   "no_result_found_for_your_search": "No results found for your search",
-  "please_try_another_keys": "Please try different keywords"
+  "please_try_another_keys": "Please try different keywords",
+  "edit": "Edit",
+  "delete": "Delete",
+  "edit_post": "Edit post",
+  "logout": "Logout",
+  "profile_link": "Profile Link",
+  "share_your_profile": "Share your profile",
+  "complaint": "Complaint",
+  "suggestion": "Suggestion",
+  "i_have": "I have",
+  "details": "Details",
+  "subject": "Subject",
+  "only_one_image": "Only one image is allowed",
+  "upload_an_image": "Upload an image",
+  "select_image": "Select image",
+  "send": "Send"
 }

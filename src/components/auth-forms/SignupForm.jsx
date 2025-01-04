@@ -1,22 +1,22 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import { useDispatch } from "react-redux";
-import _ from "lodash";
+import { useTranslation } from 'react-i18next';
+import { Link, useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
+import _ from 'lodash';
 
-import { getDirection } from "../../util/lang";
-import SignupInputField from "../../components/auth-forms/SignupInputField";
+import { getDirection } from '../../util/lang';
+import SignupInputField from '../../components/auth-forms/SignupInputField';
 import {
   validateEmail,
   validateNewPassword,
   validateUsername,
-} from "../../validation/auth";
-import { signup } from "../../http/auth";
-import { alertActions } from "../../store/alertSlice";
-import { errorHandlingActions } from "../../store/errorHandlingSlice";
-import { activationActions } from "../../store/activationCodeSlice";
+} from '../../validation/auth';
+import { signup } from '../../http/auth';
+import { alertActions } from '../../store/alertSlice';
+import { errorHandlingActions } from '../../store/errorHandlingSlice';
+import { activationActions } from '../../store/activationCodeSlice';
 
 const initialValidationState = {
   username: null,
@@ -35,7 +35,7 @@ export default function SignupForm() {
     mutationFn: signup,
     onSuccess: (response) => {
       dispatch(alertActions.alert({ messages: [response.message] }));
-      navigate("/auth/check-code");
+      navigate('/auth/check-code');
     },
     onError: (error) => {
       const messages = error.info?.message || [error.message];
@@ -62,7 +62,7 @@ export default function SignupForm() {
       email: validateEmail(email),
       password: validateNewPassword(password),
       confirmPassword:
-        password === confirmPassword ? null : "passwords_must_match",
+        password === confirmPassword ? null : 'passwords_must_match',
     };
 
     setValidation(validationObj);
@@ -78,35 +78,35 @@ export default function SignupForm() {
       <div class="flex flex-col mb-2 dark:text-slate-300">
         <SignupInputField
           name="email"
-          label={t("email")}
+          label={t('email')}
           type="text"
-          placeholder={t("enter_your_email")}
+          placeholder={t('enter_your_email')}
           validation={validation.email}
         />
         <SignupInputField
           name="username"
-          label={t("username")}
+          label={t('username')}
           type="text"
-          placeholder={t("enter_your_username")}
+          placeholder={t('enter_your_username')}
           validation={validation.username}
         />
 
         <div
-          class={"flex flex-row justify-between space-x-3 rtl:space-x-reverse"}
+          class={'flex flex-row justify-between space-x-3 rtl:space-x-reverse'}
         >
           <SignupInputField
             addStyle="w-1/2 "
             name="password"
-            label={t("password")}
+            label={t('password')}
             type="password"
-            placeholder={t("enter_your_password")}
+            placeholder={t('enter_your_password')}
           />
           <SignupInputField
             addStyle="w-1/2"
             name="confirmPassword"
-            label={t("confirm_password")}
+            label={t('confirm_password')}
             type="password"
-            placeholder={t("confirm_your_password")}
+            placeholder={t('confirm_your_password')}
           />
         </div>
         {/* password and confirm password validation  */}
@@ -116,7 +116,7 @@ export default function SignupForm() {
               ? t(validation.password)
               : validation.confirmPassword
               ? t(validation.confirmPassword)
-              : " "}
+              : ' '}
           </p>
         )}
       </div>
@@ -126,7 +126,7 @@ export default function SignupForm() {
             disabled={isLoading}
             class="py-3 px-6 flex space-x-3 rtl:space-x-reverse w-full justify-center rounded-md dark:text-slate-50 dark:opacity-90 text-white bg-logoOrange hover:shadow-lg hover:bg-orange-300 shadow-md hover:-translate-y-0.5 transition-all duration-200"
           >
-            <span>{t("signup")}</span>
+            <span>{t('signup')}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="w-7 rtl:rotate-180"
@@ -150,7 +150,7 @@ export default function SignupForm() {
             class="inline text-slate-500 dark:text-slate-200 hover:text-slate-800 dark:hover:text-white transition-all duration-200"
             to="/auth/login"
           >
-            {t("or_login")}
+            {t('or_login')}
           </Link>
         </div>
       </div>

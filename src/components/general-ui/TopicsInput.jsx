@@ -1,7 +1,7 @@
-import { useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { PlusIcon, XIcon } from "./IconsSvg";
-import { range, uniqueArrayValues } from "../../util/validation";
+import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { PlusIcon, XIcon } from './IconsSvg';
+import { range, uniqueArrayValues } from '../../util/validation';
 
 export default function TopicsInput({ topics, setTopics }) {
   const { t } = useTranslation();
@@ -12,15 +12,15 @@ export default function TopicsInput({ topics, setTopics }) {
     const addedTopic = topicRef.current.value;
 
     if (topics.length === 5) {
-      setTopicsValidation("no_more_than_five_topics");
+      setTopicsValidation('no_more_than_five_topics');
       return;
     }
     if (!range(addedTopic, 2, 16)) {
-      setTopicsValidation("topic_not_in_range");
+      setTopicsValidation('topic_not_in_range');
       return;
     }
     if (!uniqueArrayValues([...topics, addedTopic])) {
-      setTopicsValidation("topic_already_exists");
+      setTopicsValidation('topic_already_exists');
       return;
     }
 
@@ -30,7 +30,7 @@ export default function TopicsInput({ topics, setTopics }) {
       return [...topics, addedTopic];
     });
 
-    topicRef.current.value = "";
+    topicRef.current.value = '';
   };
 
   const handleRemoveTopic = (topic) => {
@@ -42,7 +42,7 @@ export default function TopicsInput({ topics, setTopics }) {
   return (
     <>
       <div className="flex flex-col text-sm font-light space-y-2 ">
-        <div>{t("topics")}</div>
+        <div>{t('topics')}</div>
         <div className="w-full relative">
           <input
             ref={topicRef}

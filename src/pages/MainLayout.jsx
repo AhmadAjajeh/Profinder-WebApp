@@ -1,20 +1,19 @@
-import { useEffect } from "react";
-import { Outlet, redirect, useLoaderData, useNavigate } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from 'react';
+import { Outlet, redirect, useLoaderData, useNavigate } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+import { useDispatch, useSelector } from 'react-redux';
 
-import SmallScreenHeader from "../components/header-components/SmallScreenHeader";
-import MediumScreenHeader from "../components/header-components/MediumScreenHeader";
-import ErrorModal from "../components/error-handling/ErrorModal";
-import AlertTopModal from "../components/alert/AlertTopModal";
-import { errorHandlingActions } from "../store/errorHandlingSlice";
-import { alertActions } from "../store/alertSlice";
-import { authActions } from "../store/authSlice";
-import { buildSearchParams, getToken, getUser } from "../util/http";
-import { useQuery } from "@tanstack/react-query";
-import { myProfileQuery } from "../http/profile";
-import { profileActions } from "../store/profileSlice";
-import { queryClient } from "../http/auth";
+import Header from '../components/header-components/Header';
+import ErrorModal from '../components/error-handling/ErrorModal';
+import AlertTopModal from '../components/alert/AlertTopModal';
+import { errorHandlingActions } from '../store/errorHandlingSlice';
+import { alertActions } from '../store/alertSlice';
+import { authActions } from '../store/authSlice';
+import { getToken, getUser } from '../util/http';
+import { useQuery } from '@tanstack/react-query';
+import { myProfileQuery } from '../http/profile';
+import { profileActions } from '../store/profileSlice';
+import { queryClient } from '../http/auth';
 
 export default function MainLayout() {
   const error = useSelector((state) => state.error);
@@ -26,7 +25,7 @@ export default function MainLayout() {
     authActions.refreshAuth({ token: getToken().token, user: getUser() })
   );
   useQuery({
-    queryKey: ["my-profile"],
+    queryKey: ['my-profile'],
     queryFn: myProfileQuery,
     onSuccess: (data) => {
       dispatch(profileActions.set({ profile: data.profile }));
@@ -35,7 +34,7 @@ export default function MainLayout() {
       let messages = error.info?.message ||
         error.info?.messgae || [error.message];
 
-      if (typeof messages !== "object") messages = [messages];
+      if (typeof messages !== 'object') messages = [messages];
 
       dispatch(
         errorHandlingActions.throwError({
@@ -44,18 +43,18 @@ export default function MainLayout() {
         })
       );
 
-      if (error.code !== 1) navigate("/auth/login");
+      if (error.code !== 1) navigate('/auth/login');
       else queryClient.cancelQueries();
     },
   });
 
   useEffect(() => {
-    document.body.classList.add("dark:bg-darkBackground");
-    document.body.classList.add("bg-lightBackground");
+    document.body.classList.add('dark:bg-darkBackground');
+    document.body.classList.add('bg-lightBackground');
 
     return () => {
-      document.body.classList.remove("dark:bg-darkBackground");
-      document.body.classList.remove("bg-lightBackground");
+      document.body.classList.remove('dark:bg-darkBackground');
+      document.body.classList.remove('bg-lightBackground');
     };
   }, []);
 
@@ -81,19 +80,18 @@ export default function MainLayout() {
         {error.code !== 0 && (
           <ErrorModal
             error={error}
-            color={"bg-white dark:bg-deepBlue dark:border-logoOrange"}
+            color={'bg-white dark:bg-deepBlue dark:border-logoOrange'}
           />
         )}
         {alert.messages?.length !== 0 && (
           <AlertTopModal
             alert={alert}
-            color={"bg-white dark:bg-deepBlue dark:border-logoOrange"}
+            color={'bg-white dark:bg-deepBlue dark:border-logoOrange'}
           />
         )}
       </AnimatePresence>
       <header className="bg-white dark:bg-elementBlack border-b-1 dark:border-0 shadow-md transition-all duration-300 fixed z-20 w-full">
-        <SmallScreenHeader />
-        <MediumScreenHeader />
+        <Header />
       </header>
       <Outlet />
     </>
@@ -104,10 +102,10 @@ export function mainLoader() {
   try {
     const { token, expires_at } = getToken();
     if (!token || !expires_at || new Date(expires_at) < new Date()) {
-      return redirect("/auth/login");
+      return redirect('/auth/login');
     }
     return { token, expires_at, user: getUser() };
   } catch (error) {
-    return redirect("/auth/login");
+    return redirect('/auth/login');
   }
 }

@@ -1,6 +1,6 @@
-import { createPortal } from "react-dom";
-import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { createPortal } from 'react-dom';
+import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 export default function Modal({
   children,
   onClose,
@@ -10,26 +10,25 @@ export default function Modal({
   lockScroll,
 }) {
   useEffect(() => {
-    if (lockScroll) document.body.classList.add("no-scroll");
+    if (lockScroll) document.body.classList.add('no-scroll');
 
     return () => {
-      document.body.classList.remove("no-scroll");
+      document.body.classList.remove('no-scroll');
     };
   }, []);
-
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
+      if (event.key === 'Escape' && onClose) {
         onClose();
       }
     };
 
     // Add event listener when the component mounts
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown);
 
     // Cleanup event listener when the component unmounts
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, [onClose]);
 
@@ -47,13 +46,13 @@ export default function Modal({
         initial="hidden"
         animate="visible"
         exit="hidden"
-        class={"fixed z-30 " + className}
+        class={'fixed z-30 ' + className}
         onClose={onClose}
         open
       >
         {children}
       </motion.dialog>
     </>,
-    document.getElementById("modal")
+    document.getElementById('modal')
   );
 }

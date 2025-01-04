@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
-import { getPostQuery } from "../../http/home";
-import Post, { PostShimmer } from "./Post";
-import { useDispatch, useSelector } from "react-redux";
-import { errorHandlingActions } from "../../store/errorHandlingSlice";
+import { getPostQuery } from '../../http/home';
+import Post, { PostShimmer } from './Post';
+import { useDispatch, useSelector } from 'react-redux';
+import { errorHandlingActions } from '../../store/errorHandlingSlice';
 
 export default function PostScroll() {
   const dispatch = useDispatch();
@@ -20,13 +20,20 @@ export default function PostScroll() {
   const observer = useRef(null);
 
   useEffect(() => {
-    if (event.type === "new-post" && event.data) {
+    if (event.type === 'new-post' && event.data) {
       setPosts((prePosts) => [event.data, ...prePosts]);
+    }
+    if (event.type === 'edit-post' && event.data) {
+      setPosts((prePosts) => {
+        return prePosts.map((post) =>
+          post._id === event.data._id ? event.data : post
+        );
+      });
     }
   }, [event]);
 
   const { isFetching, error } = useQuery({
-    queryKey: ["posts", page],
+    queryKey: ['posts', page],
     queryFn: () => getPostQuery(page),
     onSuccess: (data) => {
       setMorePagesExist(
@@ -44,7 +51,7 @@ export default function PostScroll() {
           messages,
         })
       );
-      if (error.code === 403) navigate("/auth/login");
+      if (error.code === 403) navigate('/auth/login');
     },
     keepPreviousData: true,
     enabled: morePagesExist,
@@ -68,7 +75,7 @@ export default function PostScroll() {
   );
 
   return (
-    <div className="flex flex-col items-center space-y-1">
+    <div className="flex flex-col items-center space-y-1 max-w-full">
       {posts.map((post, index) => {
         if (posts.length === index + 1) {
           return <Post post={post} key={post._id} ref={lastPostRef} />;

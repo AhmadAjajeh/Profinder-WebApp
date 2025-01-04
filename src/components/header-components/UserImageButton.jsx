@@ -52,7 +52,7 @@ export default function UserImageButton() {
             animate="visible"
             exit="hidden"
             open
-            className="absolute  bg-white dark:bg-elementBlack border border-gray-300 dark:border-darkBorder shadow-lg rtl:-right-24 ltr:-left-24 md:rtl:-right-6 md:ltr:-left-6 lg:rtl:right-0 lg:ltr:left-0   flex flex-col space-y-3 p-4 rounded-md text-xs text-right text-black dark:text-white  w-40 font-light"
+            className="absolute bg-white dark:bg-elementBlack border border-gray-300 dark:border-darkBorder shadow-lg rtl:-right-4 ltr:-left-4 md:rtl:-right-6 md:ltr:-left-6 lg:rtl:right-0 lg:ltr:left-0   flex flex-col space-y-3 p-4 rounded-md text-xs text-right text-black dark:text-white  w-40 font-light"
           >
             <NavigationButton
               textKey="home_page"

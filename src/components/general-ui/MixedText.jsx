@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export default function MixedText({ text, className }) {
   const [expanded, setExpanded] = useState(false);
@@ -7,18 +7,18 @@ export default function MixedText({ text, className }) {
     setExpanded((state) => !state);
   }
 
-  const lines = text.split("\n");
+  const lines = text.split('\n');
   const displayLines = expanded ? lines : lines.slice(0, 5);
 
   const getLineDirection = (line) => {
     const trimmedLine = line.trim();
     const firstChar = trimmedLine
-      .split("")
+      .split('')
       .find((char) => /[a-zA-Z\u0600-\u06FF]/.test(char));
     if (!firstChar) {
-      return "ltr";
+      return 'ltr';
     }
-    return /^[\u0600-\u06FF]/.test(firstChar) ? "rtl" : "ltr";
+    return /^[\u0600-\u06FF]/.test(firstChar) ? 'rtl' : 'ltr';
   };
 
   function replaceHashtags(line) {
@@ -28,16 +28,17 @@ export default function MixedText({ text, className }) {
   return (
     <div className={className}>
       {displayLines.map((line, index) => {
-        if (line === "") return <br></br>;
-        if (line.startsWith("http"))
+        if (line === '') return <br></br>;
+        if (line.startsWith('http'))
           return (
-            <a className="text-logoOrange underline" href={line}>
+            <a className="text-logoOrange underline break-words" href={line}>
               {line}
             </a>
           );
         const direction = getLineDirection(line);
         return (
           <p
+            className="break-words"
             dangerouslySetInnerHTML={{ __html: replaceHashtags(line) }}
             key={index}
             dir={direction}
@@ -46,7 +47,7 @@ export default function MixedText({ text, className }) {
       })}
       {lines.length > 5 && (
         <button onClick={toggleExpanded} className="text-logoOrange underline">
-          {expanded ? "Show less" : "Read more"}
+          {expanded ? 'Show less' : 'Read more'}
         </button>
       )}
     </div>

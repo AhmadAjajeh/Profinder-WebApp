@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-let initialTheme = localStorage.getItem("color-theme");
+let initialTheme = localStorage.getItem('color-theme');
 
 if (!initialTheme)
-  initialTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+  initialTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light';
 
 // if (initialTheme === "dark") {
 //   document.documentElement.classList.add("dark");
@@ -19,18 +19,18 @@ export default function DarkLightModeButton() {
   const [theme, setTheme] = useState(initialTheme);
 
   useEffect(() => {
-    const oldTheme = theme === "dark" ? "light" : "dark";
+    const oldTheme = theme === 'dark' ? 'light' : 'dark';
     document.documentElement.classList.remove(oldTheme);
-    localStorage.setItem("color-theme", theme);
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
+    localStorage.setItem('color-theme', theme);
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
     }
   }, [theme]);
 
   function handleClick() {
     // const newTheme = theme === "dark" ? "light" : "dark";
     // document.documentElement.classList.remove(theme);
-    setTheme((state) => (state === "dark" ? "light" : "dark"));
+    setTheme((state) => (state === 'dark' ? 'light' : 'dark'));
   }
 
   return (
@@ -39,7 +39,7 @@ export default function DarkLightModeButton() {
         <button className="flex items-center" onClick={handleClick}>
           {/* the sun svg */}
           <svg
-            className={`w-6 fill-current ${theme === "light" ? "hidden" : ""}`}
+            className={`w-6 fill-current ${theme === 'light' ? 'hidden' : ''}`}
             xmlns="http://www.w3.org/2000/svg"
             version="1.0"
             viewBox="0 0 512 512"
@@ -48,7 +48,7 @@ export default function DarkLightModeButton() {
           </svg>
           {/* the moon svg */}
           <svg
-            className={`w-6 fill-current ${theme === "dark" ? "hidden" : ""}`}
+            className={`w-6 fill-current ${theme === 'dark' ? 'hidden' : ''}`}
             xmlns="http://www.w3.org/2000/svg"
             version="1.0"
             viewBox="0 0 512 512"

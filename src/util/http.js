@@ -1,7 +1,7 @@
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from 'jwt-decode';
 
-import store from "../store/index";
-import { getLanguage } from "./lang";
+import store from '../store/index';
+import { getLanguage } from './lang';
 
 export const handlerFunction = async (url, configuration, errorMessage) => {
   let response;
@@ -9,9 +9,9 @@ export const handlerFunction = async (url, configuration, errorMessage) => {
     response = await fetch(url, configuration);
   } catch (error) {
     const err = new Error(
-      getLanguage() === "ar"
-        ? "حدث خطأ أثناء الوصول للسيرفر"
-        : "An error occurred while trying to reach the server"
+      getLanguage() === 'ar'
+        ? 'حدث خطأ أثناء الوصول للسيرفر'
+        : 'An error occurred while trying to reach the server'
     );
     err.code = 1;
     throw err;
@@ -28,13 +28,13 @@ export const handlerFunction = async (url, configuration, errorMessage) => {
 };
 
 export const getApiBaseUrl = () => {
-  return process.env.NODE_ENV === "production"
+  return process.env.NODE_ENV === 'production'
     ? process.env.REACT_APP_API_URL_PROD
     : process.env.REACT_APP_API_URL_DEV;
 };
 
 export const getBaseUrl = () => {
-  return process.env.NODE_ENV === "production"
+  return process.env.NODE_ENV === 'production'
     ? process.env.REACT_APP_URL_PROD
     : process.env.REACT_APP_URL_DEV;
 };
@@ -48,8 +48,8 @@ export const getStateUser = () => {
 };
 
 export const getToken = () => {
-  const token = JSON.parse(localStorage.getItem("token") || null);
-  const expires_at = JSON.parse(localStorage.getItem("expires_at") || null);
+  const token = JSON.parse(localStorage.getItem('token') || null);
+  const expires_at = JSON.parse(localStorage.getItem('expires_at') || null);
   return {
     token,
     expires_at,
@@ -60,23 +60,23 @@ export const setToken = (token) => {
   const decoded = jwtDecode(token);
   if (decoded.exp) {
     const expiers_at = new Date(decoded.exp * 1000);
-    localStorage.setItem("expires_at", JSON.stringify(expiers_at));
+    localStorage.setItem('expires_at', JSON.stringify(expiers_at));
   }
-  localStorage.setItem("token", JSON.stringify(token));
+  localStorage.setItem('token', JSON.stringify(token));
 };
 
 export const destroyAuthInfo = (token) => {
-  localStorage.removeItem("expires_at");
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
+  localStorage.removeItem('expires_at');
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
 };
 
 export const setUser = (user) => {
-  localStorage.setItem("user", JSON.stringify(user));
+  localStorage.setItem('user', JSON.stringify(user));
 };
 
 export const getUser = () => {
-  return JSON.parse(localStorage.getItem("user"));
+  return JSON.parse(localStorage.getItem('user'));
 };
 
 export const errorHandlingFunction = (
@@ -88,7 +88,7 @@ export const errorHandlingFunction = (
     console.log(error.info);
     let messages = error.info?.message || error.info.messgae || [error.message];
 
-    if (typeof messages !== "object") messages = [messages];
+    if (typeof messages !== 'object') messages = [messages];
 
     dispatch(
       errorHandlingActions.throwError({
@@ -96,13 +96,13 @@ export const errorHandlingFunction = (
         messages,
       })
     );
-    if (error.code === 403) navigate("/auth/login");
+    if (error.code === 403) navigate('/auth/login');
   };
 };
 
 export function buildSearchParams(params) {
   const keys = Object.keys(params);
-  let string = "";
+  let string = '';
   for (let key of keys) {
     if (!params[key]) continue;
     string +=

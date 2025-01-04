@@ -6,7 +6,6 @@ import {
   ProjectsIcon,
 } from '../general-ui/IconsSvg';
 import { matchPath, NavLink, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
 
 function NavElement({ title, icon, path, seperator, style }) {
   const { t } = useTranslation();
@@ -19,15 +18,15 @@ function NavElement({ title, icon, path, seperator, style }) {
       to={path}
       end
       className={({ isActive }) =>
-        'w-1/4 flex transition-all duration-300   ' +
+        'w-1/4 flex transition-all duration-300  hover:bg-white dark:hover:bg-elementBlack ' +
         (isActive ? 'text-logoOrange bg-white dark:bg-elementBlack ' : ' ') +
         style
       }
     >
-      <div className=" w-full text-sm  items-center  p-3 relative ">
+      <div className=" w-full text-[12px] md:text-[15px] p-3 flex  justify-center   relative ">
         <div className="flex flex-col items-center justify-between">
           {icon}
-          <div className="z-10 font-light">{t(title)}</div>
+          <div className="z-10 font-normal">{t(title)}</div>
           {isActive && <DownwardTirangle />}
         </div>
       </div>
@@ -45,33 +44,33 @@ function DownwardTirangle() {
 
 export default function HomeNavigation() {
   return (
-    <div className="flex flex-row justify-between h-18 bg-elementLightGray dark:bg-elementGray dark:text-white font-light rounded-md border-2 border-gray-300 dark:border-darkBorder w-full shadow-sm mb-5">
+    <div className="flex flex-row justify-between h-20 bg-elementLightGray dark:bg-elementGray dark:text-white font-light rounded-md border-2 border-gray-300 dark:border-darkBorder w-full shadow-sm mb-5">
       <NavElement
         style="ltr:rounded-l-md rtl:rounded-r-md border-r-2 rtl:border-r-0 dark:border-darkBorder"
         path="/home"
         title="explorer"
-        icon={<ExpolrerIcon style="w-5 fill-current mb-0.5 mt-0.5" />}
+        icon={<ExpolrerIcon style="w-6 fill-current" />}
         seperator
       />
       <NavElement
         path="/home/jobs"
         style="border-r-2 dark:border-darkBorder"
         title="jobs"
-        icon={<JobsIcon style="w-5 mb-[4px] mt-[2px]" />}
+        icon={<JobsIcon style="w-6" />}
         seperator
       />
       <NavElement
         path="/home/projects"
         style="border-r-2 dark:border-darkBorder"
         title="projects"
-        icon={<ProjectsIcon style="w-6 fill-current mb-[3px] rtl:mb-0.5" />}
+        icon={<ProjectsIcon style="w-7 fill-current " />}
         seperator={true}
       />
       <NavElement
         style="rtl:rounded-l-md ltr:rounded-r-md rtl:border-r-2 dark:border-darkBorder"
         path="/home/hashtags"
         title="hashtags"
-        icon={<HashtagsIcon style="w-5 fill-current mb-0.5 rtl:mb-1" />}
+        icon={<HashtagsIcon style="w-6 fill-current" />}
       />
     </div>
   );

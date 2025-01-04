@@ -1,18 +1,27 @@
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+
+import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import {
+  FaThumbsUp,
+  FaRegComment,
+  FaRegThumbsUp,
+  FaSave,
+  FaRegBookmark,
+  FaBookmark,
+} from 'react-icons/fa';
+import { AiOutlineLoading3Quarters, AiOutlineUser } from 'react-icons/ai';
 
 import {
   ClockIcon,
-  CommentIcon,
-  EmptyLikeIcon,
-  LikeIcon,
-  FullSavedIcon,
-  EmptySavedIcon,
   XIcon,
   SendIcon,
+  MenuIcon,
+  DeleteIcon,
+  EditIcon,
 } from '../general-ui/IconsSvg';
 import ImageSlider from '../general-ui/ImageSlider';
 import MixedText from '../general-ui/MixedText';
@@ -29,10 +38,14 @@ import { AnimatePresence } from 'framer-motion';
 import Modal from '../general-ui/Modal';
 import { range } from '../../util/validation';
 import { alertActions } from '../../store/alertSlice';
+import { NewPostModal } from './NewPost';
 
 const Post = forwardRef(({ post }, ref) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const user = useSelector((state) => state.auth.user);
 
   const [like, setLike] = useState(post.like);
   const [save, setSave] = useState(post.saved_post);
@@ -40,6 +53,9 @@ const Post = forwardRef(({ post }, ref) => {
   const [likeBtnDisabled, setLikeBtnDisabled] = useState(false);
   const [saveBtnDisabled, setSaveBtnDisabled] = useState(false);
   const [showComments, setShowComments] = useState(false);
+
+  const [menu, setMenu] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   const isFirstRender = useRef(true);
   const isFirstRender2 = useRef(true);
@@ -99,15 +115,52 @@ const Post = forwardRef(({ post }, ref) => {
   return (
     <div
       ref={ref}
-      className="bg-white min-w-full dark:bg-elementBlack dark:text-white border border-gray-300 dark:border-darkBorder shadow-sm p-4 rounded-md flex flex-col space-y-3"
+      className="bg-white min-w-full max-w-full dark:bg-elementBlack dark:text-white border border-gray-300 dark:border-darkBorder shadow-sm p-4 rounded-md flex flex-col space-y-3"
     >
+      <AnimatePresence>
+        {edit && (
+          <Modal
+            lockScroll={true}
+            onClose={() => {
+              setEdit(false);
+              setMenu(false);
+            }}
+            bgDiv={true}
+            className="inset-0 rounded-md dark:bg-elementBlack "
+            animation={{
+              hidden: { opacity: 0, scale: 0.9 },
+              visible: { opacity: 1, scale: 1 },
+            }}
+          >
+            <NewPostModal
+              onClose={() => {
+                setEdit(false);
+                setMenu(false);
+              }}
+              prePopulate={post}
+            />
+          </Modal>
+        )}
+      </AnimatePresence>
+
       {/* userimage, name, and time posted */}
       <div className="flex flex-row justify-between">
         <div className="flex flex-row space-x-2 rtl:space-x-reverse">
-          <img
-            src={getBaseUrl() + post.publisher_id.profile_image}
-            className="w-12 h-12 rounded-full"
-          />
+          {post.publisher_id.profile_image &&
+          post.publisher_id.profile_image !== '' ? (
+            <img
+              src={getBaseUrl() + post.publisher_id.profile_image}
+              className="w-12 h-12 rounded-full"
+            />
+          ) : (
+            <div
+              className={
+                'rounded-full flex items-center justify-center bg-gray-300 p-1 text-white dark:bg-gray-700 w-12 h-12'
+              }
+            >
+              <AiOutlineUser className="w-10 h-10" />
+            </div>
+          )}
           <div className="mt-2 md:mt-1">
             <div className="text-sm md:text-md font-normal">
               {post.publisher_id.username}
@@ -120,13 +173,45 @@ const Post = forwardRef(({ post }, ref) => {
             </div>
           </div>
         </div>
-        <div>ahmad</div>
+        {post.publisher_id._id === user._id && (
+          <div className="relative">
+            <button onClick={() => setMenu((state) => !state)}>
+              <MenuIcon style="w-4 h-4 dark:text-gray-400" />
+            </button>
+            <AnimatePresence>
+              {menu && (
+                <motion.div
+                  variants={{
+                    hidden: { opacity: 0, y: -5 },
+                    animate: { opacity: 1, y: 0 },
+                  }}
+                  initial="hidden"
+                  animate="animate"
+                  exit="hidden"
+                  className="absolute bg-gray-100 dark:bg-elementGray p-2 rounded-md flex flex-col space-y-3 text-xs font-light ltr:right-0 rtl:left-0"
+                >
+                  <button
+                    onClick={() => setEdit(true)}
+                    className="flex flex-row space-x-1 rtl:space-x-reverse items-center"
+                  >
+                    <EditIcon style="w-3 h-3" />
+                    <span> {t('edit')}</span>
+                  </button>
+                  <button className="flex flex-row space-x-1 rtl:space-x-reverse items-center">
+                    <DeleteIcon style="w-3 h-3" />
+                    <span>{t('delete')}</span>
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
       </div>
 
       {/* post text */}
       <div>
         <MixedText
-          className="text-[15px] font-light transition-all"
+          className="text-[15px] font-light transition-all max-w-full"
           text={text}
         />
       </div>
@@ -137,40 +222,53 @@ const Post = forwardRef(({ post }, ref) => {
         </div>
       )}
 
+      {post.topics?.length > 0 && (
+        <div className="flex flex-wrap gap-x-2 gap-y-1 rtl:space-x-reverse text-white text-xs">
+          {post.topics.map((topic) => (
+            <span
+              key={topic}
+              className="bg-orange-100 dark:bg-orange-400 text-logoOrange dark:text-white transition p-1 rounded"
+            >
+              {topic}
+            </span>
+          ))}
+        </div>
+      )}
+
       {/* interactions  */}
-      <div className="w-full mt-1 bg-gray-300  dark:bg-gray-500 h-[1px]"></div>
-      <div className="w-full flex flex-row items-center justify-between text-gray-500 h-6">
-        <div className=" grid grid-cols-2 gap-5 rtl:space-x-reverse">
+      <div className="w-full mt-1 bg-gray-300  dark:bg-darkBorder h-[1px]"></div>
+      <div className="w-full flex flex-row items-center justify-between text-gray-600 dark:text-gray-200 h-6">
+        <div className=" grid grid-cols-2 gap-6 rtl:space-x-reverse">
           <button
             disabled={likeBtnDisabled}
             className="flex flex-row space-x-2 rtl:space-x-reverse items-center justify-center"
             onClick={() => setLike((state) => !state)}
           >
             {like === true ? (
-              <LikeIcon style="w-5 text-logoOrange" />
+              <FaThumbsUp className="text-logoOrange w-5 h-5" />
             ) : (
-              <EmptyLikeIcon style="w-5 hover:text-logoOrange" />
+              <FaRegThumbsUp className="h-5 w-5 hover:text-logoOrange " />
             )}
-            <span className="w-3">{likesCount}</span>
+            <span className="w-3 -mb-1">{likesCount}</span>
           </button>
           <button
             onClick={() => setShowComments(true)}
             className="flex flex-row space-x-2 rtl:space-x-reverse items-center justify-center "
           >
-            <CommentIcon style="w-5 hover:text-logoOrange mt-[6px]" />
-            <span className="w-3">{post.comments_count}</span>
+            <FaRegComment className="w-5 h-5 hover:text-logoOrange " />
+            <span className="w-3 -mb-1">{post.comments_count}</span>
           </button>
         </div>
         <div>
           <button
-            className="mt-[4px]"
+            className="flex flex-row items-center justify-center"
             disabled={saveBtnDisabled}
             onClick={() => setSave((state) => !state)}
           >
             {save ? (
-              <FullSavedIcon style="w-5 text-logoOrange hover:text-logoOrange" />
+              <FaBookmark className="w-5 h-5 text-logoOrange hover:text-logoOrange" />
             ) : (
-              <EmptySavedIcon style="w-5 hover:text-logoOrange" />
+              <FaRegBookmark className="w-5 h-5 hover:text-logoOrange" />
             )}
           </button>
         </div>
@@ -238,7 +336,7 @@ function CommentsModal({ postId, onClose }) {
 
   const observer = useRef(null);
 
-  const { isFetching } = useQuery({
+  const { isFetching, isError } = useQuery({
     queryKey: ['posts', 'comments', postId, page],
     queryFn: () => postWithCommentsQuery({ postId, page }),
     onSuccess: (data) => {
@@ -322,7 +420,7 @@ function CommentsModal({ postId, onClose }) {
         visible: { opacity: 1, scale: 1 },
       }}
     >
-      <div className="w-[440px] md:w-[600px] dark:bg-elementBlack dark:text-white flex flex-col py-3 px-4 rounded-md border border-gray-300 dark:border-darkBorder ">
+      <div className="w-[320px] sm:w-[440px] md:w-[600px] dark:bg-elementBlack dark:text-white flex flex-col py-3 px-4 rounded-md border border-gray-300 dark:border-darkBorder ">
         {/* header */}
         <div className="w-full flex flex-row items-center justify-between mb-4">
           <div className="font-medium">
@@ -333,6 +431,12 @@ function CommentsModal({ postId, onClose }) {
             <XIcon style="w-3 h-3" />
           </button>
         </div>
+
+        {isFetching && !isError && (
+          <div className="mx-auto">
+            <AiOutlineLoading3Quarters className="text-logoOrange animate-spin text-xl sm:text-3xl" />
+          </div>
+        )}
 
         {/* list of comments */}
         <div className="max-h-80 overflow-y-auto flex flex-col items-start space-y-2 px-2">
@@ -379,17 +483,27 @@ const url = getBaseUrl();
 function Comment({ comment }) {
   return (
     <div className="flex flex-row space-x-2 rtl:space-x-reverse bg-gray-200 dark:bg-elementGray  p-2 rounded-md">
-      <img
-        src={url + comment.user_id.profile_image}
-        className="w-10 h-10 rounded-full"
-      />
-      <div className="flex flex-col space-y-1">
+      {comment.user_id.profile_image && comment.user_id.profile_image !== '' ? (
+        <img
+          src={getBaseUrl() + comment.user_id.profile_image}
+          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full"
+        />
+      ) : (
+        <div
+          className={
+            'rounded-full flex items-center justify-center bg-gray-300 p-1 text-white dark:bg-gray-700 w-10 h-10 sm:w-12 sm:h-12'
+          }
+        >
+          <AiOutlineUser className="w-10 h-10" />
+        </div>
+      )}
+      <div className="flex flex-col mt-[5px] sm:mt-1.5">
         <div className="text-sm font-semibold">{comment.user_id.username}</div>
-        <div className="flex flex-row items-center text-slate-500 dark:text-slate-300 space-x-1 rtl:space-x-reverse text-xs  mt-1">
+        <div className="flex flex-row items-center text-slate-500 dark:text-slate-300 space-x-1 rtl:space-x-reverse text-xs mb-1 -mt-0.5">
           <div>
-            <ClockIcon style="w-3" />
+            <ClockIcon style="w-[10px]" />
           </div>
-          <div className="text-xs font-light">
+          <div className="text-[10px] font-light ">
             {timeAgo(comment.created_at)}
           </div>
         </div>

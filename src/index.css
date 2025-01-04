@@ -4,7 +4,13 @@
 
 .no-scroll {
   overflow: hidden;
-  padding-right: 6px; /* Standard scrollbar width (you can adjust if needed) */
+  padding-right: 6px;
+}
+
+@media (max-width: 480px) {
+  .no-scroll {
+    padding-right: 1px; /* Adjusted for small screens */
+  }
 }
 
 /* Light Mode Scrollbar */

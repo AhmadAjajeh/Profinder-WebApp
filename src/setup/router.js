@@ -1,53 +1,53 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 
-import AuthLayout from "../pages/AuthPages/AuthLayout";
-import LoginPage from "../pages/AuthPages/LoginPage";
-import SignupPage from "../pages/AuthPages/SignupPage";
-import ActivationPage from "../pages/AuthPages/ActivationPage";
-import MainLayout, { mainLoader } from "../pages/MainLayout";
-import HomeLayout from "../pages/HomeLayout";
-import ExplorePage from "../pages/HomePages/ExplorePage";
-import { destroyAuthInfo } from "../util/http";
-import JobPage from "../pages/HomePages/JobPage";
+import AuthLayout from '../pages/AuthPages/AuthLayout';
+import LoginPage from '../pages/AuthPages/LoginPage';
+import SignupPage from '../pages/AuthPages/SignupPage';
+import ActivationPage from '../pages/AuthPages/ActivationPage';
+import MainLayout, { mainLoader } from '../pages/MainLayout';
+import HomeLayout from '../pages/HomeLayout';
+import ExplorePage from '../pages/HomePages/ExplorePage';
+import { destroyAuthInfo } from '../util/http';
+import JobPage from '../pages/HomePages/JobPage';
 
 export default createBrowserRouter([
   {
     element: <AuthLayout />,
-    path: "/auth",
+    path: '/auth',
     children: [
       {
-        path: "login",
+        path: 'login',
         element: <LoginPage />,
       },
       {
-        path: "signup",
+        path: 'signup',
         element: <SignupPage />,
       },
-      { path: "check-code", element: <ActivationPage /> },
+      { path: 'check-code', element: <ActivationPage /> },
     ],
   },
   {
-    path: "/",
+    path: '/',
     element: <MainLayout />,
     loader: mainLoader,
     children: [
-      { path: "/", element: <Navigate to="/home" replace /> },
+      { path: '/', element: <Navigate to="/home" replace /> },
       {
-        path: "home",
+        path: 'home',
         element: <HomeLayout />,
         children: [
           { index: true, element: <ExplorePage /> },
           {
-            path: "jobs",
+            path: 'jobs',
             element: <JobPage />,
           },
           {
-            path: "projects",
+            path: 'projects',
             element: <div>projects</div>,
             children: [{ index: true, element: <div>ahmad</div> }],
           },
           {
-            path: "hashtags",
+            path: 'hashtags',
             element: <div>hashtags</div>,
             children: [{ index: true, element: <div>ahmad</div> }],
           },

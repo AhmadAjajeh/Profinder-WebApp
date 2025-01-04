@@ -1,12 +1,15 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { getBaseUrl } from "../../util/http";
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { getBaseUrl } from '../../util/http';
+import { ArrowIcon } from './IconsSvg';
+import ImageSliderModal from './ImageSliderModal';
 
 const url = getBaseUrl();
 
 const ImageSlider = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [modal, setModal] = useState(false);
 
   const previousImage = () => {
     setDirection(-1);
@@ -24,28 +27,40 @@ const ImageSlider = ({ images }) => {
 
   const variants = {
     enter: (direction) => ({
-      x: direction > 0 ? "100%" : "-100%",
+      x: direction > 0 ? '100%' : '-100%',
     }),
     center: {
       x: 0,
     },
     exit: (direction) => ({
-      x: direction > 0 ? "-100%" : "100%",
+      x: direction > 0 ? '-100%' : '100%',
     }),
   };
 
   return (
     <div className="relative flex items-center justify-center w-full max-w-[600px] mx-auto overflow-hidden rounded-md ">
+      <AnimatePresence>
+        {modal && (
+          <ImageSliderModal
+            images={images}
+            index={currentIndex}
+            onClose={() => setModal(false)}
+          />
+        )}
+      </AnimatePresence>
       {currentIndex > 0 && (
         <button
           onClick={previousImage}
-          className="absolute left-3 p-2 text-xl font-bold text-white bg-gray-800 rounded-full hover:bg-gray-700 z-10"
+          className="absolute left-3 p-2 text-md font-bold  bg-gray-500 text-white rounded-full z-10"
         >
-          {"←"}
+          <ArrowIcon style="w-4 rotate-180" />
         </button>
       )}
 
-      <div className="relative aspect-square w-full flex items-center justify-center">
+      <button
+        onClick={() => setModal(true)}
+        className="relative aspect-square w-full flex items-center justify-center"
+      >
         <AnimatePresence custom={direction} initial={false}>
           <motion.img
             key={currentIndex}
@@ -60,14 +75,14 @@ const ImageSlider = ({ images }) => {
             className="absolute w-full aspect-square"
           />
         </AnimatePresence>
-      </div>
+      </button>
 
       {currentIndex < images.length - 1 && (
         <button
           onClick={nextImage}
-          className="absolute right-3 p-2 text-xl font-bold text-white bg-gray-800 rounded-full hover:bg-gray-700 z-10"
+          className="absolute right-3 p-2 text-md font-bold  bg-gray-500 text-white rounded-full z-10"
         >
-          {"→"}
+          <ArrowIcon style="w-4" />
         </button>
       )}
     </div>

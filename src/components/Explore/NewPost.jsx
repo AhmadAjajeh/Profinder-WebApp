@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useMutation } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
@@ -8,7 +8,7 @@ import UserImage from '../general-ui/UserImage';
 import { useTranslation } from 'react-i18next';
 import { XIcon } from '../general-ui/IconsSvg';
 import { range } from '../../util/validation';
-import { createPostMutation } from '../../http/home';
+import { createPostMutation, updatePostMutation } from '../../http/home';
 import { alertActions } from '../../store/alertSlice';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import TopicsInput from '../general-ui/TopicsInput';
@@ -59,18 +59,22 @@ export default function NewPost() {
   );
 }
 
-function NewPostModal({ onClose }) {
+export function NewPostModal({ onClose, prePopulate }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const textareaRef = useRef(null);
 
-  const [topics, setTopics] = useState([]);
+  const [topics, setTopics] = useState(prePopulate?.topics || []);
   const [selectedImages, setSelectedImages] = useState([]);
 
   const [textValidation, setTextValidation] = useState(null);
 
-  const { mutate } = useMutation({
+  useEffect(() => {
+    autoResize();
+  }, []);
+
+  const { mutate: createPost } = useMutation({
     mutationFn: createPostMutation,
     onSuccess: (response) => {
       dispatch(
@@ -79,6 +83,28 @@ function NewPostModal({ onClose }) {
         })
       );
       dispatch(eventActions.set({ data: response.post, type: 'new-post' }));
+      onClose();
+    },
+    onError: (error) => {
+      const messages = error.info?.message || [error.message];
+      dispatch(
+        errorHandlingActions.throwError({
+          code: error.code,
+          messages,
+        })
+      );
+    },
+  });
+
+  const { mutate: updatePost } = useMutation({
+    mutationFn: updatePostMutation,
+    onSuccess: (response) => {
+      dispatch(
+        alertActions.alert({
+          messages: [response.message],
+        })
+      );
+      dispatch(eventActions.set({ data: response.post, type: 'edit-post' }));
       onClose();
     },
     onError: (error) => {
@@ -112,7 +138,9 @@ function NewPostModal({ onClose }) {
     }
     setTextValidation(null);
 
-    if (selectedImages.length > 0) {
+    formData.set('text', text.replace(/[\r\n]+$/, ''));
+
+    if (selectedImages.length > 0 && !prePopulate) {
       selectedImages.forEach((image) => {
         formData.append('images', image);
       });
@@ -123,14 +151,19 @@ function NewPostModal({ onClose }) {
         formData.append('topics', topic);
       });
     }
-    mutate(formData);
+
+    prePopulate
+      ? updatePost({ formData, id: prePopulate._id })
+      : createPost(formData);
   }
 
   return (
-    <div className="w-[400px] md:w-[550px] dark:bg-elementBlack dark:text-white flex flex-col py-3 px-4  rounded-md dark:border dark:border-darkBorder">
+    <div className="w-[340px] sm:w-[400px] md:w-[550px] dark:bg-elementBlack dark:text-white flex flex-col py-3 px-4  rounded-md dark:border dark:border-darkBorder">
       {/* // Header */}
       <div className="w-full flex flex-row items-center justify-between mb-4 ">
-        <div className="font-medium ">{t('create_post')}</div>
+        <div className="font-medium ">
+          {t(prePopulate ? 'edit_post' : 'create_post')}
+        </div>
         <button type="button" className="text-gray-500" onClick={onClose}>
           <XIcon style="w-3 h-3" />
         </button>
@@ -148,7 +181,9 @@ function NewPostModal({ onClose }) {
               className="bg-inherit outline-none text-sm text-black dark:text-white w-full resize-none my-auto mt-[14px]"
               placeholder={t('share_something_beneficial')}
               onInput={autoResize}
-            ></textarea>
+            >
+              {prePopulate?.text || ''}
+            </textarea>
           </div>
         </div>
 
@@ -170,19 +205,22 @@ function NewPostModal({ onClose }) {
           <TopicsInput topics={topics} setTopics={setTopics} />
         </div>
 
-        {/* sperator */}
-        <div
-          id="separator"
-          className="h-2 border-b border-gray-300 dark:border-darkBorder my-2 w-full"
-        ></div>
-
-        {/* images section */}
-        <div className="mb-4">
-          <ImagesUpload
-            selectedImages={selectedImages}
-            setSelectedImages={setSelectedImages}
-          />
-        </div>
+        {!prePopulate && (
+          <div>
+            {/* sperator */}
+            <div
+              id="separator"
+              className="h-2 border-b border-gray-300 dark:border-darkBorder my-2 w-full"
+            ></div>
+            {/* images section */}
+            <div className="mb-4">
+              <ImagesUpload
+                selectedImages={selectedImages}
+                setSelectedImages={setSelectedImages}
+              />
+            </div>
+          </div>
+        )}
 
         {/* submit button */}
         <div className="w-full flex justify-end mb-2 mt-4">
