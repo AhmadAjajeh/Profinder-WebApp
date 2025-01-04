@@ -14,6 +14,7 @@ import { getBaseUrl } from '../../util/http';
 import { getJobsQuery } from '../../http/home';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import NoResult from '../general-ui/NoResult';
+import PagesNav from '../general-ui/PagesNav';
 
 export default function JobScroll({ onSelect }) {
   const { t } = useTranslation();
@@ -21,27 +22,19 @@ export default function JobScroll({ onSelect }) {
   const navigate = useNavigate();
 
   const [page, setPage] = useState(1);
-  const [morePagesExists, setMorePagesExist] = useState(true);
   const [jobs, setJobs] = useState([]);
 
   const [title, setTitle] = useState('');
   const [location, setLocation] = useState('');
   const [searchValidation, setSearchValidation] = useState(null);
 
-  const observer = useRef(null);
+  // const observer = useRef(null);
 
   const { isFetching } = useQuery({
     queryKey: ['jobs-scroll', `${page}`, title, location],
     queryFn: () => getJobsQuery({ title, location, page }),
     onSuccess: (data) => {
-      setMorePagesExist(
-        title || location
-          ? data.pagination.current_page < data.pagination.number_of_pages
-          : data.jobs.length > 0
-      );
-      setJobs((previousJobs) => {
-        return [...previousJobs, ...data.jobs];
-      });
+      setJobs(data.jobs);
     },
 
     onError: (error) => {
@@ -54,26 +47,25 @@ export default function JobScroll({ onSelect }) {
       );
       if (error.code === 403) navigate('/auth/login');
     },
-    keepPreviousData: true,
-    enabled: morePagesExists,
     refetchOnWindowFocus: false,
   });
-  const lastJobRef = useCallback(
-    (node) => {
-      if (isFetching) return; //nothing to do
-      if (observer.current) observer.current.disconnect(); // detach the observer from the previous last job
 
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && morePagesExists) {
-          setPage((prevPage) => prevPage + 1);
-        }
-      });
+  // const lastJobRef = useCallback(
+  //   (node) => {
+  //     if (isFetching) return; //nothing to do
+  //     if (observer.current) observer.current.disconnect(); // detach the observer from the previous last job
 
-      if (node) observer.current.observe(node);
-      // attach the new last job to the observer .
-    },
-    [isFetching, morePagesExists]
-  );
+  //     observer.current = new IntersectionObserver((entries) => {
+  //       if (entries[0].isIntersecting && morePagesExists) {
+  //         setPage((prevPage) => prevPage + 1);
+  //       }
+  //     });
+
+  //     if (node) observer.current.observe(node);
+  //     // attach the new last job to the observer .
+  //   },
+  //   [isFetching, morePagesExists]
+  // );
 
   useEffect(() => {
     if (!isFetching && jobs.length < 6)
@@ -99,7 +91,6 @@ export default function JobScroll({ onSelect }) {
     setLocation(location);
     setPage(1);
     setJobs([]);
-    setMorePagesExist(true);
   }
 
   return (
@@ -155,26 +146,15 @@ export default function JobScroll({ onSelect }) {
         {!isFetching &&
           jobs.length > 0 &&
           jobs.map((job, index) => {
-            if (index + 1 === jobs.length) {
-              return (
-                <ScrollJob
-                  key={job._id}
-                  ref={lastJobRef}
-                  job={job}
-                  onSelect={onSelect}
-                  rounded={index === 0 || index + 1 === jobs.length}
-                />
-              );
-            }
-            return (
-              <ScrollJob
-                key={job._id}
-                job={job}
-                onSelect={onSelect}
-                rounded={index === 0 || index + 1 === jobs.length}
-              />
-            );
+            return <ScrollJob key={job._id} job={job} onSelect={onSelect} />;
           })}
+        {!isFetching && (
+          <PagesNav
+            currentPage={page}
+            morePagesExists={jobs.length === 10}
+            changePage={setPage}
+          />
+        )}
         {isFetching && (
           <>
             <ScrollJobShimmer />
