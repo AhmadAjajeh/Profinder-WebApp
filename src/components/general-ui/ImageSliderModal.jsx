@@ -76,7 +76,7 @@ export default function ImageSliderModal({ images, index, onClose }) {
               animate="center"
               exit="exit"
               transition={{ duration: 0.4 }}
-              className="w-full object-cover object-center absolute"
+              className="w-full h-full object-contain absolute"
             />
           </AnimatePresence>
         </div>

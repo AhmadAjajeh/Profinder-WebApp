@@ -59,7 +59,7 @@ const ImageSlider = ({ images }) => {
 
       <button
         onClick={() => setModal(true)}
-        className="relative aspect-square w-full flex items-center justify-center"
+        className="relative pb-[56.25%] h-0 w-full flex items-center justify-center"
       >
         <AnimatePresence custom={direction} initial={false}>
           <motion.img
@@ -72,7 +72,7 @@ const ImageSlider = ({ images }) => {
             animate="center"
             exit="exit"
             transition={{ duration: 0.4 }}
-            className="absolute w-full aspect-square"
+            className="absolute top-0 left-0 h-full w-full object-cover"
           />
         </AnimatePresence>
       </button>
