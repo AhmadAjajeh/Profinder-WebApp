@@ -4,20 +4,20 @@ export default function PagesNav({ currentPage, morePagesExists, changePage }) {
       {currentPage !== 1 && (
         <button
           onClick={() => changePage(1)}
-          className="relative w-6 h-6 text-xs p-1 text-center rounded-md border border-gray-300 "
+          className="relative w-6 h-6 text-xs p-1 text-center rounded-md border border-gray-300 dark:border-darkBorder "
         >
           1
         </button>
       )}
       {currentPage > 3 && (
-        <span className="relative w-6 h-6 text-xs p-1 text-center rounded-md border border-gray-300 ">
+        <span className="relative w-6 h-6 text-xs p-1 text-center rounded-md border border-gray-300 dark:border-darkBorder ">
           ...
         </span>
       )}
       {currentPage > 2 && (
         <button
           onClick={() => changePage(currentPage - 1)}
-          className="relative w-6 h-6 text-xs p-1 text-center rounded-md border border-gray-300 "
+          className="relative w-6 h-6 text-xs p-1 text-center rounded-md border border-gray-300 dark:border-darkBorder "
         >
           {currentPage - 1}
         </button>
@@ -33,20 +33,20 @@ export default function PagesNav({ currentPage, morePagesExists, changePage }) {
       {morePagesExists && (
         <button
           onClick={() => changePage(currentPage + 1)}
-          className="relative w-6 h-6 text-xs p-1 text-center rounded-md border border-gray-300 "
+          className="relative w-6 h-6 text-xs p-1 text-center rounded-md border border-gray-300 dark:border-darkBorder "
         >
           {currentPage + 1}
         </button>
       )}
       {/* {currentPage + 2 < totalPages && (
-        <span className="relative w-6 h-6 text-xs p-1 text-center rounded-md border border-gray-300 ">
+        <span className="relative w-6 h-6 text-xs p-1 text-center rounded-md border border-gray-300 dark:border-darkBorder ">
           ...
         </span>
       )}
       {currentPage !== totalPages && (
         <button
           onClick={() => changePage(totalPages)}
-          className="relative w-6 h-6 text-xs p-1 text-center rounded-md border border-gray-300 "
+          className="relative w-6 h-6 text-xs p-1 text-center rounded-md border border-gray-300 dark:border-darkBorder "
         >
           {totalPages}
         </button> */}

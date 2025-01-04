@@ -175,7 +175,7 @@ const ScrollJob = forwardRef(({ job, onSelect, rounded }, ref) => {
   return (
     <button
       ref={ref}
-      className={`flex flex-row p-4 bg-white dark:bg-elementBlack space-x-3 rtl:space-x-reverse border-b border-gray-300 dark:border-darkBorder ${
+      className={`flex flex-row p-4 bg-white dark:bg-elementBlack hover:bg-elementLightGray transition-colors duration-200' space-x-3 rtl:space-x-reverse border-b border-gray-300 dark:border-darkBorder ${
         rounded && 'rounded-md'
       }`}
       onClick={onSelect}
