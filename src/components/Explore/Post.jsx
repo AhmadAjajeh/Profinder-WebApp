@@ -161,13 +161,13 @@ const Post = forwardRef(({ post }, ref) => {
               <AiOutlineUser className="w-10 h-10" />
             </div>
           )}
-          <div className="mt-2 md:mt-1">
+          <div className="mt-2">
             <div className="text-sm md:text-md font-normal">
               {post.publisher_id.username}
             </div>
-            <div className="flex flex-row items-center text-slate-500 dark:text-slate-300 space-x-1 rtl:space-x-reverse text-xs  mt-1">
+            <div className="flex flex-row items-center text-slate-500 dark:text-slate-300 space-x-0.5 rtl:space-x-reverse text-[8px] ">
               <div>
-                <ClockIcon style="w-3" />
+                <ClockIcon style="w-2" />
               </div>
               <div>{timeAgo(post.created_at)}</div>
             </div>
@@ -253,7 +253,7 @@ const Post = forwardRef(({ post }, ref) => {
           </button>
           <button
             onClick={() => setShowComments(true)}
-            className="flex flex-row space-x-2 rtl:space-x-reverse items-center justify-center "
+            className="flex flex-row space-x-2 rtl:space-x-reverse items-center justify-center mt-0.5"
           >
             <FaRegComment className="w-5 h-5 hover:text-logoOrange " />
             <span className="w-3 -mb-1">{post.comments_count}</span>
