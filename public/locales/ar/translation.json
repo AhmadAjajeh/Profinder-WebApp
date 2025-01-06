@@ -89,5 +89,7 @@
   "only_one_image": "يُسمح بصورة واحدة فقط",
   "upload_an_image": "قم بتحميل صورة",
   "select_image": "اختر صورة",
-  "send": "إرسال"
+  "send": "إرسال",
+  "are_you_sure": "هل أنت متأكد؟",
+  "cancel": "إلغاء"
 }

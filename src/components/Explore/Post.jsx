@@ -29,6 +29,7 @@ import { timeAgo } from '../../util/date';
 import { errorHandlingFunction, getBaseUrl } from '../../util/http';
 import {
   createCommentMutation,
+  deletePostMutation,
   likePostMutaiton,
   postWithCommentsQuery,
   savePostMutation,
@@ -39,6 +40,8 @@ import Modal from '../general-ui/Modal';
 import { range } from '../../util/validation';
 import { alertActions } from '../../store/alertSlice';
 import { NewPostModal } from './NewPost';
+import DeletionModal from '../general-ui/DeletionModal';
+import { eventActions } from '../../store/dataSlice';
 
 const Post = forwardRef(({ post }, ref) => {
   const dispatch = useDispatch();
@@ -56,7 +59,7 @@ const Post = forwardRef(({ post }, ref) => {
 
   const [menu, setMenu] = useState(false);
   const [edit, setEdit] = useState(false);
-
+  const [deletion, setDeletion] = useState(false);
   const isFirstRender = useRef(true);
   const isFirstRender2 = useRef(true);
 
@@ -75,6 +78,20 @@ const Post = forwardRef(({ post }, ref) => {
     // refetchOnWindowFocus: false,
   });
 
+  const { mutate: deletePost } = useMutation({
+    mutationFn: deletePostMutation,
+    onError: () => {
+      console.log('error');
+      return errorHandlingFunction(dispatch, errorHandlingActions, navigate);
+    },
+    onSuccess: (response) => {
+      setMenu(false);
+      setDeletion(false);
+      dispatch(eventActions.set({ data: post._id, type: 'delete-post' }));
+    },
+  });
+
+  // handling the like button (some kind of rate limiting)
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -95,6 +112,7 @@ const Post = forwardRef(({ post }, ref) => {
     };
   }, [like, setLikesCount, mutateLike]);
 
+  // handling the save button
   useEffect(() => {
     if (isFirstRender2.current) {
       isFirstRender2.current = false;
@@ -141,6 +159,12 @@ const Post = forwardRef(({ post }, ref) => {
             />
           </Modal>
         )}
+        {deletion && (
+          <DeletionModal
+            handleClose={() => setDeletion(false)}
+            handleDelete={() => deletePost(post._id)}
+          />
+        )}
       </AnimatePresence>
 
       {/* userimage, name, and time posted */}
@@ -165,7 +189,7 @@ const Post = forwardRef(({ post }, ref) => {
             <div className="text-sm md:text-md font-normal">
               {post.publisher_id.username}
             </div>
-            <div className="flex flex-row items-center text-slate-500 dark:text-slate-300 space-x-0.5 rtl:space-x-reverse text-[8px] ">
+            <div className="flex flex-row items-center text-slate-500 dark:text-slate-300 space-x-0.5 rtl:space-x-reverse text-[10px] ">
               <div>
                 <ClockIcon style="w-2" />
               </div>
@@ -188,16 +212,19 @@ const Post = forwardRef(({ post }, ref) => {
                   initial="hidden"
                   animate="animate"
                   exit="hidden"
-                  className="absolute bg-gray-100 dark:bg-elementGray p-2 rounded-md flex flex-col space-y-3 text-xs font-light ltr:right-0 rtl:left-0"
+                  className="absolute z-[50] bg-gray-200 dark:bg-elementGray p-3 rounded-md flex flex-col space-y-3 text-sm font-light ltr:right-0 rtl:left-0 border border-gray-400 dark:border-darkBorder"
                 >
                   <button
                     onClick={() => setEdit(true)}
-                    className="flex flex-row space-x-1 rtl:space-x-reverse items-center"
+                    className="flex flex-row space-x-1 rtl:space-x-reverse items-center "
                   >
                     <EditIcon style="w-3 h-3" />
                     <span> {t('edit')}</span>
                   </button>
-                  <button className="flex flex-row space-x-1 rtl:space-x-reverse items-center">
+                  <button
+                    onClick={() => setDeletion(true)}
+                    className="flex flex-row space-x-1 rtl:space-x-reverse items-center text-red-500"
+                  >
                     <DeleteIcon style="w-3 h-3" />
                     <span>{t('delete')}</span>
                   </button>

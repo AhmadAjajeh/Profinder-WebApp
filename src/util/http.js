@@ -24,7 +24,7 @@ export const handlerFunction = async (url, configuration, errorMessage) => {
     throw error;
   }
 
-  return await response.json();
+  if (response.status !== 204) return await response.json();
 };
 
 export const getApiBaseUrl = () => {

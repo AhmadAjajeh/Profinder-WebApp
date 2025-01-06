@@ -122,6 +122,22 @@ export function createCommentMutation(formData) {
   return handlerFunction(url, configuration, errorMessage);
 }
 
+export function deletePostMutation(postId) {
+  const url = getApiBaseUrl() + 'users/posts/' + postId;
+
+  const configuration = {
+    method: 'DELETE',
+    headers: {
+      'Accept-Language': getLanguage(),
+      authorization: 'Bearer ' + getStateToken(),
+    },
+  };
+
+  const errorMessage = 'An error occurred while deleting the post';
+
+  return handlerFunction(url, configuration, errorMessage);
+}
+
 export function getJobsQuery({ title, location, page }) {
   const url =
     getApiBaseUrl() +

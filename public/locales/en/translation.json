@@ -88,5 +88,7 @@
   "only_one_image": "Only one image is allowed",
   "upload_an_image": "Upload an image",
   "select_image": "Select image",
-  "send": "Send"
+  "send": "Send",
+  "are_you_sure": "Are you sure?",
+  "cancel": "Cancel"
 }
