@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function MixedText({ text, className }) {
+export default function MixedText({ text, className, maxlines = 5 }) {
   const [expanded, setExpanded] = useState(false);
 
   function toggleExpanded() {
@@ -45,7 +45,7 @@ export default function MixedText({ text, className }) {
           ></p>
         );
       })}
-      {lines.length > 5 && (
+      {lines.length > maxlines && (
         <button onClick={toggleExpanded} className="text-logoOrange underline">
           {expanded ? 'Show less' : 'Read more'}
         </button>

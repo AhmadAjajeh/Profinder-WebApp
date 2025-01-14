@@ -131,7 +131,11 @@ export default function JobDetails({ jobId }) {
                 <FaFileAlt className="w-5 h-5 text-logoOrange" />
                 <h3 className="font-semibold ">{t('description')} :</h3>
               </div>
-              <MixedText className="font-normal " text={job.description} />
+              <MixedText
+                maxlines={30}
+                className="font-normal "
+                text={job.description}
+              />
             </div>
 
             {/* requirements */}
@@ -140,7 +144,11 @@ export default function JobDetails({ jobId }) {
                 <FaListAlt className="w-5 h-5 text-logoOrange" />
                 <h3 className="font-semibold ">{t('requirements')} :</h3>
               </div>
-              <MixedText className="font-normal " text={job.requirements} />
+              <MixedText
+                maxlines={30}
+                className="font-normal "
+                text={job.requirements}
+              />
             </div>
             {/* location */}
             <div className="flex flex-col space-y-1">
