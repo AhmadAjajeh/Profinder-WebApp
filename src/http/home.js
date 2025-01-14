@@ -156,3 +156,39 @@ export function getJobsQuery({ title, location, page }) {
 
   return handlerFunction(url, configuration, errorMessage);
 }
+
+export function getOneJobQuery(jobId) {
+  const url = getApiBaseUrl() + 'explore/jobs/' + jobId;
+
+  const configuration = {
+    method: 'GET',
+    headers: {
+      'Accept-Language': getLanguage(),
+      authorization: 'Bearer ' + getStateToken(),
+    },
+  };
+
+  const errorMessage = 'An error occurred while fetching the job!';
+
+  return handlerFunction(url, configuration, errorMessage);
+}
+
+export function jobApplyMutation({ jobId, apply }) {
+  const url =
+    getApiBaseUrl() +
+    'explore/jobs/' +
+    jobId +
+    (apply ? '/apply' : '/cancel-apply');
+
+  const configuration = {
+    method: apply ? 'POST' : 'DELETE',
+    headers: {
+      'Accept-Language': getLanguage(),
+      authorization: 'Bearer ' + getStateToken(),
+    },
+  };
+
+  const errorMessage = 'An error occurred while applying for the job!';
+
+  return handlerFunction(url, configuration, errorMessage);
+}

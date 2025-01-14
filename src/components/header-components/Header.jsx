@@ -37,7 +37,7 @@ export default function Header() {
       {/* search for companies bar */}
       <div>
         <form>
-          <div className="hidden group relative md:flex space-x-2 rtl:space-x-reverse items-center border focus-within:border-2 border-gray-300 dark:border-darkBorder rounded-md px-2 py-2 shadow-sm">
+          <div className="hidden group relative md:flex space-x-2 rtl:space-x-reverse items-center border focus-within:shadow-md focus-within:py-1.5 border-gray-300 dark:border-darkBorder rounded-md px-2 py-1 shadow-sm transition-all">
             <div>
               <svg
                 className="w-4 h-4 text-gray-500 dark:text-slate-200 font-light"
@@ -58,7 +58,7 @@ export default function Header() {
             <div>
               <input
                 type="search"
-                className="text-sm  dark:bg-elementBlack  placeholder:text-slate-500 dark:placeholder:text-slate-200 dark:bg-customGray focus:outline-none placeholder:text-xs w-72 font-light transition-colors duration-300"
+                className="text-sm  dark:bg-elementBlack  placeholder:text-slate-500 dark:placeholder:text-slate-200 dark:bg-customGray focus:outline-none placeholder:text-xs w-[240px] focus:w-[250px] font-light transition-all outline-none duration-300 focus:placeholder-transparent"
                 placeholder={t('search_for_companies')}
               />
             </div>
