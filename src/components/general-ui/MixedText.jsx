@@ -8,7 +8,7 @@ export default function MixedText({ text, className, maxlines = 5 }) {
   }
 
   const lines = text.split('\n');
-  const displayLines = expanded ? lines : lines.slice(0, 5);
+  const displayLines = expanded ? lines : lines.slice(0, maxlines);
 
   const getLineDirection = (line) => {
     const trimmedLine = line.trim();

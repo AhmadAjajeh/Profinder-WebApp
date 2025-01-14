@@ -14,9 +14,8 @@ import { ClockIcon, SingleCompany } from '../general-ui/IconsSvg';
 import { useTranslation } from 'react-i18next';
 import MixedText from '../general-ui/MixedText';
 import Tag from '../general-ui/Tag';
-import NoResult from '../general-ui/NoResult';
 import JobHunt from '../general-ui/JobHunt';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getOneJobQuery, jobApplyMutation } from '../../http/home';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
@@ -39,7 +38,6 @@ export default function JobDetails({ jobId }) {
     queryFn: () => getOneJobQuery(jobId),
     onSuccess: (data) => {
       setJob(data.job);
-      console.log(data.job.closes_at);
       setApplied(data.job.applied);
       setApplyCount(data.job.applications_count);
     },
@@ -71,7 +69,7 @@ export default function JobDetails({ jobId }) {
     if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
       mutate({ jobId: job._id, apply: !applied });
-    }, 1000);
+    }, 500);
   }
 
   return (
@@ -132,7 +130,7 @@ export default function JobDetails({ jobId }) {
                 <h3 className="font-semibold ">{t('description')} :</h3>
               </div>
               <MixedText
-                maxlines={30}
+                maxlines={100}
                 className="font-normal "
                 text={job.description}
               />
@@ -145,7 +143,7 @@ export default function JobDetails({ jobId }) {
                 <h3 className="font-semibold ">{t('requirements')} :</h3>
               </div>
               <MixedText
-                maxlines={30}
+                maxlines={100}
                 className="font-normal "
                 text={job.requirements}
               />
