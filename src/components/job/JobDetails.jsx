@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 import MixedText from '../general-ui/MixedText';
 import Tag from '../general-ui/Tag';
 import JobHunt from '../general-ui/JobHunt';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getOneJobQuery, jobApplyMutation } from '../../http/home';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
@@ -54,6 +54,10 @@ export default function JobDetails({ jobId }) {
     },
     enabled: jobId !== null,
     refetchOnWindowFocus: false,
+  });
+
+  useEffect(() => {
+    if (!jobId) setJob(null);
   });
 
   const { mutate } = useMutation({
@@ -197,23 +201,23 @@ export default function JobDetails({ jobId }) {
               <div className="sm:w-1/2 flex flex-col space-y-1.5">
                 <div className=" flex flex-row items-center sm:space-x-2 rtl:space-x-reverse  ">
                   <div className=" text-center ">{t('position_level')} :</div>
-                  <div className="text-xs">{job.position_level || 'NA'}</div>
+                  <div className="text-xs">{job.position_level || 'N/A'}</div>
                 </div>
 
                 <div className=" flex flex-row items-center space-x-2 rtl:space-x-reverse  ">
                   <div className=" text-center">{t('job_type')} :</div>
-                  <div className="text-xs">{job.job_type || 'NA'}</div>
+                  <div className="text-xs">{job.job_type || 'N/A'}</div>
                 </div>
               </div>
               <div className="w-1/2  flex flex-col space-y-1.5">
                 <div className=" flex items-center space-x-2 rtl:space-x-reverse  ">
                   <div className="">{t('work_place')} :</div>
-                  <div className="text-xs">{job.work_place || 'NA'}</div>
+                  <div className="text-xs">{job.work_place || 'N/A'}</div>
                 </div>
 
                 <div className=" flex items-center space-x-2 rtl:space-x-reverse  ">
                   <div className="">{t('experience')} :</div>
-                  <div className="text-xs">{job.experience || 'NA'}</div>
+                  <div className="text-xs">{job.experience || 'N/A'}</div>
                 </div>
               </div>
             </div>
@@ -232,7 +236,7 @@ export default function JobDetails({ jobId }) {
                 {t('applications_count')}
               </div>
               <div className="text-xs row-span-1">
-                {applyCount !== null ? applyCount : 'NA'}
+                {applyCount !== null ? applyCount : 'N/A'}
               </div>
             </div>
 

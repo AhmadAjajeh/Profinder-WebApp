@@ -10,7 +10,7 @@ import Modal from '../../components/general-ui/Modal';
 export default function JobPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [jobId, setJobId] = useState(searchParams.get('selectedJob'));
-  console.log(jobId);
+
   return (
     <div className="w-full flex flex-row space-x-5 rtl:space-x-reverse">
       {/* middle section */}
@@ -29,11 +29,7 @@ export default function JobPage() {
           animate="animate"
           exit="hidden"
         >
-          <JobScroll
-            chooseJob={setJobId}
-            onSelect={setJobId}
-            selectedJobId={jobId}
-          />
+          <JobScroll chooseJob={setJobId} selectedJobId={jobId} />
         </motion.div>
       </div>
       {/* far right section */}

@@ -90,6 +90,7 @@ export default function JobScroll({ chooseJob, selectedJobId }) {
     setLocation(newLocation);
     setPage(1);
     setJobs([]);
+    chooseJob(null);
     if (title === newTitle && location === newLocation) refetch();
   }
 
