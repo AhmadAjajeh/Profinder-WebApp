@@ -94,7 +94,7 @@ export default function JobDetails({ jobId }) {
             <div className="w-14 h-14">
               {job.company.image_url && job.company.image_url !== '' ? (
                 <img
-                  src={'getBaseUrl() + job.company.image_url'}
+                  src={getBaseUrl() + job.company.image_url}
                   className="w-12 h-12 rounded-full"
                 />
               ) : (
