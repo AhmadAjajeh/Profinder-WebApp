@@ -91,5 +91,21 @@
   "select_image": "اختر صورة",
   "send": "إرسال",
   "are_you_sure": "هل أنت متأكد؟",
-  "cancel": "إلغاء"
+  "cancel": "إلغاء",
+  "description": "الوصف",
+  "requirements": "المتطلبات",
+  "salary": "الراتب",
+  "language": "اللغة",
+  "from": "من",
+  "to": "إلى",
+  "work_place": "مكان العمل",
+  "job_type": "نوع الوظيفة",
+  "position_level": "المستوى الوظيفي",
+  "experience": "الخبرة",
+  "applications_count": "عدد المتقدمين",
+  "closes_at": "ينتهي التقديم في",
+  "apply": "تقديم",
+  "currency": "العملة",
+  "select_a_job_to_see_its_details": "اختر وظيفة لعرض تفاصيلها",
+  "cancel_apply": "إلغاء التقديم"
 }

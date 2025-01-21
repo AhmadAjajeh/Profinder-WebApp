@@ -101,7 +101,7 @@ function SideNavElement({ icon, text, path }) {
     <NavLink
       to={path}
       className={({ isActive }) =>
-        `grid grid-cols-5 gap-2 items-center hover:text-logoOrange dark:hover:text-logoOrange hover:-translate-y-[2px] transition-all ${
+        `grid grid-cols-5 gap-2 items-center hover:text-logoOrange dark:hover:text-logoOrange  transition-all ${
           isActive ? 'text-logoOrange' : 'text-black dark:text-white'
         }`
       }

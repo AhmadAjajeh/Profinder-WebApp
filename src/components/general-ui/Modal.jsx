@@ -8,6 +8,7 @@ export default function Modal({
   className,
   bgDiv,
   lockScroll,
+  options,
 }) {
   useEffect(() => {
     if (lockScroll) document.body.classList.add('no-scroll');
@@ -33,7 +34,7 @@ export default function Modal({
   }, [onClose]);
 
   return createPortal(
-    <>
+    <div className={options}>
       {bgDiv && (
         <div
           onClick={onClose}
@@ -52,7 +53,7 @@ export default function Modal({
       >
         {children}
       </motion.dialog>
-    </>,
+    </div>,
     document.getElementById('modal')
   );
 }

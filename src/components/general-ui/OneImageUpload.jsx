@@ -47,7 +47,7 @@ export default function OneImageUpload({ setSelectedImage }) {
         {/* Custom "Choose Files" button */}
         <div className="w-full max-h-32  bg-gray-200 dark:bg-elementGray rounded-md  border border-gray-300 dark:border-darkBorder">
           {image !== '' ? (
-            <div className="w-full rounded-md relative flex items-center justify-center">
+            <div className="w-full rounded-md relative flex items-center justify-center max-h-24 overflow-y-scroll">
               <button
                 onClick={() => {
                   setImage('');
@@ -60,7 +60,7 @@ export default function OneImageUpload({ setSelectedImage }) {
 
               <img
                 src={image}
-                className=" object-cover w-full max-h-24 aspect-square rounded-md"
+                className="object-cover w-full  aspect-square rounded-md"
               />
             </div>
           ) : (

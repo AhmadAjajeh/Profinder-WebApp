@@ -1,4 +1,4 @@
-import i18next from "i18next";
+import i18next from 'i18next';
 
 export function timeAgo(createdAt) {
   const now = new Date();
@@ -22,5 +22,20 @@ export function timeAgo(createdAt) {
     }
   }
 
-  return i18next.t("just_now");
+  return i18next.t('just_now');
+}
+
+export function formatDisplayDate(dateString) {
+  // Parse the date string
+  const date = new Date(dateString);
+
+  // Format options
+  const options = {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+  };
+
+  // Convert to readable format
+  return date.toLocaleDateString(undefined, options);
 }

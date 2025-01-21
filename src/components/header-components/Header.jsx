@@ -58,7 +58,7 @@ export default function Header() {
             <div>
               <input
                 type="search"
-                className="text-sm  dark:bg-elementBlack  placeholder:text-slate-500 dark:placeholder:text-slate-200 dark:bg-customGray focus:outline-none placeholder:text-xs w-72 font-light transition-colors duration-300"
+                className="text-sm  dark:bg-elementBlack  placeholder:text-slate-500 dark:placeholder:text-slate-200 dark:bg-customGray focus:outline-none placeholder:text-xs w-[240px] focus:w-[250px] font-light transition-all outline-none duration-300 focus:placeholder-transparent"
                 placeholder={t('search_for_companies')}
               />
             </div>

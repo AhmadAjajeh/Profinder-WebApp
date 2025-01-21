@@ -1,7 +1,7 @@
-import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 
@@ -10,31 +10,36 @@ import {
   SearchIcon,
   SingleCompany,
 } from '../general-ui/IconsSvg';
-import { getBaseUrl } from '../../util/http';
+import { buildSearchParams, getBaseUrl } from '../../util/http';
 import { getJobsQuery } from '../../http/home';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import NoResult from '../general-ui/NoResult';
 import PagesNav from '../general-ui/PagesNav';
 
-export default function JobScroll({ onSelect }) {
+export default function JobScroll({ chooseJob, selectedJobId }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
   const [jobs, setJobs] = useState([]);
+  const [totalPages, setTotalPages] = useState(null);
 
-  const [title, setTitle] = useState('');
-  const [location, setLocation] = useState('');
+  const [title, setTitle] = useState(searchParams.get('title') || '');
+  const [location, setLocation] = useState(searchParams.get('location') || '');
   const [searchValidation, setSearchValidation] = useState(null);
 
-  // const observer = useRef(null);
-
-  const { isFetching } = useQuery({
+  const { isFetching, refetch } = useQuery({
     queryKey: ['jobs-scroll', `${page}`, title, location],
     queryFn: () => getJobsQuery({ title, location, page }),
     onSuccess: (data) => {
       setJobs(data.jobs);
+      setTotalPages(
+        data.pagination.total_count
+          ? Math.ceil(data.pagination.total_count / data.pagination.limit)
+          : null
+      );
     },
 
     onError: (error) => {
@@ -50,25 +55,18 @@ export default function JobScroll({ onSelect }) {
     refetchOnWindowFocus: false,
   });
 
-  // const lastJobRef = useCallback(
-  //   (node) => {
-  //     if (isFetching) return; //nothing to do
-  //     if (observer.current) observer.current.disconnect(); // detach the observer from the previous last job
-
-  //     observer.current = new IntersectionObserver((entries) => {
-  //       if (entries[0].isIntersecting && morePagesExists) {
-  //         setPage((prevPage) => prevPage + 1);
-  //       }
-  //     });
-
-  //     if (node) observer.current.observe(node);
-  //     // attach the new last job to the observer .
-  //   },
-  //   [isFetching, morePagesExists]
-  // );
+  useEffect(() => {
+    const params = buildSearchParams({
+      page,
+      title,
+      location,
+      selectedJob: selectedJobId,
+    });
+    setSearchParams(params);
+  }, [page, title, location, setSearchParams, selectedJobId]);
 
   useEffect(() => {
-    if (!isFetching && jobs.length < 6)
+    if (!isFetching && jobs.length < 5)
       document.body.classList.add('no-scroll');
     else document.body.classList.remove('no-scroll');
     return () => {
@@ -79,18 +77,21 @@ export default function JobScroll({ onSelect }) {
   function handleSearch(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const { title, location } = Object.fromEntries(formData);
+    const { title: newTitle, location: newLocation } =
+      Object.fromEntries(formData);
 
-    if (title.length < 2) {
+    if (newTitle.length < 2) {
       setSearchValidation('the_title_should_be_at_least_two_characters');
       return;
     }
 
     setSearchValidation(null);
-    setTitle(title);
-    setLocation(location);
+    setTitle(newTitle);
+    setLocation(newLocation);
     setPage(1);
     setJobs([]);
+    chooseJob(null);
+    if (title === newTitle && location === newLocation) refetch();
   }
 
   return (
@@ -107,6 +108,7 @@ export default function JobScroll({ onSelect }) {
                 name="title"
                 className="outline-none px-3 py-2 bg-gray-100 dark:bg-elementGray font-light text-sm rounded-md w-full"
                 placeholder={t('title')}
+                defaultValue={title}
               />
               <SearchIcon style="w-4 h-4 absolute ltr:right-3 rtl:left-3 text-gray-500" />
             </div>
@@ -115,6 +117,7 @@ export default function JobScroll({ onSelect }) {
                 name="location"
                 className="outline-none px-3 placeholder:h-6 py-2 bg-gray-100 dark:bg-elementGray font-light text-sm rounded-md w-full"
                 placeholder={t('location')}
+                defaultValue={location}
               />
               <LocationIcon style="w-5 h-5 absolute ltr:right-3 rtl:left-3 text-gray-500" />
             </div>
@@ -146,13 +149,22 @@ export default function JobScroll({ onSelect }) {
         {!isFetching &&
           jobs.length > 0 &&
           jobs.map((job, index) => {
-            return <ScrollJob key={job._id} job={job} onSelect={onSelect} />;
+            return (
+              <ScrollJob
+                key={job._id}
+                job={job}
+                onSelect={chooseJob}
+                rounded={index === 0}
+                selected={selectedJobId === job._id}
+              />
+            );
           })}
-        {!isFetching && (
+        {!isFetching && jobs.length > 0 && (
           <PagesNav
             currentPage={page}
-            morePagesExists={jobs.length === 10}
+            morePagesExists={title ? page < totalPages : jobs.length === 10}
             changePage={setPage}
+            totalPages={totalPages}
           />
         )}
         {isFetching && (
@@ -171,14 +183,19 @@ export default function JobScroll({ onSelect }) {
   );
 }
 
-const ScrollJob = forwardRef(({ job, onSelect, rounded }, ref) => {
+const ScrollJob = forwardRef(({ job, onSelect, rounded, selected }, ref) => {
   return (
     <button
       ref={ref}
-      className={`flex flex-row p-4 bg-white dark:bg-elementBlack hover:bg-elementLightGray transition-colors duration-200' space-x-3 rtl:space-x-reverse border-b border-gray-300 dark:border-darkBorder ${
-        rounded && 'rounded-md'
-      }`}
-      onClick={onSelect}
+      className={`flex flex-row p-4 ${
+        selected
+          ? 'bg-gray-200 dark:bg-elementGray'
+          : 'bg-white dark:bg-elementBlack'
+      } hover:bg-gray-200 dark:hover:bg-elementGray transition-colors duration-200' space-x-3 rtl:space-x-reverse border-b border-gray-300 dark:border-darkBorder ${
+        rounded && 'rounded-t-md'
+      }
+       `}
+      onClick={() => onSelect(job._id)}
     >
       {/* company image */}
       <div className="flex flex-row items-center justify-center">
@@ -188,8 +205,8 @@ const ScrollJob = forwardRef(({ job, onSelect, rounded }, ref) => {
             src={getBaseUrl() + job.company.image_url}
           />
         ) : (
-          <div className="bg-gray-300 dark:bg-gray-500 p-2 w-14 h-14">
-            <SingleCompany style="w-12 h-12 text-gray-500 dark:text-gray-700" />
+          <div className="bg-gray-300 dark:bg-gray-500 p-2 w-14 h-14 flex items-center">
+            <SingleCompany style="w-12 h-12 text-gray-500 dark:text-gray-700 " />
           </div>
         )}
       </div>

@@ -90,5 +90,21 @@
   "select_image": "Select image",
   "send": "Send",
   "are_you_sure": "Are you sure?",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "description": "Description",
+  "requirements": "Requirements",
+  "salary": "Salary",
+  "language": "Language",
+  "from": "From",
+  "to": "To",
+  "work_place": "Workplace",
+  "job_type": "Job type",
+  "position_level": "Position level",
+  "experience": "Experience",
+  "applications_count": "Applied",
+  "closes_at": "Closes at",
+  "apply": "Apply",
+  "currency": "Currency",
+  "select_a_job_to_see_its_details": "Select a job to see its details",
+  "cancel_apply": "Cancel apply"
 }
