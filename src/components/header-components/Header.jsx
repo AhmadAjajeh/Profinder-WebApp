@@ -37,7 +37,7 @@ export default function Header() {
       {/* search for companies bar */}
       <div>
         <form>
-          <div className="hidden group relative md:flex space-x-2 rtl:space-x-reverse items-center border focus-within:border-2 border-gray-300 dark:border-darkBorder rounded-md px-2 py-2 shadow-sm">
+          <div className="hidden group relative md:flex space-x-2 rtl:space-x-reverse items-center border focus-within:shadow-md focus-within:py-1.5 focus-within:px-3 border-gray-300 dark:border-darkBorder rounded-md px-2 py-1 shadow-sm   dark:shadow-darkBorder transition-all">
             <div>
               <svg
                 className="w-4 h-4 text-gray-500 dark:text-slate-200 font-light"
