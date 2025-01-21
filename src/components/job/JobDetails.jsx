@@ -1,5 +1,5 @@
 import {
-  FaHeading,
+  FaSpinner,
   FaFileAlt,
   FaListAlt,
   FaMoneyBillWave,
@@ -33,7 +33,7 @@ export default function JobDetails({ jobId }) {
 
   let timer;
 
-  useQuery({
+  const { isFetching } = useQuery({
     queryKey: ['jobs-details', jobId],
     queryFn: () => getOneJobQuery(jobId),
     onSuccess: (data) => {
@@ -78,7 +78,13 @@ export default function JobDetails({ jobId }) {
 
   return (
     <div className="bg-white dark:bg-elementBlack w-[340px] sm:w-[400px] lg:w-full p-4 rounded-md border border-gray-300 dark:border-darkBorder shadow-sm   dark:text-white h-[630px] flex flex-col">
-      {!job && (
+      {isFetching && (
+        <div className="w-full h-full flex  items-center justify-center">
+          <FaSpinner className="w-10 h-10 animate-spin text-logoOrange" />
+        </div>
+      )}
+
+      {!job && !isFetching && (
         <div className="w-full h-full flex flex-col justify-center items-center">
           <div className="uppercase text-center">
             <JobHunt className="w-[350px] h-[350px]" />
@@ -90,7 +96,7 @@ export default function JobDetails({ jobId }) {
       )}
 
       {/* company name, image and date  */}
-      {job && (
+      {job && !isFetching && (
         <>
           <div className="flex flex-row space-x-1 rtl:space-x-reverse mb-2">
             <div className="w-14 h-14">
@@ -197,7 +203,7 @@ export default function JobDetails({ jobId }) {
             </div>
 
             {/* others */}
-            <div className="w-full flex flex-row justify-between rtl:space-x-reverse">
+            <div className="w-full flex flex-row justify-between px-6 rtl:space-x-reverse">
               <div className=" flex flex-col space-y-1.5">
                 <div className=" flex flex-col space-y-1 sm:space-y-0 sm:flex-row items-center sm:space-x-2 rtl:space-x-reverse  ">
                   <div className=" text-center ">{t('position_level')} :</div>
