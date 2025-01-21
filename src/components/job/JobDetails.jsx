@@ -197,25 +197,25 @@ export default function JobDetails({ jobId }) {
             </div>
 
             {/* others */}
-            <div className="w-full flex flex-col space-y-1 sm:flex-row sm:justify-between sm:space-x-3 sm:space-y-0 rtl:space-x-reverse">
-              <div className="sm:w-1/2 flex flex-col space-y-1.5">
-                <div className=" flex flex-row items-center sm:space-x-2 rtl:space-x-reverse  ">
+            <div className="w-full flex flex-row justify-between rtl:space-x-reverse">
+              <div className=" flex flex-col space-y-1.5">
+                <div className=" flex flex-col space-y-1 sm:space-y-0 sm:flex-row items-center sm:space-x-2 rtl:space-x-reverse  ">
                   <div className=" text-center ">{t('position_level')} :</div>
                   <div className="text-xs">{job.position_level || 'N/A'}</div>
                 </div>
 
-                <div className=" flex flex-row items-center space-x-2 rtl:space-x-reverse  ">
+                <div className=" flex flex-col space-y-1 sm:space-y-0 sm:flex-row items-center sm:space-x-2 rtl:space-x-reverse  ">
                   <div className=" text-center">{t('job_type')} :</div>
                   <div className="text-xs">{job.job_type || 'N/A'}</div>
                 </div>
               </div>
-              <div className="w-1/2  flex flex-col space-y-1.5">
-                <div className=" flex items-center space-x-2 rtl:space-x-reverse  ">
+              <div className="  flex flex-col space-y-1.5">
+                <div className=" flex flex-col space-y-1 sm:space-y-0 sm:flex-row items-center sm:space-x-2 rtl:space-x-reverse  ">
                   <div className="">{t('work_place')} :</div>
                   <div className="text-xs">{job.work_place || 'N/A'}</div>
                 </div>
 
-                <div className=" flex items-center space-x-2 rtl:space-x-reverse  ">
+                <div className="flex flex-col space-y-1 sm:space-y-0 sm:flex-row items-center sm:space-x-2 rtl:space-x-reverse  ">
                   <div className="">{t('experience')} :</div>
                   <div className="text-xs">{job.experience || 'N/A'}</div>
                 </div>
