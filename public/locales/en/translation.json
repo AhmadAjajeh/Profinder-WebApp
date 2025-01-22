@@ -106,5 +106,7 @@
   "apply": "Apply",
   "currency": "Currency",
   "select_a_job_to_see_its_details": "Select a job to see its details",
-  "cancel_apply": "Cancel apply"
+  "cancel_apply": "Cancel apply",
+  "min_budget": "Min budget",
+  "max_budget": "Max budget"
 }

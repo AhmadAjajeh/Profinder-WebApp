@@ -192,3 +192,22 @@ export function jobApplyMutation({ jobId, apply }) {
 
   return handlerFunction(url, configuration, errorMessage);
 }
+
+export function getProjectsQuery({ title, min, max, page }) {
+  const url =
+    getApiBaseUrl() +
+    'explore/freelance-projects/search?' +
+    buildSearchParams({ title, 'budget.min': min, 'budget.max': max, page });
+
+  const configuration = {
+    method: 'GET',
+    headers: {
+      'Accept-Language': getLanguage(),
+      authorization: 'Bearer ' + getStateToken(),
+    },
+  };
+
+  const errorMessage = 'An error occurred while fetching the projects!';
+
+  return handlerFunction(url, configuration, errorMessage);
+}
