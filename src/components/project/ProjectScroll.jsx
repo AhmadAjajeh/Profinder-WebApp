@@ -106,36 +106,36 @@ export default function ProjectScroll({ chooseProject, selectedProjectId }) {
         <div>
           <form
             onSubmit={handleSearch}
-            className="flex flex-row items-center justify-between space-x-3 rtl:space-x-reverse "
+            className="flex flex-col space-y-2  md:flex-row md:items-center md:justify-between md:space-x-3 rtl:space-x-reverse "
           >
-            <div className="w-2/6 flex space-x-2 rtl:space-x-reverse items-center relative">
+            <div className="w-full md:w-2/6 flex space-x-2 rtl:space-x-reverse items-center relative">
               <input
                 name="title"
                 className="outline-none px-3 py-2 bg-gray-100 dark:bg-elementGray font-light placeholder:text-[12px] rounded-md w-full"
                 placeholder={t('title')}
                 defaultValue={title}
               />
-              <SearchIcon style="w-4 h-4 absolute ltr:right-3 rtl:left-3 text-gray-500 bg-gray-100 h-full" />
+              <SearchIcon style="w-4 h-4 absolute ltr:right-3 rtl:left-3 text-gray-500 bg-gray-100 h-full dark:bg-elementGray" />
             </div>
-            <div className="w-3/12 flex space-x-2 rtl:space-x-reverse items-center relative">
+            <div className="w-full md:w-3/12 flex space-x-2 rtl:space-x-reverse items-center relative">
               <input
                 name="min"
                 type="number"
                 className="outline-none px-3 placeholder:h-6 placeholder:text-[10px] py-2 bg-gray-100 dark:bg-elementGray font-light text-sm rounded-md w-full"
                 placeholder={t('min_budget')}
               />
-              <FaDollarSign className="w-5 h-5 absolute ltr:right-3 rtl:left-3 text-gray-500 bg-gray-100" />
+              <FaDollarSign className="w-5 h-5 absolute ltr:right-3 rtl:left-3 text-gray-500 bg-gray-100 dark:bg-elementGray" />
             </div>
-            <div className="w-3/12 flex space-x-2 rtl:space-x-reverse items-center relative">
+            <div className="w-full md:w-3/12 flex space-x-2 rtl:space-x-reverse items-center relative">
               <input
                 name="max"
                 type="number"
                 className="outline-none px-3 placeholder:h-6 placeholder:text-[10px] py-2 bg-gray-100 dark:bg-elementGray font-light text-sm rounded-md w-full"
                 placeholder={t('max_budget')}
               />
-              <FaDollarSign className="w-5 h-5 absolute ltr:right-3 rtl:left-3 text-gray-500 bg-gray-100" />
+              <FaDollarSign className="w-5 h-5 absolute ltr:right-3 rtl:left-3 text-gray-500 bg-gray-100 dark:bg-elementGray" />
             </div>
-            <button className="w-1/6 text-sm font-light bg-logoOrange text-white p-2 rounded-md  shadow-sm">
+            <button className="w-full md:w-1/6 text-sm font-light bg-logoOrange text-white p-2 rounded-md  shadow-sm">
               {t('search')}
             </button>
           </form>
@@ -216,7 +216,7 @@ const ScrollProject = forwardRef(
         <div className="flex flex-row items-center justify-center">
           {project.publisher_image_url ? (
             <img
-              className="w-14 h-14 object-cover"
+              className="w-14 h-14 object-cover min-w-14"
               src={getBaseUrl() + project.publisher_image_url}
             />
           ) : (
