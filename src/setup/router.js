@@ -9,6 +9,7 @@ import HomeLayout from '../pages/HomeLayout';
 import ExplorePage from '../pages/HomePages/ExplorePage';
 import { destroyAuthInfo } from '../util/http';
 import JobPage from '../pages/HomePages/JobPage';
+import ProjectPage from '../pages/HomePages/ProjectPage';
 
 export default createBrowserRouter([
   {
@@ -43,8 +44,7 @@ export default createBrowserRouter([
           },
           {
             path: 'projects',
-            element: <div>projects</div>,
-            children: [{ index: true, element: <div>ahmad</div> }],
+            element: <ProjectPage />,
           },
           {
             path: 'hashtags',
