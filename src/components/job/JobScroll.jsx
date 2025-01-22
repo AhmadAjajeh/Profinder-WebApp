@@ -103,25 +103,25 @@ export default function JobScroll({ chooseJob, selectedJobId }) {
             onSubmit={handleSearch}
             className="flex flex-row items-center justify-between space-x-3 rtl:space-x-reverse "
           >
-            <div className="w-1/2 flex space-x-2 rtl:space-x-reverse items-center relative">
+            <div className="w-5/12  flex space-x-2 rtl:space-x-reverse items-center relative">
               <input
                 name="title"
-                className="outline-none px-3 py-2 bg-gray-100 dark:bg-elementGray font-light text-sm rounded-md w-full"
+                className="outline-none px-3 py-2 bg-gray-100 dark:bg-elementGray font-light placeholder:text-[12px] rounded-md w-full"
                 placeholder={t('title')}
                 defaultValue={title}
               />
-              <SearchIcon style="w-4 h-4 absolute ltr:right-3 rtl:left-3 text-gray-500" />
+              <SearchIcon style="w-4 h-4 absolute ltr:right-3 rtl:left-3 text-gray-500 bg-gray-100 dark:bg-elementGray h-full" />
             </div>
-            <div className="w-1/2 flex space-x-2 rtl:space-x-reverse items-center relative">
+            <div className="w-5/12  flex space-x-2 rtl:space-x-reverse items-center relative">
               <input
                 name="location"
-                className="outline-none px-3 placeholder:h-6 py-2 bg-gray-100 dark:bg-elementGray font-light text-sm rounded-md w-full"
+                className="outline-none px-3 placeholder:h-6 py-2 bg-gray-100 dark:bg-elementGray font-light placeholder:text-[12px] rounded-md w-full"
                 placeholder={t('location')}
                 defaultValue={location}
               />
-              <LocationIcon style="w-5 h-5 absolute ltr:right-3 rtl:left-3 text-gray-500" />
+              <LocationIcon style="w-5 h-5 absolute ltr:right-3 rtl:left-3 text-gray-500 bg-gray-100 dark:bg-elementGray h-full" />
             </div>
-            <button className="text-sm font-light bg-logoOrange text-white p-2 rounded-md  shadow-sm">
+            <button className="w-1/6 text-sm font-light bg-logoOrange text-white p-2 rounded-md  shadow-sm">
               {t('search')}
             </button>
           </form>
