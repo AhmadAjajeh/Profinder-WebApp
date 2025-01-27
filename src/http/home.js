@@ -211,3 +211,40 @@ export function getProjectsQuery({ title, min, max, page }) {
 
   return handlerFunction(url, configuration, errorMessage);
 }
+
+export function getOneProjectQuery({ id }) {
+  const url = getApiBaseUrl() + 'explore/freelance-projects/' + id;
+
+  const configuration = {
+    method: 'GET',
+    headers: {
+      'Accept-language': getLanguage(),
+      authorization: 'Bearer ' + getStateToken(),
+    },
+  };
+
+  const errorMessage = 'An error occurred while fetching the project!';
+
+  return handlerFunction(url, configuration, errorMessage);
+}
+
+export function projectApplyMutation({ id, apply }) {
+  const url =
+    getApiBaseUrl() +
+    'explore/freelance-projects/' +
+    id +
+    (apply ? '/apply' : '/cancel-apply');
+
+  const configuration = {
+    method: apply ? 'POST' : 'DELETE',
+    headers: {
+      'Accept-Language': getLanguage(),
+      authorization: 'Bearer ' + getStateToken(),
+    },
+  };
+
+  const errorMessage =
+    'An error occurred while applying/cancel-applying for the job';
+
+  return handlerFunction(url, configuration, errorMessage);
+}

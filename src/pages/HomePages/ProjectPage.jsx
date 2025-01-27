@@ -7,15 +7,13 @@ import JobDetails from '../../components/job/JobDetails';
 import { useSearchParams } from 'react-router-dom';
 import Modal from '../../components/general-ui/Modal';
 import ProjectScroll from '../../components/project/ProjectScroll';
+import ProjectDetails from '../../components/project/ProjectDetails';
 
 export default function ProjectPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [projectId, setProjectId] = useState(
     searchParams.get('selectedProject')
   );
-
-  const jobId = null;
-  const setJobId = console.log;
 
   return (
     <div className="w-full flex flex-row space-x-5 rtl:space-x-reverse">
@@ -35,18 +33,21 @@ export default function ProjectPage() {
           animate="animate"
           exit="hidden"
         >
-          <ProjectScroll chooseProject={setJobId} selectedProjectId={jobId} />
+          <ProjectScroll
+            chooseProject={setProjectId}
+            selectedProjectId={projectId}
+          />
         </motion.div>
       </div>
       {/* far right section */}
       <div className="hidden h-fit lg:flex w-full lg:min-w-[250px] lg:max-w-[380px] xl:min-w-[430px] xl:max-w-[430px] sticky top-20">
-        <JobDetails jobId={jobId} />
+        <ProjectDetails projectId={projectId} />
       </div>
 
       <AnimatePresence>
-        {jobId !== null && (
+        {projectId !== null && (
           <Modal
-            onClose={() => setJobId(null)}
+            onClose={() => setProjectId(null)}
             bgDiv={true}
             className="inset-0 rounded-md dark:bg-elementBlack"
             options="lg:hidden"
@@ -55,7 +56,7 @@ export default function ProjectPage() {
               visible: { opacity: 1, scale: 1 },
             }}
           >
-            <JobDetails jobId={jobId} />
+            <ProjectDetails projectId={projectId} />
           </Modal>
         )}
       </AnimatePresence>

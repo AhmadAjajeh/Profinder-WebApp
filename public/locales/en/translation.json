@@ -108,5 +108,8 @@
   "select_a_job_to_see_its_details": "Select a job to see its details",
   "cancel_apply": "Cancel apply",
   "min_budget": "Min budget",
-  "max_budget": "Max budget"
+  "max_budget": "Max budget",
+  "select_a_project_to_view_its_details": "Select a project to view its details",
+  "budget": "Budget",
+  "delivery_time": "Delivery Time"
 }

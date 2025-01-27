@@ -109,5 +109,8 @@
   "select_a_job_to_see_its_details": "اختر وظيفة لعرض تفاصيلها",
   "cancel_apply": "إلغاء التقديم",
   "min_budget": "الحد الأدنى للميزانية",
-  "max_budget": "الحد الأقصى للميزانية"
+  "max_budget": "الحد الأقصى للميزانية",
+  "select_a_project_to_view_its_details": "اختر مشروعًا لعرض تفاصيله",
+  "budget": "الميزانية",
+  "delivery_time": "وقت التسليم"
 }

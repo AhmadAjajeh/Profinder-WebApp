@@ -1,21 +1,18 @@
 import { forwardRef, useEffect, useState } from 'react';
-
 import { useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
-import { FaDollarSign } from 'react-icons/fa';
 
-import {
-  LocationIcon,
-  SearchIcon,
-  SingleCompany,
-} from '../general-ui/IconsSvg';
-import { buildSearchParams, getBaseUrl } from '../../util/http';
-import { getJobsQuery, getProjectsQuery } from '../../http/home';
-import { errorHandlingActions } from '../../store/errorHandlingSlice';
+import { FaDollarSign } from 'react-icons/fa';
+import { SearchIcon, SingleCompany } from '../general-ui/IconsSvg';
+
 import NoResult from '../general-ui/NoResult';
 import PagesNav from '../general-ui/PagesNav';
+
+import { buildSearchParams, getBaseUrl } from '../../util/http';
+import { getProjectsQuery } from '../../http/home';
+import { errorHandlingActions } from '../../store/errorHandlingSlice';
 
 export default function ProjectScroll({ chooseProject, selectedProjectId }) {
   const { t } = useTranslation();
@@ -106,16 +103,16 @@ export default function ProjectScroll({ chooseProject, selectedProjectId }) {
         <div>
           <form
             onSubmit={handleSearch}
-            className="flex flex-col space-y-2  md:flex-row md:items-center md:justify-between md:space-x-3 rtl:space-x-reverse "
+            className="flex flex-col  space-y-2  md:flex-row  md:space-y-0 items-center justify-between md:space-x-3 rtl:space-x-reverse "
           >
             <div className="w-full md:w-2/6 flex space-x-2 rtl:space-x-reverse items-center relative">
               <input
                 name="title"
-                className="outline-none px-3 py-2 bg-gray-100 dark:bg-elementGray font-light placeholder:text-[12px] rounded-md w-full"
+                className="outline-none px-3 py-2 bg-gray-100 dark:bg-elementGray font-light placeholder:text-[12px] rounded-md w-full text-sm"
                 placeholder={t('title')}
                 defaultValue={title}
               />
-              <SearchIcon style="w-4 h-4 absolute ltr:right-3 rtl:left-3 text-gray-500 bg-gray-100 h-full dark:bg-elementGray" />
+              <SearchIcon style="w-5 h-5 absolute ltr:right-3 rtl:left-3 text-gray-500 bg-gray-100 dark:bg-elementGray" />
             </div>
             <div className="w-full md:w-3/12 flex space-x-2 rtl:space-x-reverse items-center relative">
               <input
