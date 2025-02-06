@@ -1,12 +1,25 @@
-export default function Input({ label, className, name }) {
+import { useTranslation } from 'react-i18next';
+
+export default function Input({
+  label,
+  className,
+  inputClass,
+  name,
+  validation,
+}) {
+  const { t } = useTranslation();
+
   return (
-    <div>
+    <div className={className}>
       {label && (
-        <label className="text-black dark:text-white  text-sm font-light">
-          {label}
+        <label className="text-black dark:text-white text-sm font-light">
+          {t(label)}
         </label>
       )}
-      <input name={name} className={'block ' + className} />
+      <input name={name} className={'block ' + inputClass} autoComplete="off" />
+      {validation && (
+        <div className="text-red-500 text-sm font-light">{t(validation)}</div>
+      )}
     </div>
   );
 }

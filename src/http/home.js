@@ -248,3 +248,21 @@ export function projectApplyMutation({ id, apply }) {
 
   return handlerFunction(url, configuration, errorMessage);
 }
+
+export function createProjectMutation(formData) {
+  const url = getApiBaseUrl() + 'user/freelance-projects';
+
+  const configuration = {
+    method: 'POST',
+    headers: {
+      'Accept-Language': getLanguage(),
+      authorization: 'Bearer ' + getStateToken(),
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData),
+  };
+
+  const errorMessage = 'An error occurred while creating the freelance project';
+
+  return handlerFunction(url, configuration, errorMessage);
+}

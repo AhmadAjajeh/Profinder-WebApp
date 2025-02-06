@@ -111,5 +111,14 @@
   "max_budget": "Max budget",
   "select_a_project_to_view_its_details": "Select a project to view its details",
   "budget": "Budget",
-  "delivery_time": "Delivery Time"
+  "delivery_time": "Delivery Time",
+  "create_new_freelance_project": "Create new freelance project",
+  "title_must_be_between_16_and_128_chars": "Title must be between 16 and 128 characters",
+  "description_must_be_between_64_and_4096_chars": "Description must be between 64 and 4096 characters",
+  "min_and_max_should_be_numbers": "Min and max should be numbers",
+  "currency_should_be_between_1_and_3_chars": "Currency should be between 1 and 3 characters",
+  "at_least_one_topic_is_required": "At least one topic is required",
+  "delivery_time_should_be_a_number": "Delivery time should be a number",
+  "delivery_time_should_be_between_1_and_365_days": "Delivery time should be between 1 and 365 days",
+  "min_should_be_less_than_max": "Min should be less than max"
 }

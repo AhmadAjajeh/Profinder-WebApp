@@ -112,5 +112,14 @@
   "max_budget": "الحد الأقصى للميزانية",
   "select_a_project_to_view_its_details": "اختر مشروعًا لعرض تفاصيله",
   "budget": "الميزانية",
-  "delivery_time": "وقت التسليم"
+  "delivery_time": "وقت التسليم",
+  "create_new_freelance_project": "إنشاء مشروع عمل حر جديد",
+  "title_must_be_between_16_and_128_chars": "يجب أن يكون العنوان بين 16 و 128 حرفًا",
+  "description_must_be_between_64_and_4096_chars": "يجب أن يكون الوصف بين 64 و 4096 حرفًا",
+  "min_and_max_should_be_numbers": "يجب أن يكون الحد الأدنى والحد الأقصى أرقامًا",
+  "currency_should_be_between_1_and_3_chars": "يجب أن تكون العملة بين 1 و 3 أحرف",
+  "at_least_one_topic_is_required": "مطلوب موضوع واحد على الأقل",
+  "delivery_time_should_be_a_number": "يجب أن يكون وقت التسليم رقمًا",
+  "delivery_time_should_be_between_1_and_365_days": "يجب أن يكون وقت التسليم بين 1 و 365 يومًا",
+  "min_should_be_less_than_max": "يجب أن يكون الحد الأدنى أقل من الحد الأقصى"
 }

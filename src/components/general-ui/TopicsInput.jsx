@@ -3,7 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { PlusIcon, XIcon } from './IconsSvg';
 import { range, uniqueArrayValues } from '../../util/validation';
 
-export default function TopicsInput({ topics, setTopics }) {
+export default function TopicsInput({
+  topics,
+  setTopics,
+  validation,
+  className,
+}) {
   const { t } = useTranslation();
   const topicRef = useRef(null);
   const [topicsValidation, setTopicsValidation] = useState(null);
@@ -11,7 +16,7 @@ export default function TopicsInput({ topics, setTopics }) {
   const handleAddTopic = () => {
     const addedTopic = topicRef.current.value;
 
-    if (topics.length === 5) {
+    if (topics.length > 5) {
       setTopicsValidation('no_more_than_five_topics');
       return;
     }
@@ -40,13 +45,19 @@ export default function TopicsInput({ topics, setTopics }) {
   };
 
   return (
-    <>
+    <div>
       <div className="flex flex-col text-sm font-light space-y-2 ">
         <div>{t('topics')}</div>
         <div className="w-full relative">
           <input
             ref={topicRef}
             className="bg-elementLightGray dark:bg-elementGray w-full outline-none border border-gray-300 dark:border-darkBorder px-4 py-2 rounded-md"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                handleAddTopic();
+              }
+            }}
           />
           <button
             onClick={handleAddTopic}
@@ -59,9 +70,9 @@ export default function TopicsInput({ topics, setTopics }) {
       </div>
 
       {/* topics validation */}
-      {topicsValidation && (
+      {(validation || topicsValidation) && (
         <div className="text-red-500 text-sm font-light mt-1">
-          {t(topicsValidation)}
+          {t(validation || topicsValidation)}
         </div>
       )}
 
@@ -83,6 +94,6 @@ export default function TopicsInput({ topics, setTopics }) {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }

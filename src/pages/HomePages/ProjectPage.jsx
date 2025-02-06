@@ -1,19 +1,21 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useSearchParams } from 'react-router-dom';
 
 import HomeNavigation from '../../components/home-components/HomeNavigation';
-import JobScroll from '../../components/job/JobScroll';
-import JobDetails from '../../components/job/JobDetails';
-import { useSearchParams } from 'react-router-dom';
 import Modal from '../../components/general-ui/Modal';
 import ProjectScroll from '../../components/project/ProjectScroll';
 import ProjectDetails from '../../components/project/ProjectDetails';
+import { PlusIcon } from '../../components/general-ui/IconsSvg';
+import NewProject from '../../components/project/NewProject';
 
 export default function ProjectPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [projectId, setProjectId] = useState(
     searchParams.get('selectedProject')
   );
+
+  const [newProjectModal, setNewProjectModal] = useState(false);
 
   return (
     <div className="w-full flex flex-row space-x-5 rtl:space-x-reverse">
@@ -34,20 +36,32 @@ export default function ProjectPage() {
           exit="hidden"
         >
           <ProjectScroll
-            chooseProject={setProjectId}
+            chooseProject={(id) => {
+              setProjectId(id);
+              setNewProjectModal(false);
+            }}
             selectedProjectId={projectId}
           />
         </motion.div>
       </div>
       {/* far right section */}
       <div className="hidden h-fit lg:flex w-full lg:min-w-[250px] lg:max-w-[380px] xl:min-w-[430px] xl:max-w-[430px] sticky top-20">
-        <ProjectDetails projectId={projectId} />
+        <div className="bg-white dark:bg-elementBlack w-[340px] sm:w-[400px] lg:w-full p-4 rounded-md border border-gray-300 dark:border-darkBorder shadow-sm dark:text-white h-[630px] flex items-center justify-center">
+          {newProjectModal ? (
+            <NewProject />
+          ) : (
+            <ProjectDetails projectId={projectId} />
+          )}
+        </div>
       </div>
 
       <AnimatePresence>
-        {projectId !== null && (
+        {(projectId !== null || newProjectModal) && (
           <Modal
-            onClose={() => setProjectId(null)}
+            onClose={() => {
+              setProjectId(null);
+              setNewProjectModal(false);
+            }}
             bgDiv={true}
             className="inset-0 rounded-md dark:bg-elementBlack"
             options="lg:hidden"
@@ -56,10 +70,23 @@ export default function ProjectPage() {
               visible: { opacity: 1, scale: 1 },
             }}
           >
-            <ProjectDetails projectId={projectId} />
+            <div className="bg-white dark:bg-elementBlack w-[340px] sm:w-[400px] lg:w-full p-4 rounded-md border border-gray-300 dark:border-darkBorder shadow-sm dark:text-white h-[630px] flex items-center justify-center">
+              {newProjectModal ? (
+                <NewProject />
+              ) : (
+                <ProjectDetails projectId={projectId} />
+              )}
+            </div>
           </Modal>
         )}
       </AnimatePresence>
+
+      <button
+        onClick={() => setNewProjectModal(true)}
+        className="fixed bottom-3 ltr:right-3 rtl:left-3 text-white bg-logoOrange p-3 rounded-full"
+      >
+        <PlusIcon style="w-6 h-6" />
+      </button>
     </div>
   );
 }

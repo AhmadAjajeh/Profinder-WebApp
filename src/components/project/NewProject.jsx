@@ -1,0 +1,224 @@
+import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { isEqual, isNumber } from 'lodash';
+
+import { MdCreate } from 'react-icons/md';
+
+import Input from '../general-ui/Input';
+import TextArea from '../general-ui/TextArea';
+import { range } from '../../util/validation';
+import TopicsInput from '../general-ui/TopicsInput';
+import OneImageUpload from '../general-ui/OneImageUpload';
+import { useMutation } from '@tanstack/react-query';
+import { createProjectMutation } from '../../http/home';
+import { alertActions } from '../../store/alertSlice';
+import { eventActions } from '../../store/dataSlice';
+import { errorHandlingActions } from '../../store/errorHandlingSlice';
+import { useDispatch } from 'react-redux';
+
+const initialValidation = {
+  title: null,
+  description: null,
+  topics: null,
+  budget: null,
+  working_interval: null,
+};
+
+export default function NewProject() {
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  const descriptionRef = useRef(null);
+  const formRef = useRef(null);
+  const [topics, setTopics] = useState([]);
+
+  const [validation, setValidation] = useState(initialValidation);
+
+  const { mutate: createProject } = useMutation({
+    mutationFn: createProjectMutation,
+    onSuccess: (response) => {
+      dispatch(
+        alertActions.alert({
+          messages: [response.message],
+        })
+      );
+      dispatch(eventActions.set({ data: response.post, type: 'new-post' }));
+      formRef.current.reset();
+      setTopics([]);
+    },
+    onError: (error) => {
+      const messages = error.info?.message || [error.message];
+      dispatch(
+        errorHandlingActions.throwError({
+          code: error.code,
+          messages,
+        })
+      );
+    },
+  });
+
+  function handleSubmission(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const { title, description, min, max, currency, working_interval } =
+      Object.fromEntries(formData);
+
+    // validation
+    const formValidation = {};
+
+    if (!range(title, 16, 128)) {
+      formValidation.title = 'title_must_be_between_16_and_128_chars';
+    } else {
+      formValidation.title = null;
+    }
+
+    if (!range(description, 64, 4096)) {
+      formValidation.description =
+        'description_must_be_between_64_and_4096_chars';
+    } else {
+      formValidation.description = null;
+    }
+
+    if (!isNumber(+min) || !isNumber(+max)) {
+      formValidation.budget = 'min_and_max_should_be_numbers';
+    } else if (!range(currency, 1, 3)) {
+      formValidation.budget = 'currency_should_be_between_1_and_3_chars';
+    } else if (min >= max) {
+      formValidation.budget = 'min_should_be_less_than_max';
+    } else {
+      formValidation.budget = null;
+    }
+
+    if (topics.length < 1) {
+      formValidation.topics = 'at_least_one_topic_is_required';
+    } else {
+      formValidation.topics = null;
+    }
+
+    if (!isNumber(+working_interval)) {
+      formValidation.working_interval = 'delivery_time_should_be_a_number';
+    } else if (working_interval < 1 || working_interval > 365) {
+      formValidation.working_interval =
+        'delivery_time_should_be_between_1_and_365_days';
+    } else {
+      formValidation.working_interval = null;
+    }
+
+    setValidation(formValidation);
+
+    if (!isEqual(formValidation, initialValidation)) return;
+
+    createProject({
+      title,
+      description,
+      topics,
+      budget: { min, max, currency },
+      working_interval,
+    });
+  }
+
+  return (
+    <div className="flex flex-col h-full w-full">
+      <div className="flex flex-row space-x-2 rtl:space-x-reverse items-center mb-4">
+        <MdCreate className="text-logoOrange h-5 w-5" />
+        <div>{t('create_new_freelance_project')}</div>
+      </div>
+      <form
+        ref={formRef}
+        onSubmit={handleSubmission}
+        className="h-full flex flex-col justify-between"
+      >
+        <div className="flex flex-col w-full">
+          <Input
+            name="title"
+            label="title"
+            inputClass="w-full p-1 bg-inherit border border-gray-300 dark:border-darkBorder mt-2 rounded-md outline-none focus:bg-gray-100 dark:focus:bg-elementGray transition-all font-light"
+            validation={validation.title}
+            className={validation.title ? '' : 'mb-5'}
+          />
+          <TextArea
+            ref={descriptionRef}
+            label="description"
+            inputClass="w-full p-1 bg-inherit border border-gray-300 dark:border-darkBorder mt-2 rounded-md outline-none focus:bg-gray-100 dark:focus:bg-elementGray transition-all font-light "
+            name="description"
+            rows={4}
+            validation={validation.description}
+            className={validation.description ? '' : 'mb-5'}
+          />
+          <div className="mb-6">
+            <TopicsInput
+              topics={topics}
+              setTopics={setTopics}
+              validation={validation.topics}
+            />
+          </div>
+          <div
+            className={'flex flex-col ' + (validation.budget ? 'mb-1' : 'mb-6')}
+          >
+            <div className="font-light text-sm mb-1">{t('budget')}</div>
+            <div className="w-full px-2 flex flex-row justify-between  rtl:space-x-reverse">
+              <div className=" flex flex-row space-x-1 rtl:space-x-reverse">
+                <label className="font-light text-sm px-1 ">{t('from')}</label>
+                <input
+                  name="min"
+                  className="w-16 text-sm rounded-md border border-gray-300 dark:border-darkBorder outline-none p-0.5 font-light"
+                />
+              </div>
+              <div className=" flex flex-row space-x-1 rtl:space-x-reverse">
+                <label className="font-light text-sm px-1">{t('to')}</label>
+                <input
+                  name="max"
+                  className="w-16 text-sm rounded-md border border-gray-300 dark:border-darkBorder outline-none p-0.5 font-light"
+                />
+              </div>
+              <div className=" flex flex-row space-x-1 rtl:space-x-reverse">
+                <label className="font-light text-sm px-1">
+                  {t('currency')}
+                </label>
+                <input
+                  name="currency"
+                  maxLength={3}
+                  className="w-16 text-sm rounded-md border border-gray-300 dark:border-darkBorder outline-none p-0.5 font-light"
+                />
+              </div>
+            </div>
+            {validation.budget && (
+              <div className="text-red-500 text-sm font-light ">
+                {t(validation.budget)}
+              </div>
+            )}
+          </div>
+
+          <div className="flex flex-col">
+            <div
+              className={
+                'flex flex-row space-x-3 items-center rtl:space-x-reverse ' +
+                (validation.working_interval ? 'mb-0' : 'mb-5')
+              }
+            >
+              <div className="font-light text-sm">{t('delivery_time')}</div>
+              <input
+                name="working_interval"
+                className={
+                  'border border-gray-300 dark:border-darkBorder rounded-md outline-none p-1 w-24 text-sm '
+                }
+              />
+            </div>
+            {validation.working_interval && (
+              <div className="text-red-500 text-sm font-light">
+                {t(validation.working_interval)}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="w-full flex flex-row justify-end">
+          <button className="bg-logoOrange text-white font-light w-fit px-5 py-2 rounded-md">
+            {t('publish')}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
