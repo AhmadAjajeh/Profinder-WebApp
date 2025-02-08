@@ -266,3 +266,22 @@ export function createProjectMutation(formData) {
 
   return handlerFunction(url, configuration, errorMessage);
 }
+
+export function searchComapniesQuery({ name, page }) {
+  const url =
+    getApiBaseUrl() +
+    'explore/companies/search?' +
+    buildSearchParams({ name, page });
+
+  const configuration = {
+    method: 'GET',
+    headers: {
+      'Accept-Language': getLanguage(),
+      authorization: 'Bearer ' + getStateToken(),
+    },
+  };
+
+  const errorMessage = 'An error occurred while saerching companies';
+
+  return handlerFunction(url, configuration, errorMessage);
+}
