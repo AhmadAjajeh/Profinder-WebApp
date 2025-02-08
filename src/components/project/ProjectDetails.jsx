@@ -107,7 +107,7 @@ export default function ProjectDetails({ projectId }) {
                 />
               ) : (
                 <div className="bg-gray-300 dark:bg-gray-500 w-12 h-12 flex items-center justify-center rounded-full overflow-hidden">
-                  <AiOutlineUser style="w-9 h-9 text-gray-500 dark:text-gray-700 " />
+                  <AiOutlineUser className="w-9 h-9 text-gray-500 dark:text-gray-700 " />
                 </div>
               )}
             </div>
