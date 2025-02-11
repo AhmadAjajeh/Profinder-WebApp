@@ -46,6 +46,7 @@ export default function MainLayout() {
       if (error.code !== 1) navigate('/auth/login');
       else queryClient.cancelQueries();
     },
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
