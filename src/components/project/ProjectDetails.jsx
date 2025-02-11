@@ -63,7 +63,8 @@ export default function ProjectDetails({ projectId }) {
     mutationFn: projectApplyMutation,
     onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
     onSuccess: () => {
-      setApplyCount((state) => (applied ? state - 1 : state + 1));
+      if (applyCount !== null)
+        setApplyCount((state) => (applied ? state - 1 : state + 1));
       setApplied((state) => !state);
     },
   });
@@ -206,7 +207,7 @@ export default function ProjectDetails({ projectId }) {
               <div className="text-xs ow-span-1">
                 {project.closes_at
                   ? formatDisplayDate(project.closes_at)
-                  : 'NA'}
+                  : t('unknown')}
               </div>
             </div>
 
@@ -215,7 +216,7 @@ export default function ProjectDetails({ projectId }) {
                 {t('applications_count')}
               </div>
               <div className="text-xs row-span-1">
-                {applyCount !== null ? applyCount : 'N/A'}
+                {applyCount !== null ? applyCount : t('unknown')}
               </div>
             </div>
 

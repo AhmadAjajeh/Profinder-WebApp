@@ -64,7 +64,8 @@ export default function JobDetails({ jobId }) {
     mutationFn: jobApplyMutation,
     onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
     onSuccess: () => {
-      setApplyCount((state) => (applied ? state - 1 : state + 1));
+      if (applyCount !== null)
+        setApplyCount((state) => (applied ? state - 1 : state + 1));
       setApplied((state) => !state);
     },
   });
@@ -233,7 +234,7 @@ export default function JobDetails({ jobId }) {
             <div className="w-1/3 grid grid-rows-2 gap-1 items-center justify-center text-xs sm:text-sm space-y-1 text-center">
               <div className="text-logoOrange row-span-1">{t('closes_at')}</div>
               <div className="text-xs ow-span-1">
-                {job.closes_at ? formatDisplayDate(job.closes_at) : 'NA'}
+                {job.closes_at ? formatDisplayDate(job.closes_at) : t('unkown')}
               </div>
             </div>
 
@@ -242,7 +243,7 @@ export default function JobDetails({ jobId }) {
                 {t('applications_count')}
               </div>
               <div className="text-xs row-span-1">
-                {applyCount !== null ? applyCount : 'N/A'}
+                {applyCount !== null ? applyCount : t('unknown')}
               </div>
             </div>
 
