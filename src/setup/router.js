@@ -5,12 +5,13 @@ import LoginPage from '../pages/AuthPages/LoginPage';
 import SignupPage from '../pages/AuthPages/SignupPage';
 import ActivationPage from '../pages/AuthPages/ActivationPage';
 import MainLayout, { mainLoader } from '../pages/MainLayout';
-import HomeLayout from '../pages/HomeLayout';
+// import HomeLayout from '../pages/HomeLayout';
 import ExplorePage from '../pages/HomePages/ExplorePage';
 import { destroyAuthInfo } from '../util/http';
 import JobPage from '../pages/HomePages/JobPage';
 import ProjectPage from '../pages/HomePages/ProjectPage';
 import HashtagPage from '../pages/HomePages/HashtagPage';
+import ProfilePage from '../pages/ProfilePage';
 
 export default createBrowserRouter([
   {
@@ -36,7 +37,7 @@ export default createBrowserRouter([
       { path: '/', element: <Navigate to="/home" replace /> },
       {
         path: 'home',
-        element: <HomeLayout />,
+        // element: <HomeLayout />,
         children: [
           { index: true, element: <ExplorePage /> },
           {
@@ -53,6 +54,7 @@ export default createBrowserRouter([
           },
         ],
       },
+      { path: 'profile/:id', element: <ProfilePage /> },
     ],
   },
 ]);

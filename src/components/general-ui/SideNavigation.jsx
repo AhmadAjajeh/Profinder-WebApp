@@ -45,7 +45,7 @@ export default function SideNavigation() {
         <SideNavElement
           icon={<ProfileIcon style="w-5 fill-current" />}
           text="profile"
-          path="/profile"
+          path={`/profile/${user._id}`}
         />
         <SideNavElement
           icon={<CompaniesIcon style="w-[24px] fill-current" />}
