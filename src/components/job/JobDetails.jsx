@@ -234,7 +234,9 @@ export default function JobDetails({ jobId }) {
             <div className="w-1/3 grid grid-rows-2 gap-1 items-center justify-center text-xs sm:text-sm space-y-1 text-center">
               <div className="text-logoOrange row-span-1">{t('closes_at')}</div>
               <div className="text-xs ow-span-1">
-                {job.closes_at ? formatDisplayDate(job.closes_at) : t('unkown')}
+                {job.closes_at
+                  ? formatDisplayDate(job.closes_at)
+                  : t('unknown')}
               </div>
             </div>
 
