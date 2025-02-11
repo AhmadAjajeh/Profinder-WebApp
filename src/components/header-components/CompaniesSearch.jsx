@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { SingleCompany } from '../general-ui/IconsSvg';
 import PagesNav from '../general-ui/PagesNav';
 import { FaBuilding, FaSpinner } from 'react-icons/fa';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { searchComapniesQuery } from '../../http/home';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
@@ -20,6 +20,7 @@ export default function CompaniesSearch() {
   const [totalPages, setTotalPages] = useState(1);
   const [companies, setComapnies] = useState([]);
   const [searching, setSearching] = useState(false);
+  const input = useRef(null);
 
   const { isFetching } = useQuery({
     queryKey: ['company-search', name, page],
@@ -58,6 +59,7 @@ export default function CompaniesSearch() {
           setSearching(false);
           setComapnies([]);
           setName('');
+          input.current.value = '';
         }}
       >
         <div className="hidden group relative md:flex space-x-2 rtl:space-x-reverse items-center border focus-within:shadow-md focus-within:py-1.5 focus-within:px-3 border-gray-300 dark:border-darkBorder rounded-md px-2 py-1 shadow-sm   dark:shadow-darkBorder transition-all">
@@ -84,6 +86,8 @@ export default function CompaniesSearch() {
               name="name"
               className="text-sm  dark:bg-elementBlack  placeholder:text-slate-500 dark:placeholder:text-slate-200 dark:bg-customGray focus:outline-none placeholder:text-xs w-[240px] focus:w-[250px] font-light transition-all outline-none duration-300 focus:placeholder-transparent"
               placeholder={t('search_for_companies')}
+              autoComplete="off"
+              ref={input}
             />
           </div>
         </div>
@@ -130,7 +134,7 @@ function Company({ company }) {
           <img
             src={getBaseUrl() + company.image.url}
             alt={company.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover text-xs"
           />
         ) : (
           <div className="bg-gray-300 dark:bg-gray-500 p-2 w-full h-full flex items-center">
