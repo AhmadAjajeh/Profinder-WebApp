@@ -2,7 +2,10 @@ import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AddImageIcon, XIcon } from './IconsSvg';
 
-export default function OneImageUpload({ setSelectedImage }) {
+export default function OneImageUpload({
+  setSelectedImage,
+  label = 'upload_an_image',
+}) {
   const { t } = useTranslation();
   const fileInputRef = useRef(null);
   const [image, setImage] = useState('');
@@ -31,9 +34,9 @@ export default function OneImageUpload({ setSelectedImage }) {
 
   return (
     <>
-      <div className="text-sm font-light flex flex-col  space-y-2">
+      <div className="text-sm font-light flex flex-col">
         {/* label */}
-        <div className="mb-1">{t('upload_an_image')}</div>
+        {label && <div className="mb-2">{t(label)}</div>}
 
         {/* Hidden file input */}
         <input
@@ -41,31 +44,34 @@ export default function OneImageUpload({ setSelectedImage }) {
           accept="image/*"
           onChange={handleImagesChange}
           ref={fileInputRef}
-          className="hidden"
+          className="hidden "
         />
 
         {/* Custom "Choose Files" button */}
-        <div className="w-full max-h-32  bg-gray-200 dark:bg-elementGray rounded-md  border border-gray-300 dark:border-darkBorder">
+        <div className="w-full h-32 bg-gray-100 dark:bg-elementGray rounded-md border border-gray-300 dark:border-darkBorder overflow-hidden">
           {image !== '' ? (
-            <div className="w-full rounded-md relative flex items-center justify-center max-h-24 overflow-y-scroll">
+            <div className="relative w-full h-full">
               <button
                 onClick={() => {
                   setImage('');
                   setSelectedImage('');
                 }}
-                className="absolute top-2 rtl:right-2 ltr:left-2 text-white p-2 bg-gray-600 rounded-full "
+                className="absolute top-2 rtl:right-2 ltr:left-2 text-white p-2 bg-gray-600 rounded-full z-10 hover:bg-gray-700 transition-colors "
               >
                 <XIcon style="w-3" />
               </button>
 
-              <img
-                src={image}
-                className="object-cover w-full  aspect-square rounded-md"
-              />
+              <div className="w-full h-full overflow-auto">
+                <img
+                  src={image}
+                  className="object-cover w-full min-h-full rounded-md"
+                  alt="Uploaded preview"
+                />
+              </div>
             </div>
           ) : (
             <button
-              className="flex  w-full flex-col items-center p-4"
+              className="flex w-full h-full flex-col items-center justify-center p-4"
               onClick={() => fileInputRef?.current.click()}
             >
               <AddImageIcon style="w-10 text-gray-700 dark:text-gray-300 mb-1" />
@@ -76,7 +82,6 @@ export default function OneImageUpload({ setSelectedImage }) {
           )}
         </div>
       </div>
-      {/* Display image previews */}
     </>
   );
 }

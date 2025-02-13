@@ -122,5 +122,8 @@
   "delivery_time_should_be_a_number": "يجب أن يكون وقت التسليم رقمًا",
   "delivery_time_should_be_between_1_and_365_days": "يجب أن يكون وقت التسليم بين 1 و 365 يومًا",
   "min_should_be_less_than_max": "يجب أن يكون الحد الأدنى أقل من الحد الأقصى",
-  "unknown": "غير معروف"
+  "unknown": "غير معروف",
+  "edit_background_image": "تعديل صورة الخلفية",
+  "remove_existent_image": "إزالة الصورة الموجودة",
+  "update": "تحديث"
 }
