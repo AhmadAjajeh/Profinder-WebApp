@@ -42,6 +42,7 @@ import { alertActions } from '../../store/alertSlice';
 import { NewPostModal } from './NewPost';
 import DeletionModal from '../general-ui/DeletionModal';
 import { eventActions } from '../../store/dataSlice';
+import UserImage from '../general-ui/UserImage';
 
 const Post = forwardRef(({ post }, ref) => {
   const dispatch = useDispatch();
@@ -170,21 +171,10 @@ const Post = forwardRef(({ post }, ref) => {
       {/* userimage, name, and time posted */}
       <div className="flex flex-row justify-between">
         <div className="flex flex-row space-x-2 rtl:space-x-reverse">
-          {post.publisher_id.profile_image &&
-          post.publisher_id.profile_image !== '' ? (
-            <img
-              src={getBaseUrl() + post.publisher_id.profile_image}
-              className="w-12 h-12 rounded-full"
-            />
-          ) : (
-            <div
-              className={
-                'rounded-full flex items-center justify-center bg-gray-300 p-1 text-white dark:bg-gray-700 w-12 h-12'
-              }
-            >
-              <AiOutlineUser className="w-10 h-10" />
-            </div>
-          )}
+          <UserImage
+            className="w-12 h-12 p-2"
+            image={post.publisher_id.profile_image}
+          />
           <div className="mt-2">
             <div className="text-sm md:text-md font-normal">
               {post.publisher_id.username}

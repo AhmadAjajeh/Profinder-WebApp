@@ -30,8 +30,10 @@ export default function NewPost() {
 
   return (
     <div className="w-full p-4 rounded-md shadow-sm border border-gray-300 dark:border-darkBorder focus:outline-none  bg-white dark:bg-elementBlack">
-      <div className="w-full flex flex-row space-x-4 rtl:space-x-reverse">
-        <UserImage className="w-12 h-12 rounded-full" />
+      <div className="w-full flex flex-row space-x-3 rtl:space-x-reverse">
+        <div className="w-12 h-12">
+          <UserImage className="w-12 h-12 p-2" />
+        </div>
         <button
           onClick={handleShowNewPost}
           className="w-full bg-gray-100 dark:bg-elementGray rounded-full text-gray-500 font-light text-sm focus:outline-none flex items-center px-3"

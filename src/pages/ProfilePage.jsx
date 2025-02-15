@@ -65,7 +65,7 @@ export default function ProfilePage() {
         bio={profile.bio}
         address={address}
         backgroundImage={backgroundImage}
-        profileImage={profileImage}
+        profileImage={user.profile_image}
         github={github}
         linkedin={linkedin}
         fullname={profile.full_name}

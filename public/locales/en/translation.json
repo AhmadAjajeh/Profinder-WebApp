@@ -124,5 +124,21 @@
   "unknown": "Unknown",
   "edit_background_image": "Edit background image",
   "remove_existent_image": "Remove existent image",
-  "update": "Update"
+  "update": "Update",
+  "edit_profile_image": "Edit profile image",
+  "professional_profile": "Professional Profile",
+  "full_name": "Full Name",
+  "bio": "Bio",
+  "email_address": "Email Address",
+  "linked_profile": "LinkedIn Profile",
+  "github_profile": "GitHub Profile",
+  "save_profile": "Save Profile",
+  "summary_placeholder": "e.g., Experienced software engineer with a passion for...",
+  "name_placeholder": "e.g., Lisa Martin",
+  "email_placeholder": "you@example.com",
+  "location_placeholder": "e.g., San Francisco, CA",
+  "linkedin_placeholder": "LinkedIn URL",
+  "github_placeholder": "GitHub URL",
+  "edit_profile": "Edit Profile",
+  "address": "Address"
 }

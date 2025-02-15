@@ -125,5 +125,21 @@
   "unknown": "غير معروف",
   "edit_background_image": "تعديل صورة الخلفية",
   "remove_existent_image": "إزالة الصورة الموجودة",
-  "update": "تحديث"
+  "update": "تحديث",
+  "edit_profile_image": "تعديل صورة الملف الشخصي",
+  "professional_profile": "الملف الشخصي المهني",
+  "full_name": "الاسم الكامل",
+  "bio": "السيرة الذاتية",
+  "email_address": "عنوان البريد الإلكتروني",
+  "linked_profile": "حساب LinkedIn",
+  "github_profile": "حساب GitHub",
+  "save_profile": "حفظ الملف الشخصي",
+  "summary_placeholder": "مثال: مهندس برمجيات متمرس بشغف لـ...",
+  "name_placeholder": "مثال: ليزا مارتن",
+  "email_placeholder": "you@example.com",
+  "location_placeholder": "مثال: سان فرانسيسكو، كاليفورنيا",
+  "linkedin_placeholder": "رابط لينكدإن",
+  "github_placeholder": "رابط غيت هاب",
+  "edit_profile": "تعديل الملف الشخصي",
+  "address": "العنوان"
 }
