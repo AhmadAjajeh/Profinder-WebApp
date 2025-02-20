@@ -23,7 +23,7 @@ export default function SideNavigation() {
       {/* <!-- user identity --> */}
       <div class="flex flex-row items-center jusitfy-center space-x-2 rtl:space-x-reverse mb-6">
         <div className="mb-2 min-w-12">
-          <UserImage className="w-12 h-12 rounded-full" />
+          <UserImage image={user.profile_image} className="w-12 h-12 p-2" />
         </div>
         <div>
           <div class="text-sm font-semibold dark:text-white">

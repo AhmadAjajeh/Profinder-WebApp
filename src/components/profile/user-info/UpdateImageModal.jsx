@@ -6,10 +6,11 @@ import { useMutation } from '@tanstack/react-query';
 import { updateUserMutation } from '../../../http/user';
 import { queryClient } from '../../../http/auth';
 import { useNavigate, useParams } from 'react-router-dom';
-import { errorHandlingFunction } from '../../../util/http';
+import { errorHandlingFunction, setUser } from '../../../util/http';
 import { useDispatch } from 'react-redux';
 import { errorHandlingActions } from '../../../store/errorHandlingSlice';
 import { alertActions } from '../../../store/alertSlice';
+import { authActions } from '../../../store/authSlice';
 
 export function UpdateImageModel({ image, handleClose, label, imageField }) {
   const { t } = useTranslation();
@@ -29,9 +30,11 @@ export function UpdateImageModel({ image, handleClose, label, imageField }) {
         })
       );
 
+      setUser(response.user);
+      dispatch(authActions.updateUser(response.user));
+
       queryClient.invalidateQueries({ queryKey: ['visit-user', id] });
       queryClient.invalidateQueries({ queryKey: ['profile', id] });
-
       handleClose();
     },
     onError: errorHandlingFunction(dispatch, navigate, errorHandlingActions),

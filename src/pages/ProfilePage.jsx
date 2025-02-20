@@ -24,7 +24,6 @@ export default function ProfilePage() {
   const backgroundImage = user?.background_image
     ? getBaseUrl() + user?.background_image
     : null;
-  console.log('here', backgroundImage);
 
   useQuery({
     queryKey: ['visit-user', id],

@@ -12,9 +12,11 @@ import {
   SettingsIcon,
   WalletIcon,
 } from '../general-ui/IconsSvg';
+import { useSelector } from 'react-redux';
 
 export default function UserImageButton() {
   const [showList, setShowList] = useState(false);
+  const user = useSelector((state) => state.auth.user);
 
   function handleShowList() {
     setShowList((state) => !state);
@@ -26,7 +28,10 @@ export default function UserImageButton() {
       <div className="flex relative">
         <button className="rounded-full text-white" onClick={handleShowList}>
           {/* user image */}
-          <UserImage className=" w-10 h-10 p-1.5 rounded-full" />
+          <UserImage
+            image={user?.profile_image}
+            className=" w-10 h-10 p-1.5 rounded-full"
+          />
           {/* down arrow svg */}
           <div className="absolute bottom-0 flex items-center justify-center bg-slate-500 border border-white rounded-full w-4 h-4">
             <svg

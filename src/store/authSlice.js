@@ -1,25 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  token: "",
+  token: '',
   user: {
-    id: "",
-    username: "",
+    id: '',
+    username: '',
     approved: new Date(),
-    profileId: "",
+    profileId: '',
     companies: [],
     managerAt: [],
-    backgroundImage: "",
+    background_image: '',
+    profile_image: '',
   },
 };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     refreshAuth(state, action) {
       state.token = action.payload.token;
       state.user = action.payload.user;
+    },
+    updateUser(state, action) {
+      state.user = action.payload;
     },
   },
 });

@@ -35,7 +35,7 @@ export default function DarkLightModeButton() {
 
   return (
     <>
-      <div className=" p-[6px] bg-elementLightGray dark:bg-elementGray border border-gray-300 dark:border-darkBorder rounded-full transition-colors duration-300">
+      <div className=" p-[6px] w-10 h-10 flex items-center justify-center bg-elementLightGray dark:bg-elementGray border border-gray-300 dark:border-darkBorder rounded-full transition-colors duration-300">
         <button className="flex items-center" onClick={handleClick}>
           {/* the sun svg */}
           <svg

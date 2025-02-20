@@ -18,10 +18,10 @@ export default function UserInfo({
   linkedin,
   fullname,
 }) {
-  const [modal, setModal] = useState(null);
+  const [modal, setModal] = useState('');
 
   function handleCloseModal() {
-    setModal(null);
+    setModal('');
   }
 
   const modals = (

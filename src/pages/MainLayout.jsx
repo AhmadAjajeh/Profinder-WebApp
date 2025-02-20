@@ -16,15 +16,22 @@ import { profileActions } from '../store/profileSlice';
 import { queryClient } from '../http/auth';
 import SideNavigation from '../components/general-ui/SideNavigation';
 
+let initialRender = true;
+
 export default function MainLayout() {
   const error = useSelector((state) => state.error);
   const alert = useSelector((state) => state.alert);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  dispatch(
-    authActions.refreshAuth({ token: getToken().token, user: getUser() })
-  );
+  if (initialRender)
+    dispatch(
+      authActions.refreshAuth({ token: getToken().token, user: getUser() })
+    );
+  useEffect(() => {
+    initialRender = false;
+  }, []);
+
   useQuery({
     queryKey: ['my-profile'],
     queryFn: myProfileQuery,
