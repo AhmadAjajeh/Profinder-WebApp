@@ -2,7 +2,13 @@ import { useState } from 'react';
 import EditButton from '../../../components/general-ui/EditButton';
 import { UpdateImageModel } from './UpdateImageModal';
 import { AnimatePresence } from 'framer-motion';
-import { FaEnvelope, FaPen, FaGithub, FaLinkedin, FaGit } from 'react-icons/fa';
+import {
+  FaEnvelope,
+  FaPen,
+  FaGithub,
+  FaLinkedin,
+  FaUser,
+} from 'react-icons/fa';
 import { getBaseUrl } from '../../../util/http';
 import UserInfoModal from './UserInforModal';
 
@@ -69,12 +75,21 @@ export default function UserInfo({
       </div>
 
       {/* Profile Image */}
-      <div className="absolute transform -translate-y-24 md:-translate-y-16 left-1/2 md:left-auto md:rtl:right-8 md:ltr:left-8 md:translate-x-0 -translate-x-1/2">
-        <img
-          src={getBaseUrl() + profileImage}
-          alt={username}
-          className="w-32 h-32 rounded-full border-4 border-white shadow-lg"
-        />
+      <div className="absolute transform -translate-y-24 md:-translate-y-16 left-1/2 md:left-auto  md:rtl:right-8 md:ltr:left-8 md:translate-x-0 -translate-x-1/2">
+        {profileImage && (
+          <img
+            src={getBaseUrl() + profileImage}
+            alt={username}
+            className="w-32 h-32 rounded-full border-4 border-white shadow-lg"
+          />
+        )}
+
+        {!profileImage && (
+          <div className="relative overflow-hidden w-32 h-32 rounded-full bg-gray-200 dark:bg-gray-500 border-white dark:border-darkBorder flex items-center justify-center">
+            <FaUser className="absolute top-8 w-24 h-24 text-gray-400 dark:text-gray-100" />
+          </div>
+        )}
+
         {myProfile && (
           <button
             onClick={() => setModal('profile-image')}

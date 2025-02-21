@@ -30,7 +30,8 @@ export default function UserImageButton() {
           {/* user image */}
           <UserImage
             image={user?.profile_image}
-            className=" w-10 h-10 p-1.5 rounded-full"
+            className=" w-10 h-10 rounded-full"
+            outlinePadding="p-1"
           />
           {/* down arrow svg */}
           <div className="absolute bottom-0 flex items-center justify-center bg-slate-500 border border-white rounded-full w-4 h-4">

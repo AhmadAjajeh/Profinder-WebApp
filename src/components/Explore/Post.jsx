@@ -172,7 +172,8 @@ const Post = forwardRef(({ post }, ref) => {
       <div className="flex flex-row justify-between">
         <div className="flex flex-row space-x-2 rtl:space-x-reverse">
           <UserImage
-            className="w-12 h-12 p-2"
+            className="w-12 h-12 "
+            outlinePadding="p-2"
             image={post.publisher_id.profile_image}
           />
           <div className="mt-2">

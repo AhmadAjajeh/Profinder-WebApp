@@ -79,6 +79,7 @@ export function UpdateImageModel({ image, handleClose, label, imageField }) {
           <button
             onClick={updateImage}
             className="w-full text-white rounded-md font-extralight p-1 bg-logoOrange mb-2"
+            disabled={!selectedImage}
           >
             {t('update')}
           </button>

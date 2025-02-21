@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useMutation } from '@tanstack/react-query';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Modal from '../general-ui/Modal';
 import UserImage from '../general-ui/UserImage';
@@ -17,6 +17,7 @@ import { eventActions } from '../../store/dataSlice';
 
 export default function NewPost() {
   const { t } = useTranslation();
+  const user = useSelector((state) => state.auth.user);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -31,12 +32,16 @@ export default function NewPost() {
   return (
     <div className="w-full p-4 rounded-md shadow-sm border border-gray-300 dark:border-darkBorder focus:outline-none  bg-white dark:bg-elementBlack">
       <div className="w-full flex flex-row space-x-3 rtl:space-x-reverse">
-        <div className="w-12 h-12">
-          <UserImage className="w-12 h-12 p-2" />
+        <div className="w-12 h-12 ">
+          <UserImage
+            image={user.profile_image}
+            className=" w-full h-full "
+            outlinePadding="p-2"
+          />
         </div>
         <button
           onClick={handleShowNewPost}
-          className="w-full bg-gray-100 dark:bg-elementGray rounded-full text-gray-500 font-light text-sm focus:outline-none flex items-center px-3"
+          className="flex-grow bg-gray-100 dark:bg-elementGray rounded-full text-gray-500 font-light text-sm focus:outline-none flex items-center px-3"
         >
           <span>{t('share_something_beneficial')}</span>
         </button>
