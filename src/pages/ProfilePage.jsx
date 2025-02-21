@@ -30,15 +30,7 @@ export default function ProfilePage() {
     queryFn: () => visitUserQuery({ id }),
     onSuccess: (data) => {
       setUser(data.user);
-    },
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
-  });
-
-  useQuery({
-    queryKey: ['profile', id],
-    queryFn: () => profileQuery({ id }),
-    onSuccess: (data) => {
-      setProfile(data.profile);
+      setProfile(data.user.profile_id);
     },
     onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
   });
