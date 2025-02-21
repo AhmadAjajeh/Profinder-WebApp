@@ -46,7 +46,7 @@ export default function ProjectPage() {
       </div>
       {/* far right section */}
       <div className="hidden h-fit lg:flex w-full lg:min-w-[250px] lg:max-w-[380px] xl:min-w-[430px] xl:max-w-[430px] sticky top-20">
-        <div className="bg-white dark:bg-elementBlack w-[340px] sm:w-[400px] lg:w-full p-4 rounded-md border border-gray-300 dark:border-darkBorder shadow-sm dark:text-white h-[630px] flex items-center justify-center">
+        <div className="bg-white dark:bg-elementBlack w-[340px] sm:w-[400px] lg:w-full  rounded-md border border-gray-300 dark:border-darkBorder shadow-sm dark:text-white h-[630px] flex items-center justify-center">
           {newProjectModal ? (
             <NewProject />
           ) : (
@@ -70,7 +70,7 @@ export default function ProjectPage() {
               visible: { opacity: 1, scale: 1 },
             }}
           >
-            <div className="bg-white dark:bg-elementBlack w-[340px] sm:w-[400px] lg:w-full p-4 rounded-md border border-gray-300 dark:border-darkBorder shadow-sm dark:text-white h-[630px] flex items-center justify-center">
+            <div className="bg-white dark:bg-elementBlack w-[340px] sm:w-[400px] lg:w-full  rounded-md border border-gray-300 dark:border-darkBorder shadow-sm dark:text-white h-[630px] flex items-center justify-center">
               {newProjectModal ? (
                 <NewProject />
               ) : (

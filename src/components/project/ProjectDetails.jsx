@@ -77,7 +77,7 @@ export default function ProjectDetails({ projectId }) {
   }
 
   return (
-    <div className="flex flex-col h-full w-full">
+    <div className="flex flex-col h-full w-full p-4">
       {isFetching && (
         <div className="w-full h-full flex  items-center justify-center">
           <FaSpinner className="w-10 h-10 animate-spin text-logoOrange" />

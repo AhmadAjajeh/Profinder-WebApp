@@ -8,7 +8,6 @@ import Input from '../general-ui/Input';
 import TextArea from '../general-ui/TextArea';
 import { range } from '../../util/validation';
 import TopicsInput from '../general-ui/TopicsInput';
-import OneImageUpload from '../general-ui/OneImageUpload';
 import { useMutation } from '@tanstack/react-query';
 import { createProjectMutation } from '../../http/home';
 import { alertActions } from '../../store/alertSlice';
@@ -84,7 +83,7 @@ export default function NewProject() {
       formValidation.budget = 'min_and_max_should_be_numbers';
     } else if (!range(currency, 1, 3)) {
       formValidation.budget = 'currency_should_be_between_1_and_3_chars';
-    } else if (min >= max) {
+    } else if (+min >= +max) {
       formValidation.budget = 'min_should_be_less_than_max';
     } else {
       formValidation.budget = null;
@@ -119,32 +118,37 @@ export default function NewProject() {
   }
 
   return (
-    <div className="flex flex-col h-full w-full">
-      <div className="flex flex-row space-x-2 rtl:space-x-reverse items-center mb-4">
-        <MdCreate className="text-logoOrange h-5 w-5" />
-        <div>{t('create_new_freelance_project')}</div>
+    <div className="flex flex-col space-y-3 h-full w-full">
+      <div className="px-6 py-4 bg-gradient-to-r bg-logoOrange rounded-t-md">
+        <div className="flex items-center space-x-3 rtl:space-x-reverse">
+          <MdCreate className="h-6 w-6 text-white" />
+          <h1 className="text-xl font-semibold text-white">
+            {t('create_new_freelance_project')}
+          </h1>
+        </div>
       </div>
+
       <form
         ref={formRef}
         onSubmit={handleSubmission}
-        className="h-full flex flex-col justify-between"
+        className="h-full flex flex-col justify-between px-4 pb-4"
       >
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col space-y-4 w-full">
           <Input
             name="title"
             label="title"
-            inputClass="w-full p-1 bg-inherit border border-gray-300 dark:border-darkBorder mt-2 rounded-md outline-none focus:bg-gray-100 dark:focus:bg-elementGray transition-all font-light"
+            className="w-full  p-2 text-sm bg-inherit border border-gray-300 dark:border-darkBorder rounded-md focus:bg-gray-50 dark:focus:bg-elementGray transition-all font-light mt-2"
             validation={validation.title}
-            className={validation.title ? '' : 'mb-5'}
+            placeholder={t('project_title_placeholder')}
           />
           <TextArea
             ref={descriptionRef}
             label="description"
-            inputClass="w-full p-1 bg-inherit border border-gray-300 dark:border-darkBorder mt-2 rounded-md outline-none focus:bg-gray-100 dark:focus:bg-elementGray transition-all font-light "
+            className="w-full p-2 mt-2 text-sm bg-inherit border border-gray-300 dark:border-darkBorder rounded-md focus:bg-gray-50 dark:focus:bg-elementGray transition-all font-light "
             name="description"
             rows={4}
             validation={validation.description}
-            className={validation.description ? '' : 'mb-5'}
+            placeholder={t('project_description_placeholder')}
           />
           <div className="mb-6">
             <TopicsInput
@@ -153,38 +157,37 @@ export default function NewProject() {
               validation={validation.topics}
             />
           </div>
-          <div
-            className={'flex flex-col ' + (validation.budget ? 'mb-1' : 'mb-6')}
-          >
-            <div className="font-light text-sm mb-1">{t('budget')}</div>
-            <div className="w-full px-2 flex flex-row justify-between  rtl:space-x-reverse">
-              <div className=" flex flex-row space-x-1 rtl:space-x-reverse">
-                <label className="font-light text-sm px-1 ">{t('from')}</label>
-                <input
-                  name="min"
-                  className="w-16 text-sm rounded-md border border-gray-300 dark:border-darkBorder outline-none p-0.5 font-light"
-                />
-              </div>
-              <div className=" flex flex-row space-x-1 rtl:space-x-reverse">
-                <label className="font-light text-sm px-1">{t('to')}</label>
-                <input
-                  name="max"
-                  className="w-16 text-sm rounded-md border border-gray-300 dark:border-darkBorder outline-none p-0.5 font-light"
-                />
-              </div>
-              <div className=" flex flex-row space-x-1 rtl:space-x-reverse">
-                <label className="font-light text-sm px-1">
-                  {t('currency')}
-                </label>
-                <input
-                  name="currency"
-                  maxLength={3}
-                  className="w-16 text-sm rounded-md border border-gray-300 dark:border-darkBorder outline-none p-0.5 font-light"
-                />
+
+          <div>
+            <div className="w-full flex flex-row space-x-3 rtl:space-x-reverse">
+              <div className="font-light text-sm mt-1">{t('budget')}</div>
+              <div className="px-2 flex flex-row space-x-2 rtl:space-x-reverse">
+                <div className=" flex flex-col space-x-1 rtl:space-x-reverse">
+                  <Input
+                    name="min"
+                    placeholder={t('from')}
+                    className="w-16 mt-0.5 text-sm rounded-md border border-gray-300 dark:border-darkBorder p-0.5 font-light"
+                  />
+                </div>
+                <div className=" flex flex-row space-x-1 rtl:space-x-reverse">
+                  <Input
+                    name="max"
+                    placeholder={t('to')}
+                    className="w-16 mt-0.5 text-sm rounded-md border border-gray-300 dark:border-darkBorder p-0.5 font-light"
+                  />
+                </div>
+                <div className=" flex flex-row space-x-1 rtl:space-x-reverse">
+                  <Input
+                    name="currency"
+                    placeholder={t('currency')}
+                    maxLength={3}
+                    className="w-16 mt-0.5 text-sm rounded-md border border-gray-300 dark:border-darkBorder p-0.5 font-light"
+                  />
+                </div>
               </div>
             </div>
             {validation.budget && (
-              <div className="text-red-500 text-sm font-light ">
+              <div className="text-red-500 text-sm font-light mt-1">
                 {t(validation.budget)}
               </div>
             )}
@@ -198,22 +201,23 @@ export default function NewProject() {
               }
             >
               <div className="font-light text-sm">{t('delivery_time')}</div>
-              <input
+              <Input
                 name="working_interval"
                 className={
-                  'border border-gray-300 dark:border-darkBorder rounded-md outline-none p-1 w-24 text-sm '
+                  'border border-gray-300 dark:border-darkBorder rounded-md p-1 w-24 text-sm font-light'
                 }
+                placeholder={t('project_delivery_days_placeholder')}
               />
             </div>
             {validation.working_interval && (
-              <div className="text-red-500 text-sm font-light">
+              <div className="text-red-500 text-sm font-light mt-1">
                 {t(validation.working_interval)}
               </div>
             )}
           </div>
         </div>
 
-        <div className="w-full flex flex-row justify-end">
+        <div className="absolute bottom-2 rtl:left-2 ltr:right-2 w-full flex flex-row justify-end">
           <button className="bg-logoOrange text-white font-light w-fit px-5 py-2 rounded-md">
             {t('publish')}
           </button>

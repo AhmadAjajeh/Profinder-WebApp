@@ -121,5 +121,8 @@
   "delivery_time_should_be_a_number": "Delivery time should be a number",
   "delivery_time_should_be_between_1_and_365_days": "Delivery time should be between 1 and 365 days",
   "min_should_be_less_than_max": "Min should be less than max",
-  "unknown": "Unknown"
+  "unknown": "Unknown",
+  "project_title_placeholder": "Full-Stack Web Application Development",
+  "project_description_placeholder": "Develop a responsive and scalable web application using React and Node.js. Includes user authentication, database integration, and RESTful APIs.",
+  "project_delivery_days_placeholder": "10 days"
 }
