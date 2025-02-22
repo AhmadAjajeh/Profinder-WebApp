@@ -141,5 +141,8 @@
   "linkedin_placeholder": "رابط لينكدإن",
   "github_placeholder": "رابط غيت هاب",
   "edit_profile": "تعديل الملف الشخصي",
-  "address": "العنوان"
+  "address": "العنوان",
+  "project_title_placeholder": "تطوير تطبيق ويب كامل المكدس",
+  "project_description_placeholder": "تطوير تطبيق ويب متجاوب وقابل للتوسع باستخدام React و Node.js. يشمل مصادقة المستخدم، تكامل قاعدة البيانات، وواجهات برمجة تطبيقات RESTful.",
+  "project_delivery_days_placeholder": "10 أيام"
 }

@@ -6,13 +6,14 @@ export default function Input({
   label,
   className,
   inputClass,
+  name,
   validation,
   placeholder,
 }) {
   const { t } = useTranslation();
 
   return (
-    <div className={className}>
+    <div>
       {label && (
         <label
           htmlFor={id}
@@ -21,13 +22,7 @@ export default function Input({
           {t(label)}
         </label>
       )}
-      <input
-        id={id}
-        name={name}
-        className={'block ' + inputClass}
-        autoComplete="off"
-        placeholder={placeholder}
-      />
+      <input name={name} className={'block ' + inputClass} autoComplete="off" />
       {validation && (
         <div className="text-red-500 text-sm font-light">{t(validation)}</div>
       )}

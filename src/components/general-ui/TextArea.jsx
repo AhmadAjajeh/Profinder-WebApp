@@ -6,7 +6,6 @@ const TextArea = forwardRef(
     {
       placeholder,
       name,
-      inputClass,
       className,
       rows,
       maxLength,
@@ -30,15 +29,15 @@ const TextArea = forwardRef(
     };
 
     return (
-      <div className={className}>
+      <div>
         {label && <lable className="text-sm font-light">{t(label)}</lable>}
         <textarea
           ref={textareaRef}
           rows={rows}
           maxLength={maxLength}
           name={name || ''}
-          className={`outline-none text-sm w-full resize-none my-auto  ${inputClass}`}
-          placeholder={t(placeholder)}
+          className={`text-sm w-full resize-none my-auto  ${className}`}
+          placeholder={placeholder}
           onInput={autoResize}
         ></textarea>
         {validation && (

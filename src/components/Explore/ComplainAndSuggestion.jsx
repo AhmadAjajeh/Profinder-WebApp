@@ -45,13 +45,13 @@ export default function ComplainAndSuggestion() {
       </div>
 
       <Input
-        inputClass="h-9 outline-none -none border bg-white dark:bg-elementBlack border-gray-300 dark:border-darkBorder p-1 focus:p-2 rounded-md mt-2 w-full hover:bg-elementLightGray dark:hover:bg-elementGray transition-all duration-300"
+        className="h-9 -none border bg-white dark:bg-elementBlack border-gray-300 dark:border-darkBorder p-1 rounded-md mt-2 w-full hover:bg-elementLightGray dark:hover:bg-elementGray transition-all duration-300"
         label={t('subject')}
       />
 
       <TextArea
         ref={textareaRef}
-        inputClass="dark:bg-elementBlack hover:bg-gray-100 dark:hover:bg-elementGray border border-gray-300 dark:border-darkBorder duration-300 rounded-md p-2 focus:p-3 font-light transition-all mt-2"
+        className="dark:bg-elementBlack hover:bg-gray-100 dark:hover:bg-elementGray border border-gray-300 dark:border-darkBorder duration-300 rounded-md p-2 font-light transition-all mt-2"
         maxLength={1024}
         maxRows={12}
         rows={3}
