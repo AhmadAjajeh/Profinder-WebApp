@@ -32,7 +32,7 @@ export default function PostScroll() {
     }
     if (event.type === 'delete-post' && event.data) {
       setPosts((prePosts) => {
-        return prePosts.filter((post) => post._id === event.data);
+        return prePosts.filter((post) => post._id !== event.data);
       });
     }
   }, [event]);
