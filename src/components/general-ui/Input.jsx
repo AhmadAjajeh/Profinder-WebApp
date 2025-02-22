@@ -5,8 +5,6 @@ export default function Input({
   id,
   label,
   className,
-  inputClass,
-  name,
   validation,
   placeholder,
 }) {
@@ -22,7 +20,12 @@ export default function Input({
           {t(label)}
         </label>
       )}
-      <input name={name} className={'block ' + inputClass} autoComplete="off" />
+      <input
+        name={name}
+        className={'block ' + className}
+        autoComplete="off"
+        placeholder={placeholder}
+      />
       {validation && (
         <div className="text-red-500 text-sm font-light">{t(validation)}</div>
       )}
