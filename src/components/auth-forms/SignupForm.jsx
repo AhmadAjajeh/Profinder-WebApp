@@ -17,6 +17,7 @@ import { signup } from '../../http/auth';
 import { alertActions } from '../../store/alertSlice';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import { activationActions } from '../../store/activationCodeSlice';
+import { errorHandlingFunction } from '../../util/http';
 
 const initialValidationState = {
   username: null,
@@ -37,16 +38,7 @@ export default function SignupForm() {
       dispatch(alertActions.alert({ messages: [response.message] }));
       navigate('/auth/check-code');
     },
-    onError: (error) => {
-      const messages = error.info?.message || [error.message];
-
-      dispatch(
-        errorHandlingActions.throwError({
-          code: error.code,
-          messages,
-        })
-      );
-    },
+    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
   });
 
   function handleSignUp(event) {

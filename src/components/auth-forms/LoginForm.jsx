@@ -10,7 +10,7 @@ import { validateEmail, validatePassword } from '../../validation/auth';
 import { loginMutation } from '../../http/auth';
 import { authActions } from '../../store/authSlice';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
-import { setToken, setUser } from '../../util/http';
+import { errorHandlingFunction, setToken, setUser } from '../../util/http';
 
 export default function LoginForm() {
   const { t } = useTranslation();
@@ -31,14 +31,7 @@ export default function LoginForm() {
       setUser(response.user);
       navigate('/');
     },
-    onError: (error) => {
-      dispatch(
-        errorHandlingActions.throwError({
-          code: error.code,
-          messages: error.info?.message || [error.message],
-        })
-      );
-    },
+    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
   });
 
   function handleLogin(event) {

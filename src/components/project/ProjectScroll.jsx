@@ -9,15 +9,20 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 
-import { FaDollarSign } from 'react-icons/fa';
+import { FaDollarSign, FaSpinner } from 'react-icons/fa';
 import { SearchIcon, SingleCompany } from '../general-ui/IconsSvg';
 
 import NoResult from '../general-ui/NoResult';
 import PagesNav from '../general-ui/PagesNav';
 
-import { buildSearchParams, getBaseUrl } from '../../util/http';
+import {
+  buildSearchParams,
+  errorHandlingFunction,
+  getBaseUrl,
+} from '../../util/http';
 import { getProjectsQuery } from '../../http/home';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
+import { AiOutlineUser } from 'react-icons/ai';
 
 export default function ProjectScroll({}) {
   const { t } = useTranslation();
@@ -46,16 +51,7 @@ export default function ProjectScroll({}) {
       );
     },
 
-    onError: (error) => {
-      const messages = error.info?.message || [error.message];
-      dispatch(
-        errorHandlingActions.throwError({
-          code: error.code,
-          messages,
-        })
-      );
-      if (error.code === 403) navigate('/auth/login');
-    },
+    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
     refetchOnWindowFocus: false,
   });
 
@@ -138,8 +134,15 @@ export default function ProjectScroll({}) {
               />
               <FaDollarSign className="w-5 h-5 absolute ltr:right-3 rtl:left-3 text-gray-500 bg-gray-100 dark:bg-elementGray" />
             </div>
-            <button className="w-full md:w-1/6 text-sm font-light bg-logoOrange text-white p-2 rounded-md  shadow-sm">
-              {t('search')}
+            <button
+              disabled={isFetching}
+              className="w-full md:w-1/6 text-sm font-light bg-logoOrange text-white p-2 rounded-md  shadow-sm"
+            >
+              {isFetching ? (
+                <FaSpinner className="w-5 h-5 animate-spin text-white mx-auto" />
+              ) : (
+                <span>{t('search')}</span>
+              )}
             </button>
           </form>
         </div>
@@ -222,8 +225,8 @@ const ScrollProject = forwardRef(({ project, rounded, selected }, ref) => {
             src={getBaseUrl() + project.publisher_image_url}
           />
         ) : (
-          <div className="bg-gray-300 dark:bg-gray-500 p-2 w-14 h-14 flex items-center">
-            <SingleCompany style="w-12 h-12 text-gray-500 dark:text-gray-700 " />
+          <div className="bg-gray-300 dark:text-gray-300 p-2 w-14 h-14 flex items-center">
+            <AiOutlineUser style="w-12 h-12 text-gray-500 dark:text-gray-300 " />
           </div>
         )}
       </div>

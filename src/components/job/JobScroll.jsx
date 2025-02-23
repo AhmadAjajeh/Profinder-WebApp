@@ -15,11 +15,16 @@ import {
   SearchIcon,
   SingleCompany,
 } from '../general-ui/IconsSvg';
-import { buildSearchParams, getBaseUrl } from '../../util/http';
+import {
+  buildSearchParams,
+  errorHandlingFunction,
+  getBaseUrl,
+} from '../../util/http';
 import { getJobsQuery } from '../../http/home';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import NoResult from '../general-ui/NoResult';
 import PagesNav from '../general-ui/PagesNav';
+import { FaSpinner } from 'react-icons/fa';
 
 export default function JobScroll({}) {
   const { t } = useTranslation();
@@ -49,16 +54,7 @@ export default function JobScroll({}) {
       );
     },
 
-    onError: (error) => {
-      const messages = error.info?.message || [error.message];
-      dispatch(
-        errorHandlingActions.throwError({
-          code: error.code,
-          messages,
-        })
-      );
-      if (error.code === 403) navigate('/auth/login');
-    },
+    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
     refetchOnWindowFocus: false,
   });
 
@@ -107,9 +103,9 @@ export default function JobScroll({}) {
         <div>
           <form
             onSubmit={handleSearch}
-            className="flex flex-row items-center justify-between space-x-3 rtl:space-x-reverse "
+            className="flex flex-col space-y-2 lg:space-y-0 lg:flex-row lg:items-center lg:justify-between lg:space-x-3 rtl:space-x-reverse  "
           >
-            <div className="w-5/12  flex space-x-2 rtl:space-x-reverse items-center relative">
+            <div className="w-full lg:w-5/12  flex space-x-2 rtl:space-x-reverse items-center relative">
               <input
                 name="title"
                 className="outline-none px-3 py-2 bg-gray-100 dark:bg-elementGray font-light placeholder:text-[12px] rounded-md w-full"
@@ -118,7 +114,7 @@ export default function JobScroll({}) {
               />
               <SearchIcon style="w-4 h-4 absolute ltr:right-3 rtl:left-3 text-gray-500 bg-gray-100 dark:bg-elementGray h-full" />
             </div>
-            <div className="w-5/12  flex space-x-2 rtl:space-x-reverse items-center relative">
+            <div className="w-full lg:w-5/12  flex space-x-2 rtl:space-x-reverse items-center relative">
               <input
                 name="location"
                 className="outline-none px-3 placeholder:h-6 py-2 bg-gray-100 dark:bg-elementGray font-light placeholder:text-[12px] rounded-md w-full"
@@ -127,8 +123,15 @@ export default function JobScroll({}) {
               />
               <LocationIcon style="w-5 h-5 absolute ltr:right-3 rtl:left-3 text-gray-500 bg-gray-100 dark:bg-elementGray h-full" />
             </div>
-            <button className="w-1/6 text-sm font-light bg-logoOrange text-white p-2 rounded-md  shadow-sm">
-              {t('search')}
+            <button
+              disabled={isFetching}
+              className="w-full lg:w-1/6 text-sm font-light bg-logoOrange text-white p-2 rounded-md  shadow-sm"
+            >
+              {isFetching ? (
+                <FaSpinner className="w-5 h-5 animate-spin text-white mx-auto" />
+              ) : (
+                <span>{t('search')}</span>
+              )}
             </button>
           </form>
         </div>
@@ -211,7 +214,7 @@ const ScrollJob = forwardRef(({ job, rounded, selected }, ref) => {
           />
         ) : (
           <div className="bg-gray-300 dark:bg-gray-500 p-2 w-14 h-14 flex items-center">
-            <SingleCompany style="w-12 h-12 text-gray-500 dark:text-gray-700 " />
+            <SingleCompany style="w-12 h-12 text-gray-500 dark:text-gray-300 " />
           </div>
         )}
       </div>

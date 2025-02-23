@@ -42,16 +42,7 @@ export default function ProjectDetails({}) {
       setApplyCount(data.project.applications_count);
     },
 
-    onError: (error) => {
-      const messages = error.info?.message || [error.message];
-      dispatch(
-        errorHandlingActions.throwError({
-          code: error.code,
-          messages,
-        })
-      );
-      if (error.code === 403) navigate('/auth/login');
-    },
+    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
     enabled: projectId !== null,
     refetchOnWindowFocus: false,
   });

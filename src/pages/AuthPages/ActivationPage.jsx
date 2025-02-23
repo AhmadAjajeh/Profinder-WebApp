@@ -12,6 +12,7 @@ import { alertActions } from '../../store/alertSlice';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import { getDirection } from '../../util/lang';
 import SmallLogoImage from '../../components/header-components/SmallLogoImage';
+import { errorHandlingFunction } from '../../util/http';
 
 export default function ActivationPage() {
   const { email } = useSelector((state) => state.activation);
@@ -26,15 +27,7 @@ export default function ActivationPage() {
       dispatch(alertActions.alert({ messages: [response.message] }));
       navigate('/auth/login');
     },
-    onError: (error) => {
-      const messages = error.info?.message || [error.message];
-      dispatch(
-        errorHandlingActions.throwError({
-          code: error.code,
-          messages,
-        })
-      );
-    },
+    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
   });
 
   const handleSubmit = (event) => {

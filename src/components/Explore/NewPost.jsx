@@ -14,6 +14,8 @@ import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import TopicsInput from '../general-ui/TopicsInput';
 import ImagesUpload from '../general-ui/ImagesUpload';
 import { eventActions } from '../../store/dataSlice';
+import { errorHandlingFunction } from '../../util/http';
+import { useNavigate } from 'react-router-dom';
 
 export default function NewPost() {
   const { t } = useTranslation();
@@ -69,6 +71,7 @@ export default function NewPost() {
 export function NewPostModal({ onClose, prePopulate }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
 
   const textareaRef = useRef(null);
@@ -93,15 +96,7 @@ export function NewPostModal({ onClose, prePopulate }) {
       dispatch(eventActions.set({ data: response.post, type: 'new-post' }));
       onClose();
     },
-    onError: (error) => {
-      const messages = error.info?.message || [error.message];
-      dispatch(
-        errorHandlingActions.throwError({
-          code: error.code,
-          messages,
-        })
-      );
-    },
+    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
   });
 
   const { mutate: updatePost } = useMutation({
@@ -115,15 +110,7 @@ export function NewPostModal({ onClose, prePopulate }) {
       dispatch(eventActions.set({ data: response.post, type: 'edit-post' }));
       onClose();
     },
-    onError: (error) => {
-      const messages = error.info?.message || [error.message];
-      dispatch(
-        errorHandlingActions.throwError({
-          code: error.code,
-          messages,
-        })
-      );
-    },
+    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
   });
 
   const autoResize = () => {

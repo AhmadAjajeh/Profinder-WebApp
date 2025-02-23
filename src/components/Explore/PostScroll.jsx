@@ -6,6 +6,7 @@ import { getPostQuery } from '../../http/home';
 import Post, { PostShimmer } from './Post';
 import { useDispatch, useSelector } from 'react-redux';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
+import { errorHandlingFunction } from '../../util/http';
 
 export default function PostScroll() {
   const dispatch = useDispatch();
@@ -48,16 +49,7 @@ export default function PostScroll() {
         return [...previousPosts, ...data.posts];
       });
     },
-    onError: (error) => {
-      const messages = error.info?.message || [error.message];
-      dispatch(
-        errorHandlingActions.throwError({
-          code: error.code,
-          messages,
-        })
-      );
-      if (error.code === 403) navigate('/auth/login');
-    },
+    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
     keepPreviousData: true,
     enabled: morePagesExist,
     refetchOnWindowFocus: false,

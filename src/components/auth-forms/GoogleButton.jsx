@@ -10,7 +10,7 @@ import googleLogo from '../../assets/images/google.png';
 import { googleLoginMutation } from '../../http/auth';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import { useTranslation } from 'react-i18next';
-import { setToken, setUser } from '../../util/http';
+import { errorHandlingFunction, setToken, setUser } from '../../util/http';
 
 export default function GoogleButton({}) {
   const navigate = useNavigate();
@@ -27,14 +27,7 @@ export default function GoogleButton({}) {
       setUser(response.user);
       navigate('/');
     },
-    onError: (error) => {
-      dispatch(
-        errorHandlingActions.throwError({
-          code: error.code,
-          messages: error.info?.message || [error.message],
-        })
-      );
-    },
+    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
   });
 
   const login = useGoogleLogin({

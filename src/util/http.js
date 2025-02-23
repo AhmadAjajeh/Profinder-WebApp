@@ -85,7 +85,6 @@ export const errorHandlingFunction = (
   navigate
 ) => {
   return (error) => {
-    console.log(error.info);
     let messages = error.info?.message || error.info.messgae || [error.message];
 
     if (typeof messages !== 'object') messages = [messages];
@@ -96,7 +95,7 @@ export const errorHandlingFunction = (
         messages,
       })
     );
-    if (error.code === 403) navigate('/auth/login');
+    if (error.info.refresh_token) navigate('/auth/login');
   };
 };
 

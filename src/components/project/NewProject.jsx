@@ -14,6 +14,8 @@ import { alertActions } from '../../store/alertSlice';
 import { eventActions } from '../../store/dataSlice';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import { useDispatch } from 'react-redux';
+import { errorHandlingFunction } from '../../util/http';
+import { useNavigate } from 'react-router-dom';
 
 const initialValidation = {
   title: null,
@@ -26,6 +28,7 @@ const initialValidation = {
 export default function NewProject() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const descriptionRef = useRef(null);
   const formRef = useRef(null);
@@ -45,15 +48,7 @@ export default function NewProject() {
       formRef.current.reset();
       setTopics([]);
     },
-    onError: (error) => {
-      const messages = error.info?.message || [error.message];
-      dispatch(
-        errorHandlingActions.throwError({
-          code: error.code,
-          messages,
-        })
-      );
-    },
+    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
   });
 
   function handleSubmission(event) {

@@ -9,7 +9,7 @@ import AlertTopModal from '../components/alert/AlertTopModal';
 import { errorHandlingActions } from '../store/errorHandlingSlice';
 import { alertActions } from '../store/alertSlice';
 import { authActions } from '../store/authSlice';
-import { getToken, getUser } from '../util/http';
+import { errorHandlingFunction, getToken, getUser } from '../util/http';
 import { useQuery } from '@tanstack/react-query';
 import { myProfileQuery } from '../http/profile';
 import { profileActions } from '../store/profileSlice';
@@ -38,22 +38,7 @@ export default function MainLayout() {
     onSuccess: (data) => {
       dispatch(profileActions.set({ profile: data.profile }));
     },
-    onError: (error) => {
-      let messages = error.info?.message ||
-        error.info?.messgae || [error.message];
-
-      if (typeof messages !== 'object') messages = [messages];
-
-      dispatch(
-        errorHandlingActions.throwError({
-          code: error.code,
-          messages,
-        })
-      );
-
-      if (error.code !== 1) navigate('/auth/login');
-      else queryClient.cancelQueries();
-    },
+    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
     refetchOnWindowFocus: false,
   });
 

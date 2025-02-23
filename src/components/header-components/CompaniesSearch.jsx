@@ -8,7 +8,7 @@ import { searchComapniesQuery } from '../../http/home';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getBaseUrl } from '../../util/http';
+import { errorHandlingFunction, getBaseUrl } from '../../util/http';
 
 export default function CompaniesSearch() {
   const { t } = useTranslation();
@@ -29,16 +29,7 @@ export default function CompaniesSearch() {
       setComapnies(data.companies);
       setTotalPages(data.pagination.number_of_pages || null);
     },
-    onError: (error) => {
-      const messages = error.info?.message || [error.message];
-      dispatch(
-        errorHandlingActions.throwError({
-          code: error.code,
-          messages,
-        })
-      );
-      if (error.code === 403) navigate('/auth/login');
-    },
+    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
     refetchOnWindowFocus: false,
     enabled: name.length > 2,
   });
