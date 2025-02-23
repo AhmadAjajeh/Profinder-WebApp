@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { FaSpinner, FaFileAlt, FaMoneyBillWave } from 'react-icons/fa';
 import { MdTitle } from 'react-icons/md';
@@ -21,11 +21,12 @@ import { getDirection } from '../../util/lang';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import { getOneProjectQuery, projectApplyMutation } from '../../http/home';
 
-export default function ProjectDetails({ projectId }) {
+export default function ProjectDetails({}) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { projectId } = useParams();
   const [project, setProject] = useState(null);
   const [applied, setApplied] = useState(false);
   const [applyCount, setApplyCount] = useState(null);
@@ -81,17 +82,6 @@ export default function ProjectDetails({ projectId }) {
       {isFetching && (
         <div className="w-full h-full flex  items-center justify-center">
           <FaSpinner className="w-10 h-10 animate-spin text-logoOrange" />
-        </div>
-      )}
-
-      {!project && !isFetching && (
-        <div className="w-full h-full flex flex-col justify-center items-center">
-          <div className="uppercase text-center">
-            <JobHunt className="w-[350px] h-[350px]" />
-          </div>
-          <div className="uppercase font-semibold text-[16px]">
-            {t('select_a_project_to_view_its_details')}
-          </div>
         </div>
       )}
 

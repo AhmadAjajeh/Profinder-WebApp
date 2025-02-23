@@ -69,6 +69,7 @@ export default function NewPost() {
 export function NewPostModal({ onClose, prePopulate }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
 
   const textareaRef = useRef(null);
 
@@ -179,7 +180,11 @@ export function NewPostModal({ onClose, prePopulate }) {
       <form onSubmit={handlePublishPost}>
         {/* text area */}
         <div className="flex flex-row justify-start  space-x-2 rtl:space-x-reverse px-2 mb-4">
-          <UserImage className="w-12 h-12 rounded-full" />
+          <UserImage
+            image={user.profile_image}
+            className=" w-12 h-12 "
+            outlinePadding="p-2"
+          />
           <div className="text-gray-500 text-md font-light w-full">
             <textarea
               ref={textareaRef}

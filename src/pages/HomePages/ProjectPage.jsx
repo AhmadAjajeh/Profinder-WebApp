@@ -1,21 +1,28 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useSearchParams } from 'react-router-dom';
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 
 import HomeNavigation from '../../components/home-components/HomeNavigation';
 import Modal from '../../components/general-ui/Modal';
 import ProjectScroll from '../../components/project/ProjectScroll';
-import ProjectDetails from '../../components/project/ProjectDetails';
 import { PlusIcon } from '../../components/general-ui/IconsSvg';
-import NewProject from '../../components/project/NewProject';
+import JobHunt from '../../components/general-ui/JobHunt';
+import { useTranslation } from 'react-i18next';
 
 export default function ProjectPage() {
-  const [searchParams] = useSearchParams();
-  const [projectId, setProjectId] = useState(
-    searchParams.get('selectedProject')
-  );
+  const { projectId } = useParams();
 
-  const [newProjectModal, setNewProjectModal] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const parentPage = location.pathname === '/home/projects';
 
   return (
     <div className="w-full flex flex-row space-x-5 rtl:space-x-reverse">
@@ -35,33 +42,31 @@ export default function ProjectPage() {
           animate="animate"
           exit="hidden"
         >
-          <ProjectScroll
-            chooseProject={(id) => {
-              setProjectId(id);
-              setNewProjectModal(false);
-            }}
-            selectedProjectId={projectId}
-          />
+          <ProjectScroll />
         </motion.div>
       </div>
       {/* far right section */}
       <div className="hidden h-fit lg:flex w-full lg:min-w-[250px] lg:max-w-[380px] xl:min-w-[430px] xl:max-w-[430px] sticky top-20">
         <div className="bg-white dark:bg-elementBlack w-[340px] sm:w-[400px] lg:w-full  rounded-md border border-gray-300 dark:border-darkBorder shadow-sm dark:text-white h-[630px] flex items-center justify-center">
-          {newProjectModal ? (
-            <NewProject />
+          {parentPage ? (
+            <div className="w-full h-full flex flex-col justify-center items-center">
+              <div className="uppercase text-center">
+                <JobHunt className="w-[350px] h-[350px]" />
+              </div>
+              <div className="uppercase font-semibold text-[16px]">
+                {t('select_a_project_to_view_its_details')}
+              </div>
+            </div>
           ) : (
-            <ProjectDetails projectId={projectId} />
+            <Outlet />
           )}
         </div>
       </div>
 
       <AnimatePresence>
-        {(projectId !== null || newProjectModal) && (
+        {!parentPage && (
           <Modal
-            onClose={() => {
-              setProjectId(null);
-              setNewProjectModal(false);
-            }}
+            onClose={() => navigate('/home/projects')}
             bgDiv={true}
             className="inset-0 rounded-md dark:bg-elementBlack"
             options="lg:hidden"
@@ -71,22 +76,29 @@ export default function ProjectPage() {
             }}
           >
             <div className="bg-white dark:bg-elementBlack w-[340px] sm:w-[400px] lg:w-full  rounded-md border border-gray-300 dark:border-darkBorder shadow-sm dark:text-white h-[630px] flex items-center justify-center">
-              {newProjectModal ? (
-                <NewProject />
+              {parentPage ? (
+                <div className="w-full h-full flex flex-col justify-center items-center">
+                  <div className="uppercase text-center">
+                    <JobHunt className="w-[350px] h-[350px]" />
+                  </div>
+                  <div className="uppercase font-semibold text-[16px]">
+                    {t('select_a_project_to_view_its_details')}
+                  </div>
+                </div>
               ) : (
-                <ProjectDetails projectId={projectId} />
+                <Outlet />
               )}
             </div>
           </Modal>
         )}
       </AnimatePresence>
 
-      <button
-        onClick={() => setNewProjectModal(true)}
+      <Link
+        to="new-project"
         className="fixed bottom-3 ltr:right-3 rtl:left-3 text-white bg-logoOrange p-3 rounded-full"
       >
         <PlusIcon style="w-6 h-6" />
-      </button>
+      </Link>
     </div>
   );
 }

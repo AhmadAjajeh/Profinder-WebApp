@@ -1,7 +1,12 @@
 import { forwardRef, useEffect, useState } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 
@@ -16,10 +21,12 @@ import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import NoResult from '../general-ui/NoResult';
 import PagesNav from '../general-ui/PagesNav';
 
-export default function JobScroll({ chooseJob, selectedJobId }) {
+export default function JobScroll({}) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { jobId: selectedJobId } = useParams();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
@@ -60,10 +67,9 @@ export default function JobScroll({ chooseJob, selectedJobId }) {
       page,
       title,
       location,
-      selectedJob: selectedJobId,
     });
-    setSearchParams(params);
-  }, [page, title, location, setSearchParams, selectedJobId]);
+    setSearchParams(params, { replace: true }); // this line
+  }, [page, title, location, setSearchParams]);
 
   useEffect(() => {
     if (!isFetching && jobs.length < 5)
@@ -90,7 +96,7 @@ export default function JobScroll({ chooseJob, selectedJobId }) {
     setLocation(newLocation);
     setPage(1);
     setJobs([]);
-    chooseJob(null);
+    // chooseJob(null);
     if (title === newTitle && location === newLocation) refetch();
   }
 
@@ -153,7 +159,6 @@ export default function JobScroll({ chooseJob, selectedJobId }) {
               <ScrollJob
                 key={job._id}
                 job={job}
-                onSelect={chooseJob}
                 rounded={index === 0}
                 selected={selectedJobId === job._id}
               />
@@ -183,9 +188,9 @@ export default function JobScroll({ chooseJob, selectedJobId }) {
   );
 }
 
-const ScrollJob = forwardRef(({ job, onSelect, rounded, selected }, ref) => {
+const ScrollJob = forwardRef(({ job, rounded, selected }, ref) => {
   return (
-    <button
+    <Link
       ref={ref}
       className={`flex flex-row p-4 ${
         selected
@@ -195,7 +200,7 @@ const ScrollJob = forwardRef(({ job, onSelect, rounded, selected }, ref) => {
         rounded && 'rounded-t-md'
       }
        `}
-      onClick={() => onSelect(job._id)}
+      to={job._id}
     >
       {/* company image */}
       <div className="flex flex-row items-center justify-center">
@@ -221,7 +226,7 @@ const ScrollJob = forwardRef(({ job, onSelect, rounded, selected }, ref) => {
           {job.location}
         </div>
       </div>
-    </button>
+    </Link>
   );
 });
 

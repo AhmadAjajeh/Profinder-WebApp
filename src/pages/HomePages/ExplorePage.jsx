@@ -10,7 +10,7 @@ export default function ExplorePage() {
   return (
     <>
       {/* middle section */}
-      <div className="flex-1 overflow-hidden min-w-[400px]">
+      <div className="flex-1 overflow-hidden lg:min-w-[400px]">
         <div className=" flex flex-col item-center ">
           {/* <HomeNavigation /> */}
           <HomeNavigation />

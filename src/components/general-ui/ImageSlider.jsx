@@ -38,7 +38,7 @@ const ImageSlider = ({ images }) => {
   };
 
   return (
-    <div className="relative flex items-center justify-center w-full max-w-[600px] mx-auto overflow-hidden rounded-md ">
+    <div className="relative flex items-center justify-center w-full max-w-[600px] mx-auto overflow-hidden bg-elementDarkerLightGray dark:bg-elementGray rounded-md ">
       <AnimatePresence>
         {modal && (
           <ImageSliderModal
@@ -72,7 +72,7 @@ const ImageSlider = ({ images }) => {
             animate="center"
             exit="exit"
             transition={{ duration: 0.4 }}
-            className="absolute top-0 left-0 h-full w-full object-cover"
+            className="absolute top-0 left-0 h-full w-full object-contain object-center"
           />
         </AnimatePresence>
       </button>

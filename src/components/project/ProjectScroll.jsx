@@ -1,6 +1,11 @@
 import { forwardRef, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 
@@ -14,11 +19,12 @@ import { buildSearchParams, getBaseUrl } from '../../util/http';
 import { getProjectsQuery } from '../../http/home';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
 
-export default function ProjectScroll({ chooseProject, selectedProjectId }) {
+export default function ProjectScroll({}) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { projectId: selectedProjectId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
   const [projects, setProjects] = useState([]);
@@ -58,10 +64,10 @@ export default function ProjectScroll({ chooseProject, selectedProjectId }) {
       page,
       title,
       ...minmax,
-      selectedProject: selectedProjectId,
     });
-    setSearchParams(params);
-  }, [page, title, minmax.min, minmax.max, setSearchParams, selectedProjectId]);
+
+    setSearchParams(params, { replace: true });
+  }, [page, title, minmax.min, minmax.max, setSearchParams]);
 
   useEffect(() => {
     if (!isFetching && projects.length < 5)
@@ -91,7 +97,7 @@ export default function ProjectScroll({ chooseProject, selectedProjectId }) {
     setMinmax({ min: newMin, max: newMax });
     setPage(1);
     setProjects([]);
-    chooseProject(null);
+
     if (title === newTitle && minmax.min === newMin && minmax.max === newMax)
       refetch();
   }
@@ -164,7 +170,6 @@ export default function ProjectScroll({ chooseProject, selectedProjectId }) {
               <ScrollProject
                 key={project._id}
                 project={project}
-                onSelect={chooseProject}
                 rounded={index === 0}
                 selected={selectedProjectId === project._id}
               />
@@ -194,49 +199,48 @@ export default function ProjectScroll({ chooseProject, selectedProjectId }) {
   );
 }
 
-const ScrollProject = forwardRef(
-  ({ project, onSelect, rounded, selected }, ref) => {
-    return (
-      <button
-        ref={ref}
-        className={`flex flex-row p-4 ${
-          selected
-            ? 'bg-gray-200 dark:bg-elementGray'
-            : 'bg-white dark:bg-elementBlack'
-        } hover:bg-gray-200 dark:hover:bg-elementGray transition-colors duration-200' space-x-3 rtl:space-x-reverse border-b border-gray-300 dark:border-darkBorder ${
-          rounded && 'rounded-t-md'
-        }
+const ScrollProject = forwardRef(({ project, rounded, selected }, ref) => {
+  console.log(project._id);
+  return (
+    <Link
+      ref={ref}
+      className={`flex flex-row p-4 ${
+        selected
+          ? 'bg-gray-200 dark:bg-elementGray'
+          : 'bg-white dark:bg-elementBlack'
+      } hover:bg-gray-200 dark:hover:bg-elementGray transition-colors duration-200' space-x-3 rtl:space-x-reverse border-b border-gray-300 dark:border-darkBorder ${
+        rounded && 'rounded-t-md'
+      }
        `}
-        onClick={() => onSelect(project._id)}
-      >
-        {/* company image */}
-        <div className="flex flex-row items-center justify-center">
-          {project.publisher_image_url ? (
-            <img
-              className="w-14 h-14 object-cover min-w-14"
-              src={getBaseUrl() + project.publisher_image_url}
-            />
-          ) : (
-            <div className="bg-gray-300 dark:bg-gray-500 p-2 w-14 h-14 flex items-center">
-              <SingleCompany style="w-12 h-12 text-gray-500 dark:text-gray-700 " />
-            </div>
-          )}
-        </div>
+      to={project._id}
+    >
+      {/* company image */}
+      <div className="flex flex-row items-center justify-center">
+        {project.publisher_image_url ? (
+          <img
+            className="w-14 h-14 object-cover min-w-14"
+            src={getBaseUrl() + project.publisher_image_url}
+          />
+        ) : (
+          <div className="bg-gray-300 dark:bg-gray-500 p-2 w-14 h-14 flex items-center">
+            <SingleCompany style="w-12 h-12 text-gray-500 dark:text-gray-700 " />
+          </div>
+        )}
+      </div>
 
-        {/* title and location */}
-        <div className="flex flex-col space-y-[2px] text-start">
-          <h4 className="font-normal text-sm ">{project.title}</h4>
-          <div className="text-xs text-gray-500 dark:text-gray-300">
-            {project.publisher_name}
-          </div>
-          <div className="text-xs text-gray-500 dark:text-gray-300">
-            {project.location}
-          </div>
+      {/* title and location */}
+      <div className="flex flex-col space-y-[2px] text-start">
+        <h4 className="font-normal text-sm ">{project.title}</h4>
+        <div className="text-xs text-gray-500 dark:text-gray-300">
+          {project.publisher_name}
         </div>
-      </button>
-    );
-  }
-);
+        <div className="text-xs text-gray-500 dark:text-gray-300">
+          {project.location}
+        </div>
+      </div>
+    </Link>
+  );
+});
 
 function ScrollProjectShimmer() {
   return (

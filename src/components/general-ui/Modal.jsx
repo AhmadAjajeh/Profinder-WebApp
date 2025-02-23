@@ -17,6 +17,7 @@ export default function Modal({
       document.body.classList.remove('no-scroll');
     };
   }, []);
+
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === 'Escape' && onClose) {

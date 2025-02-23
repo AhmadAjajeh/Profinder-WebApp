@@ -12,6 +12,9 @@ import JobPage from '../pages/HomePages/JobPage';
 import ProjectPage from '../pages/HomePages/ProjectPage';
 import HashtagPage from '../pages/HomePages/HashtagPage';
 import ProfilePage from '../pages/ProfilePage';
+import JobDetails from '../components/job/JobDetails';
+import ProjectDetails from '../components/project/ProjectDetails';
+import NewProject from '../components/project/NewProject';
 
 export default createBrowserRouter([
   {
@@ -43,10 +46,15 @@ export default createBrowserRouter([
           {
             path: 'jobs',
             element: <JobPage />,
+            children: [{ path: ':jobId', element: <JobDetails /> }],
           },
           {
             path: 'projects',
             element: <ProjectPage />,
+            children: [
+              { path: ':projectId', element: <ProjectDetails /> },
+              { path: 'new-project', element: <NewProject /> },
+            ],
           },
           {
             path: 'hashtags',

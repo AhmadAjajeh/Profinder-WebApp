@@ -3,13 +3,17 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import HomeNavigation from '../../components/home-components/HomeNavigation';
 import JobScroll from '../../components/job/JobScroll';
-import JobDetails from '../../components/job/JobDetails';
-import { useSearchParams } from 'react-router-dom';
+
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import Modal from '../../components/general-ui/Modal';
+import JobHunt from '../../components/general-ui/JobHunt';
+import { useTranslation } from 'react-i18next';
 
 export default function JobPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [jobId, setJobId] = useState(searchParams.get('selectedJob'));
+  const { jobId } = useParams();
+
+  const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <div className="w-full flex flex-row space-x-5 rtl:space-x-reverse">
@@ -29,18 +33,31 @@ export default function JobPage() {
           animate="animate"
           exit="hidden"
         >
-          <JobScroll chooseJob={setJobId} selectedJobId={jobId} />
+          <JobScroll />
         </motion.div>
       </div>
       {/* far right section */}
       <div className="hidden h-fit lg:flex w-full lg:min-w-[250px] lg:max-w-[380px] xl:min-w-[430px] xl:max-w-[430px] sticky top-20">
-        <JobDetails jobId={jobId} />
+        <div className="bg-white dark:bg-elementBlack w-[340px] sm:w-[400px] lg:w-full p-4 rounded-md border border-gray-300 dark:border-darkBorder shadow-sm   dark:text-white h-[630px] flex flex-col">
+          {!jobId ? (
+            <div className="w-full h-full flex flex-col justify-center items-center">
+              <div className="uppercase text-center">
+                <JobHunt className="w-[350px] h-[350px]" />
+              </div>
+              <div className="uppercase font-semibold text-[16px]">
+                {t('select_a_job_to_see_its_details')}
+              </div>
+            </div>
+          ) : (
+            <Outlet />
+          )}
+        </div>
       </div>
 
       <AnimatePresence>
-        {jobId !== null && (
+        {jobId && (
           <Modal
-            onClose={() => setJobId(null)}
+            onClose={() => navigate('/home/jobs')}
             bgDiv={true}
             className="inset-0 rounded-md dark:bg-elementBlack"
             options="lg:hidden"
@@ -49,7 +66,9 @@ export default function JobPage() {
               visible: { opacity: 1, scale: 1 },
             }}
           >
-            <JobDetails jobId={jobId} />
+            <div className="bg-white dark:bg-elementBlack w-[340px] sm:w-[400px] lg:w-full p-4 rounded-md border border-gray-300 dark:border-darkBorder shadow-sm   dark:text-white h-[630px] flex flex-col">
+              <Outlet />
+            </div>
           </Modal>
         )}
       </AnimatePresence>

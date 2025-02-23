@@ -42,7 +42,6 @@ import { alertActions } from '../../store/alertSlice';
 import { NewPostModal } from './NewPost';
 import DeletionModal from '../general-ui/DeletionModal';
 import { eventActions } from '../../store/dataSlice';
-import UserImage from '../general-ui/UserImage';
 
 const Post = forwardRef(({ post }, ref) => {
   const dispatch = useDispatch();
@@ -171,11 +170,21 @@ const Post = forwardRef(({ post }, ref) => {
       {/* userimage, name, and time posted */}
       <div className="flex flex-row justify-between">
         <div className="flex flex-row space-x-2 rtl:space-x-reverse">
-          <UserImage
-            className="w-12 h-12 "
-            outlinePadding="p-2"
-            image={post.publisher_id.profile_image}
-          />
+          {post.publisher_id.profile_image &&
+          post.publisher_id.profile_image !== '' ? (
+            <img
+              src={getBaseUrl() + post.publisher_id.profile_image}
+              className="w-12 h-12 rounded-full"
+            />
+          ) : (
+            <div
+              className={
+                'rounded-full flex items-center justify-center bg-gray-300 p-1 text-white dark:bg-gray-700 w-12 h-12'
+              }
+            >
+              <AiOutlineUser className="w-10 h-10" />
+            </div>
+          )}
           <div className="mt-2">
             <div className="text-sm md:text-md font-normal">
               {post.publisher_id.username}
@@ -203,20 +212,20 @@ const Post = forwardRef(({ post }, ref) => {
                   initial="hidden"
                   animate="animate"
                   exit="hidden"
-                  className="absolute z-[50] bg-gray-200 dark:bg-elementGray p-3 rounded-md flex flex-col space-y-3 text-sm font-light ltr:right-0 rtl:left-0 border border-gray-400 dark:border-darkBorder"
+                  className="absolute w-32 z-[50] bg-white dark:bg-elementBlack flex flex-col  text-[13px] font-light ltr:right-0 rtl:left-0 border border-gray-400 dark:border-darkBorder"
                 >
                   <button
                     onClick={() => setEdit(true)}
-                    className="flex flex-row space-x-1 rtl:space-x-reverse items-center "
+                    className="flex flex-row space-x-3 p-2 rtl:space-x-reverse items-center hover:bg-orange-300"
                   >
-                    <EditIcon style="w-3 h-3" />
+                    <EditIcon style="w-4 h-4" />
                     <span> {t('edit')}</span>
                   </button>
                   <button
                     onClick={() => setDeletion(true)}
-                    className="flex flex-row space-x-1 rtl:space-x-reverse items-center text-red-500"
+                    className="flex flex-row space-x-3 p-2  rtl:space-x-reverse items-center text-red-500 hover:bg-red-300"
                   >
-                    <DeleteIcon style="w-3 h-3" />
+                    <DeleteIcon style="w-4 h-4" />
                     <span>{t('delete')}</span>
                   </button>
                 </motion.div>

@@ -20,9 +20,11 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { getOneJobQuery, jobApplyMutation } from '../../http/home';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export default function JobDetails({ jobId }) {
+export default function JobDetails({}) {
+  const { jobId } = useParams();
+
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -78,21 +80,10 @@ export default function JobDetails({ jobId }) {
   }
 
   return (
-    <div className="bg-white dark:bg-elementBlack w-[340px] sm:w-[400px] lg:w-full p-4 rounded-md border border-gray-300 dark:border-darkBorder shadow-sm   dark:text-white h-[630px] flex flex-col">
+    <>
       {isFetching && (
         <div className="w-full h-full flex  items-center justify-center">
           <FaSpinner className="w-10 h-10 animate-spin text-logoOrange" />
-        </div>
-      )}
-
-      {!job && !isFetching && (
-        <div className="w-full h-full flex flex-col justify-center items-center">
-          <div className="uppercase text-center">
-            <JobHunt className="w-[350px] h-[350px]" />
-          </div>
-          <div className="uppercase font-semibold text-[16px]">
-            {t('select_a_job_to_see_its_details')}
-          </div>
         </div>
       )}
 
@@ -258,6 +249,6 @@ export default function JobDetails({ jobId }) {
           </div>
         </>
       )}
-    </div>
+    </>
   );
 }
