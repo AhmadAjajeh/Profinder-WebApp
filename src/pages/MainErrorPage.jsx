@@ -5,6 +5,9 @@ import { useTranslation } from 'react-i18next';
 
 export default function MainErrorPage() {
   const { t } = useTranslation();
+  const error = useRouteError();
+
+  console.log(error);
 
   return (
     <div className="mx-auto w-fit flex flex-col space-y-5 mt-16 px-4">

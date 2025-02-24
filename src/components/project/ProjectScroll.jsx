@@ -226,7 +226,7 @@ const ScrollProject = forwardRef(({ project, rounded, selected }, ref) => {
           />
         ) : (
           <div className="bg-gray-300 dark:text-gray-300 p-2 w-14 h-14 flex items-center">
-            <AiOutlineUser style="w-12 h-12 text-gray-500 dark:text-gray-300 " />
+            <AiOutlineUser className="w-12 h-12 text-gray-500 dark:text-gray-300 " />
           </div>
         )}
       </div>
