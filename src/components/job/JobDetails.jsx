@@ -53,7 +53,7 @@ export default function JobDetails({}) {
     if (!jobId) setJob(null);
   });
 
-  const { mutate } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: jobApplyMutation,
     onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
     onSuccess: () => {
@@ -233,9 +233,14 @@ export default function JobDetails({}) {
 
             <button
               onClick={handleApply}
+              disabled={isLoading}
               className="w-1/3 bg-logoOrange text-white rounded-md shadow-md"
             >
-              {applied ? t('cancel_apply') : t('apply')}
+              {isLoading ? (
+                <FaSpinner className="w-5 h-5 animate-spin text-white mx-auto" />
+              ) : (
+                <span>{applied ? t('cancel_apply') : t('apply')}</span>
+              )}
             </button>
           </div>
         </>

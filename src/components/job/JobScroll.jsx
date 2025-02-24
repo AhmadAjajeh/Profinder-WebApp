@@ -124,10 +124,10 @@ export default function JobScroll({}) {
               <LocationIcon style="w-5 h-5 absolute ltr:right-3 rtl:left-3 text-gray-500 bg-gray-100 dark:bg-elementGray h-full" />
             </div>
             <button
-              disabled={isFetching}
+              disabled={isFetching && title}
               className="w-full lg:w-1/6 text-sm font-light bg-logoOrange text-white p-2 rounded-md  shadow-sm"
             >
-              {isFetching ? (
+              {isFetching && title ? (
                 <FaSpinner className="w-5 h-5 animate-spin text-white mx-auto" />
               ) : (
                 <span>{t('search')}</span>

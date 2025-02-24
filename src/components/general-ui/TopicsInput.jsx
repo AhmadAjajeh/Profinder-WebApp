@@ -16,7 +16,7 @@ export default function TopicsInput({
   const handleAddTopic = () => {
     const addedTopic = topicRef.current.value;
 
-    if (topics.length > 5) {
+    if (topics.length === 5) {
       setTopicsValidation('no_more_than_five_topics');
       return;
     }

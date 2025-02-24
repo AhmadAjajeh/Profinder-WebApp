@@ -16,6 +16,7 @@ import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import { useDispatch } from 'react-redux';
 import { errorHandlingFunction } from '../../util/http';
 import { useNavigate } from 'react-router-dom';
+import { FaSpinner } from 'react-icons/fa';
 
 const initialValidation = {
   title: null,
@@ -36,7 +37,7 @@ export default function NewProject() {
 
   const [validation, setValidation] = useState(initialValidation);
 
-  const { mutate: createProject } = useMutation({
+  const { mutate: createProject, isLoading } = useMutation({
     mutationFn: createProjectMutation,
     onSuccess: (response) => {
       dispatch(
@@ -214,7 +215,11 @@ export default function NewProject() {
 
         <div className="absolute bottom-2 rtl:left-2 ltr:right-2 w-full flex flex-row justify-end">
           <button className="bg-logoOrange text-white font-light w-fit px-5 py-2 rounded-md">
-            {t('publish')}
+            {isLoading ? (
+              <FaSpinner className="w-5 h-5 animate-spin text-white mx-auto" />
+            ) : (
+              <span>{t('publish')}</span>
+            )}
           </button>
         </div>
       </form>

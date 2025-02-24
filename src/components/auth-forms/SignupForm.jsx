@@ -18,6 +18,7 @@ import { alertActions } from '../../store/alertSlice';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import { activationActions } from '../../store/activationCodeSlice';
 import { errorHandlingFunction } from '../../util/http';
+import { FaSpinner } from 'react-icons/fa';
 
 const initialValidationState = {
   username: null,
@@ -118,22 +119,29 @@ export default function SignupForm() {
             disabled={isLoading}
             class="py-3 px-6 flex space-x-3 rtl:space-x-reverse w-full justify-center rounded-md dark:text-slate-50 dark:opacity-90 text-white bg-logoOrange hover:shadow-lg hover:bg-orange-300 shadow-md hover:-translate-y-0.5 transition-all duration-200"
           >
-            <span>{t('signup')}</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-7 rtl:rotate-180"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="#ffffff"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <line x1="13" y1="18" x2="19" y2="12" />
-              <line x1="13" y1="6" x2="19" y2="12" />
-            </svg>
+            {isLoading ? (
+              <FaSpinner className="w-5 h-5 animate-spin text-white mx-auto" />
+            ) : (
+              <>
+                {' '}
+                <span>{t('signup')}</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-7 rtl:rotate-180"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="#ffffff"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <line x1="13" y1="18" x2="19" y2="12" />
+                  <line x1="13" y1="6" x2="19" y2="12" />
+                </svg>
+              </>
+            )}
           </button>
         </div>
         {/* login */}

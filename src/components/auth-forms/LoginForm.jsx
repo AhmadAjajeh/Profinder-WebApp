@@ -11,6 +11,7 @@ import { loginMutation } from '../../http/auth';
 import { authActions } from '../../store/authSlice';
 import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import { errorHandlingFunction, setToken, setUser } from '../../util/http';
+import { FaSpinner } from 'react-icons/fa';
 
 export default function LoginForm() {
   const { t } = useTranslation();
@@ -80,22 +81,28 @@ export default function LoginForm() {
           disabled={isLoading}
           class="py-4 px-6 flex space-x-3 rounded-md dark:text-slate-100 dark:opacity-95 text-white bg-logoOrange hover:shadow-lg hover:bg-orange-300 shadow-md hover:-translate-y-0.5 transition-all duration-200"
         >
-          <span>{t('login')}</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class={`w-7 rtl:hidden`}
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="#ffffff"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <line x1="5" y1="12" x2="19" y2="12" />
-            <line x1="13" y1="18" x2="19" y2="12" />
-            <line x1="13" y1="6" x2="19" y2="12" />
-          </svg>
+          {isLoading ? (
+            <FaSpinner className="w-5 h-5 animate-spin text-white mx-auto" />
+          ) : (
+            <>
+              <span>{t('login')}</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class={`w-7 rtl:hidden`}
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="#ffffff"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <line x1="13" y1="18" x2="19" y2="12" />
+                <line x1="13" y1="6" x2="19" y2="12" />
+              </svg>
+            </>
+          )}
         </button>
       </div>
     </form>
