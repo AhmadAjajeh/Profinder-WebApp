@@ -13,12 +13,11 @@ import { errorHandlingFunction, getToken, getUser } from '../util/http';
 import { useQuery } from '@tanstack/react-query';
 import { myProfileQuery } from '../http/profile';
 import { profileActions } from '../store/profileSlice';
-import { queryClient } from '../http/auth';
 import SideNavigation from '../components/general-ui/SideNavigation';
 
 let initialRender = true;
 
-export default function MainLayout() {
+export default function MainLayout({ children }) {
   const error = useSelector((state) => state.error);
   const alert = useSelector((state) => state.alert);
   const dispatch = useDispatch();
@@ -97,7 +96,7 @@ export default function MainLayout() {
           <SideNavigation />
         </aside>
 
-        <Outlet />
+        {children || <Outlet />}
       </div>
     </div>
   );

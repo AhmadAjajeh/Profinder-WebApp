@@ -5,7 +5,6 @@ import LoginPage from '../pages/AuthPages/LoginPage';
 import SignupPage from '../pages/AuthPages/SignupPage';
 import ActivationPage from '../pages/AuthPages/ActivationPage';
 import MainLayout, { mainLoader } from '../pages/MainLayout';
-// import HomeLayout from '../pages/HomeLayout';
 import ExplorePage from '../pages/HomePages/ExplorePage';
 import { destroyAuthInfo } from '../util/http';
 import JobPage from '../pages/HomePages/JobPage';
@@ -15,6 +14,7 @@ import ProfilePage from '../pages/ProfilePage';
 import JobDetails from '../components/job/JobDetails';
 import ProjectDetails from '../components/project/ProjectDetails';
 import NewProject from '../components/project/NewProject';
+import MainErrorPage from '../pages/MainErrorPage';
 
 export default createBrowserRouter([
   {
@@ -35,12 +35,12 @@ export default createBrowserRouter([
   {
     path: '/',
     element: <MainLayout />,
+    errorElement: <MainErrorPage />,
     loader: mainLoader,
     children: [
       { path: '/', element: <Navigate to="/home" replace /> },
       {
         path: 'home',
-        // element: <HomeLayout />,
         children: [
           { index: true, element: <ExplorePage /> },
           {

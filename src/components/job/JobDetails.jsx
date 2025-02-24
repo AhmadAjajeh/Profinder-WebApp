@@ -90,7 +90,7 @@ export default function JobDetails({}) {
                 />
               ) : (
                 <div className="bg-gray-300 dark:bg-gray-500 w-12 h-12 flex items-center justify-center rounded-full overflow-hidden">
-                  <SingleCompany style="w-9 h-9 text-gray-500 dark:text-gray-700 " />
+                  <SingleCompany style="w-9 h-9 text-gray-500 dark:text-gray-300 " />
                 </div>
               )}
             </div>

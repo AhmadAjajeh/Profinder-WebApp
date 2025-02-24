@@ -132,6 +132,8 @@
   "bio": "السيرة الذاتية",
   "email_address": "عنوان البريد الإلكتروني",
   "linked_profile": "حساب LinkedIn",
+  "back_to_home_page": "العودة إلى الصفحة الرئيسية",
+  "an_error_occurred": "حدث خطأ",
   "github_profile": "حساب GitHub",
   "save_profile": "حفظ الملف الشخصي",
   "summary_placeholder": "مثال: مهندس برمجيات متمرس بشغف لـ...",
