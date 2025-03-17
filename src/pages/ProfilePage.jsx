@@ -1,18 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
-import { profileQuery, visitUserQuery } from '../http/profile';
-import { errorHandlingFunction, getBaseUrl } from '../util/http';
-import { errorHandlingActions } from '../store/errorHandlingSlice';
+import { visitUserQuery } from '../http/profile';
+import { getBaseUrl } from '../util/http';
 import UserInfo from '../components/profile/user-info/UserInfo';
+import useErrorHandler from '../hooks/useErrorHandler';
 
 export default function ProfilePage() {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const handleError = useErrorHandler();
 
   const { id } = useParams();
   const [profile, setProfile] = useState({});
@@ -28,11 +25,11 @@ export default function ProfilePage() {
   useQuery({
     queryKey: ['visit-user', id],
     queryFn: () => visitUserQuery({ id }),
-    onSuccess: (data) => {
+    onSuccess: ({ data }) => {
       setUser(data.user);
       setProfile(data.user.profile_id);
     },
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
   });
 
   const username = 'John Doe';

@@ -2,6 +2,7 @@ import { jwtDecode } from 'jwt-decode';
 
 import store from '../store/index';
 import { getLanguage } from './lang';
+import i18next from 'i18next';
 
 export const handlerFunction = async (url, configuration, errorMessage) => {
   let response;
@@ -85,17 +86,42 @@ export const errorHandlingFunction = (
   navigate
 ) => {
   return (error) => {
-    let messages = error.info?.message || error.info.messgae || [error.message];
+    let messages = [];
 
-    if (typeof messages !== 'object') messages = [messages];
+    // Handle Axios errors
+    if (error.isAxiosError) {
+      if (!error.response) {
+        // Network error or server not reachable
+        messages = [
+          i18next.t('an_error_occurred_while_trying_to_reach_the_server'),
+        ];
+      } else {
+        // Server responded with error
+        const responseData = error.response.data;
+        messages = responseData.message
+          ? Array.isArray(responseData.message)
+            ? responseData.message
+            : [responseData.message]
+          : [error.message];
+      }
+    } else {
+      // Handle non-Axios errors (like backend validation errors)
+      messages = error.message
+        ? [error.message]
+        : ['An unknown error occurred'];
+    }
 
     dispatch(
       errorHandlingActions.throwError({
-        code: error.code,
+        code: error.response?.status || error.code || 500,
         messages,
       })
     );
-    if (error.info.refresh_token) navigate('/auth/login');
+
+    // Handle authentication errors
+    if (error.response?.status === 401 || error.response?.data?.refresh_token) {
+      navigate('/auth/login');
+    }
   };
 };
 

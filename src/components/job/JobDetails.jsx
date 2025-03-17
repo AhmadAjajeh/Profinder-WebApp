@@ -9,18 +9,17 @@ import {
 } from 'react-icons/fa';
 
 import { formatDisplayDate, timeAgo } from '../../util/date';
-import { errorHandlingFunction, getBaseUrl } from '../../util/http';
+import { getBaseUrl } from '../../util/http';
 import { ClockIcon, SingleCompany } from '../general-ui/IconsSvg';
 import { useTranslation } from 'react-i18next';
 import MixedText from '../general-ui/MixedText';
 import Tag from '../general-ui/Tag';
-import JobHunt from '../general-ui/JobHunt';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { getOneJobQuery, jobApplyMutation } from '../../http/home';
-import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 export default function JobDetails({}) {
   const { jobId } = useParams();
@@ -28,6 +27,7 @@ export default function JobDetails({}) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const handleError = useErrorHandler();
 
   const [job, setJob] = useState(null);
   const [applied, setApplied] = useState(false);
@@ -38,13 +38,13 @@ export default function JobDetails({}) {
   const { isFetching } = useQuery({
     queryKey: ['jobs-details', jobId],
     queryFn: () => getOneJobQuery(jobId),
-    onSuccess: (data) => {
+    onSuccess: ({ data }) => {
       setJob(data.job);
       setApplied(data.job.applied);
       setApplyCount(data.job.applications_count);
     },
 
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
     enabled: jobId !== null,
     refetchOnWindowFocus: false,
   });
@@ -55,7 +55,7 @@ export default function JobDetails({}) {
 
   const { mutate, isLoading } = useMutation({
     mutationFn: jobApplyMutation,
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
     onSuccess: () => {
       if (applyCount !== null)
         setApplyCount((state) => (applied ? state - 1 : state + 1));

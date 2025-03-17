@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Outlet, redirect, useLoaderData, useNavigate } from 'react-router-dom';
+import { Outlet, redirect } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -9,11 +9,12 @@ import AlertTopModal from '../components/alert/AlertTopModal';
 import { errorHandlingActions } from '../store/errorHandlingSlice';
 import { alertActions } from '../store/alertSlice';
 import { authActions } from '../store/authSlice';
-import { errorHandlingFunction, getToken, getUser } from '../util/http';
+import { getToken, getUser } from '../util/http';
 import { useQuery } from '@tanstack/react-query';
 import { myProfileQuery } from '../http/profile';
 import { profileActions } from '../store/profileSlice';
 import SideNavigation from '../components/general-ui/SideNavigation';
+import useErrorHandler from '../hooks/useErrorHandler';
 
 let initialRender = true;
 
@@ -21,7 +22,7 @@ export default function MainLayout({ children }) {
   const error = useSelector((state) => state.error);
   const alert = useSelector((state) => state.alert);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const handleError = useErrorHandler();
 
   if (initialRender)
     dispatch(
@@ -34,10 +35,10 @@ export default function MainLayout({ children }) {
   useQuery({
     queryKey: ['my-profile'],
     queryFn: myProfileQuery,
-    onSuccess: (data) => {
+    onSuccess: ({ data }) => {
       dispatch(profileActions.set({ profile: data.profile }));
     },
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
     refetchOnWindowFocus: false,
   });
 

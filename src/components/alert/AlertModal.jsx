@@ -1,5 +1,4 @@
 import { useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 
 import Modal from '../general-ui/Modal';
 import { alertActions } from '../../store/alertSlice';

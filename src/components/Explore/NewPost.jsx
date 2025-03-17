@@ -10,12 +10,11 @@ import { XIcon } from '../general-ui/IconsSvg';
 import { range } from '../../util/validation';
 import { createPostMutation, updatePostMutation } from '../../http/home';
 import { alertActions } from '../../store/alertSlice';
-import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import TopicsInput from '../general-ui/TopicsInput';
 import ImagesUpload from '../general-ui/ImagesUpload';
 import { eventActions } from '../../store/dataSlice';
-import { errorHandlingFunction } from '../../util/http';
 import { useNavigate } from 'react-router-dom';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 export default function NewPost() {
   const { t } = useTranslation();
@@ -73,6 +72,7 @@ export function NewPostModal({ onClose, prePopulate }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
+  const handleError = useErrorHandler();
 
   const textareaRef = useRef(null);
 
@@ -87,30 +87,30 @@ export function NewPostModal({ onClose, prePopulate }) {
 
   const { mutate: createPost } = useMutation({
     mutationFn: createPostMutation,
-    onSuccess: (response) => {
+    onSuccess: ({ data }) => {
       dispatch(
         alertActions.alert({
-          messages: [response.message],
+          messages: [data.message],
         })
       );
-      dispatch(eventActions.set({ data: response.post, type: 'new-post' }));
+      dispatch(eventActions.set({ data: data.post, type: 'new-post' }));
       onClose();
     },
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
   });
 
   const { mutate: updatePost } = useMutation({
     mutationFn: updatePostMutation,
-    onSuccess: (response) => {
+    onSuccess: ({ data }) => {
       dispatch(
         alertActions.alert({
-          messages: [response.message],
+          messages: [data.message],
         })
       );
-      dispatch(eventActions.set({ data: response.post, type: 'edit-post' }));
+      dispatch(eventActions.set({ data: data.post, type: 'edit-post' }));
       onClose();
     },
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
   });
 
   const autoResize = () => {

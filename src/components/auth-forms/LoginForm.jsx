@@ -5,17 +5,17 @@ import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import InputField from './LoginInputField';
-import { getDirection } from '../../util/lang';
 import { validateEmail, validatePassword } from '../../validation/auth';
 import { loginMutation } from '../../http/auth';
 import { authActions } from '../../store/authSlice';
-import { errorHandlingActions } from '../../store/errorHandlingSlice';
-import { errorHandlingFunction, setToken, setUser } from '../../util/http';
+import { setToken, setUser } from '../../util/http';
 import { FaSpinner } from 'react-icons/fa';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 export default function LoginForm() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const handleError = useErrorHandler();
 
   const dispatch = useDispatch();
 
@@ -24,15 +24,13 @@ export default function LoginForm() {
 
   const { mutate, isLoading } = useMutation({
     mutationFn: loginMutation,
-    onSuccess: (response) => {
-      dispatch(
-        authActions.refreshAuth({ token: response.token, user: response.user })
-      );
-      setToken(response.token);
-      setUser(response.user);
+    onSuccess: ({ data }) => {
+      dispatch(authActions.refreshAuth({ token: data.token, user: data.user }));
+      setToken(data.token);
+      setUser(data.user);
       navigate('/');
     },
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
   });
 
   function handleLogin(event) {

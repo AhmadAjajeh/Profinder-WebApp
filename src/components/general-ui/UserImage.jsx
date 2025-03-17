@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { AiOutlineUser } from 'react-icons/ai';
 
 import { getBaseUrl } from '../../util/http';

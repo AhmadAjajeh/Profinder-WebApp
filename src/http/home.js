@@ -1,287 +1,94 @@
-import {
-  buildSearchParams,
-  getApiBaseUrl,
-  getStateToken,
-  getToken,
-  handlerFunction,
-} from '../util/http';
-import { getLanguage } from '../util/lang';
+import { buildSearchParams } from '../util/http';
+import axiosInstance from './axios';
 
 export function createPostMutation(formData) {
-  const url = getApiBaseUrl() + 'users/posts?publisher=true';
-  const configuration = {
-    method: 'POST',
-    body: formData,
-    headers: {
-      'Accept-Language': getLanguage(),
-      authorization: 'Bearer ' + getStateToken(),
-    },
-  };
-
-  const errorMessage = 'An error occurred while trying to publish the post';
-
-  return handlerFunction(url, configuration, errorMessage);
+  return axiosInstance.post('users/posts?publisher=true', formData);
 }
 
 export function updatePostMutation({ formData, id }) {
-  const url = getApiBaseUrl() + `users/posts/${id}?publisher=true`;
-  const configuration = {
-    method: 'PUT',
-    body: formData,
-    headers: {
-      'Accept-Language': getLanguage(),
-      authorization: 'Bearer ' + getStateToken(),
-    },
-  };
-
-  const errorMessage = 'An error occurred while trying to edit the post';
-
-  return handlerFunction(url, configuration, errorMessage);
+  return axiosInstance.put(`users/posts/${id}?publisher=true`, formData);
 }
 
 export function getPostQuery(page) {
-  const url = getApiBaseUrl() + 'public/posts?publisher=true&page=' + page;
-  const configuration = {
-    method: 'GET',
-    headers: {
-      'Accept-Language': getLanguage(),
-      authorization: 'Bearer ' + getStateToken(),
-    },
-  };
-
-  const errorMessage = 'An error occurred while getting the post';
-
-  return handlerFunction(url, configuration, errorMessage);
+  return axiosInstance.get(`public/posts?publisher=true&page=${page}`);
 }
 
 export function likePostMutaiton({ like, postId }) {
-  const url = getApiBaseUrl() + 'users/likes' + (like ? '' : `/${postId}`);
-  const configuration = {
+  const url = `users/likes${like ? '' : `/${postId}`}`;
+  return axiosInstance({
     method: like ? 'POST' : 'DELETE',
-    body: JSON.stringify({ post_id: postId }),
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept-language': getLanguage(),
-      authorization: 'Bearer ' + getStateToken(),
-    },
-  };
-
-  const errorMessage = 'An error occurred while like/unlike the post';
-
-  return handlerFunction(url, configuration, errorMessage);
+    url,
+    data: { post_id: postId },
+  });
 }
 
 export function savePostMutation({ save, postId }) {
-  const url = getApiBaseUrl() + 'users/saved-post' + (save ? '' : `/${postId}`);
-  const configuration = {
+  const url = `users/saved-post${save ? '' : `/${postId}`}`;
+  return axiosInstance({
     method: save ? 'POST' : 'DELETE',
-    body: JSON.stringify({ post_id: postId }),
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept-language': getLanguage(),
-      authorization: 'Bearer ' + getStateToken(),
-    },
-  };
-
-  const errorMessage = 'An error occurred while save/unsave the post';
-
-  return handlerFunction(url, configuration, errorMessage);
+    url,
+    data: { post_id: postId },
+  });
 }
 
 export function postWithCommentsQuery({ postId, page }) {
-  const url =
-    getApiBaseUrl() + 'public/posts/' + postId + '/comments?page=' + page;
-  const configuration = {
-    method: 'GET',
-    headers: {
-      'Accept-Language': getLanguage(),
-      authorization: 'Bearer ' + getStateToken(),
-    },
-  };
-
-  const errorMessage = 'An error occurred while fetching comments';
-
-  return handlerFunction(url, configuration, errorMessage);
+  return axiosInstance.get(`public/posts/${postId}/comments?page=${page}`);
 }
 
 export function createCommentMutation(formData) {
-  const url = getApiBaseUrl() + 'users/comments';
-
-  const configuration = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept-Language': getLanguage(),
-      authorization: 'Bearer ' + getStateToken(),
-    },
-    body: JSON.stringify(formData),
-  };
-
-  const errorMessage = 'An error occurred while creating the comment';
-
-  return handlerFunction(url, configuration, errorMessage);
+  return axiosInstance.post('users/comments', formData);
 }
 
 export function deletePostMutation(postId) {
-  const url = getApiBaseUrl() + 'users/posts/' + postId;
-
-  const configuration = {
-    method: 'DELETE',
-    headers: {
-      'Accept-Language': getLanguage(),
-      authorization: 'Bearer ' + getStateToken(),
-    },
-  };
-
-  const errorMessage = 'An error occurred while deleting the post';
-
-  return handlerFunction(url, configuration, errorMessage);
+  return axiosInstance.delete(`users/posts/${postId}`);
 }
 
 export function getJobsQuery({ title, location, page }) {
-  const url =
-    getApiBaseUrl() +
-    'explore/jobs/search?' +
-    buildSearchParams({ title, location, page });
-
-  const configuration = {
-    method: 'GET',
-    headers: {
-      'Accept-Language': getLanguage(),
-      authorization: 'Bearer ' + getStateToken(),
-    },
-  };
-
-  const errorMessage = 'An error occurred while fetching the jobs!';
-
-  return handlerFunction(url, configuration, errorMessage);
+  const params = buildSearchParams({ title, location, page });
+  return axiosInstance.get(`explore/jobs/search?${params}`);
 }
 
 export function getOneJobQuery(jobId) {
-  const url = getApiBaseUrl() + 'explore/jobs/' + jobId;
-
-  const configuration = {
-    method: 'GET',
-    headers: {
-      'Accept-Language': getLanguage(),
-      authorization: 'Bearer ' + getStateToken(),
-    },
-  };
-
-  const errorMessage = 'An error occurred while fetching the job!';
-
-  return handlerFunction(url, configuration, errorMessage);
+  return axiosInstance.get(`explore/jobs/${jobId}`);
 }
 
 export function jobApplyMutation({ jobId, apply }) {
-  const url =
-    getApiBaseUrl() +
-    'explore/jobs/' +
-    jobId +
-    (apply ? '/apply' : '/cancel-apply');
-
-  const configuration = {
+  const url = `explore/jobs/${jobId}${apply ? '/apply' : '/cancel-apply'}`;
+  return axiosInstance({
     method: apply ? 'POST' : 'DELETE',
-    headers: {
-      'Accept-Language': getLanguage(),
-      authorization: 'Bearer ' + getStateToken(),
-    },
-  };
-
-  const errorMessage = 'An error occurred while applying for the job!';
-
-  return handlerFunction(url, configuration, errorMessage);
+    url,
+  });
 }
 
 export function getProjectsQuery({ title, min, max, page }) {
-  const url =
-    getApiBaseUrl() +
-    'explore/freelance-projects/search?' +
-    buildSearchParams({ title, 'budget.min': min, 'budget.max': max, page });
-
-  const configuration = {
-    method: 'GET',
-    headers: {
-      'Accept-Language': getLanguage(),
-      authorization: 'Bearer ' + getStateToken(),
-    },
-  };
-
-  const errorMessage = 'An error occurred while fetching the projects!';
-
-  return handlerFunction(url, configuration, errorMessage);
+  const params = buildSearchParams({
+    title,
+    'budget.min': min,
+    'budget.max': max,
+    page,
+  });
+  return axiosInstance.get(`explore/freelance-projects/search?${params}`);
 }
 
 export function getOneProjectQuery({ id }) {
-  const url = getApiBaseUrl() + 'explore/freelance-projects/' + id;
-
-  const configuration = {
-    method: 'GET',
-    headers: {
-      'Accept-language': getLanguage(),
-      authorization: 'Bearer ' + getStateToken(),
-    },
-  };
-
-  const errorMessage = 'An error occurred while fetching the project!';
-
-  return handlerFunction(url, configuration, errorMessage);
+  return axiosInstance.get(`explore/freelance-projects/${id}`);
 }
 
 export function projectApplyMutation({ id, apply }) {
-  const url =
-    getApiBaseUrl() +
-    'explore/freelance-projects/' +
-    id +
-    (apply ? '/apply' : '/cancel-apply');
-
-  const configuration = {
+  const url = `explore/freelance-projects/${id}${
+    apply ? '/apply' : '/cancel-apply'
+  }`;
+  return axiosInstance({
     method: apply ? 'POST' : 'DELETE',
-    headers: {
-      'Accept-Language': getLanguage(),
-      authorization: 'Bearer ' + getStateToken(),
-    },
-  };
-
-  const errorMessage =
-    'An error occurred while applying/cancel-applying for the job';
-
-  return handlerFunction(url, configuration, errorMessage);
+    url,
+  });
 }
 
 export function createProjectMutation(formData) {
-  const url = getApiBaseUrl() + 'user/freelance-projects';
-
-  const configuration = {
-    method: 'POST',
-    headers: {
-      'Accept-Language': getLanguage(),
-      authorization: 'Bearer ' + getStateToken(),
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(formData),
-  };
-
-  const errorMessage = 'An error occurred while creating the freelance project';
-
-  return handlerFunction(url, configuration, errorMessage);
+  return axiosInstance.post('user/freelance-projects', formData);
 }
 
 export function searchComapniesQuery({ name, page }) {
-  const url =
-    getApiBaseUrl() +
-    'explore/companies/search?' +
-    buildSearchParams({ name, page });
-
-  const configuration = {
-    method: 'GET',
-    headers: {
-      'Accept-Language': getLanguage(),
-      authorization: 'Bearer ' + getStateToken(),
-    },
-  };
-
-  const errorMessage = 'An error occurred while saerching companies';
-
-  return handlerFunction(url, configuration, errorMessage);
+  const params = buildSearchParams({ name, page });
+  return axiosInstance.get(`explore/companies/search?${params}`);
 }

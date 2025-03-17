@@ -9,7 +9,6 @@ import {
   FaThumbsUp,
   FaRegComment,
   FaRegThumbsUp,
-  FaSave,
   FaRegBookmark,
   FaBookmark,
 } from 'react-icons/fa';
@@ -26,7 +25,7 @@ import {
 import ImageSlider from '../general-ui/ImageSlider';
 import MixedText from '../general-ui/MixedText';
 import { timeAgo } from '../../util/date';
-import { errorHandlingFunction, getBaseUrl } from '../../util/http';
+import { getBaseUrl } from '../../util/http';
 import {
   createCommentMutation,
   deletePostMutation,
@@ -34,7 +33,6 @@ import {
   postWithCommentsQuery,
   savePostMutation,
 } from '../../http/home';
-import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import { AnimatePresence } from 'framer-motion';
 import Modal from '../general-ui/Modal';
 import { range } from '../../util/validation';
@@ -42,11 +40,12 @@ import { alertActions } from '../../store/alertSlice';
 import { NewPostModal } from './NewPost';
 import DeletionModal from '../general-ui/DeletionModal';
 import { eventActions } from '../../store/dataSlice';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 const Post = forwardRef(({ post }, ref) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { t } = useTranslation();
+  const handleError = useErrorHandler();
 
   const user = useSelector((state) => state.auth.user);
 
@@ -68,23 +67,22 @@ const Post = forwardRef(({ post }, ref) => {
 
   const { mutate: mutateLike } = useMutation({
     mutationFn: likePostMutaiton,
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
     // refetchOnWindowFocus: false,
   });
 
   const { mutate: mutateSave } = useMutation({
     mutationFn: savePostMutation,
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
     // refetchOnWindowFocus: false,
   });
 
   const { mutate: deletePost } = useMutation({
     mutationFn: deletePostMutation,
     onError: () => {
-      console.log('error');
-      return errorHandlingFunction(dispatch, errorHandlingActions, navigate);
+      return handleError;
     },
-    onSuccess: (response) => {
+    onSuccess: () => {
       setMenu(false);
       setDeletion(false);
       dispatch(eventActions.set({ data: post._id, type: 'delete-post' }));
@@ -351,8 +349,8 @@ export function PostShimmer() {
 function CommentsModal({ postId, onClose }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const textArea = useRef(null);
+  const handleError = useErrorHandler();
 
   const user = useSelector((state) => state.auth.user);
   const [page, setPage] = useState(1);
@@ -366,7 +364,7 @@ function CommentsModal({ postId, onClose }) {
   const { isFetching, isError } = useQuery({
     queryKey: ['posts', 'comments', postId, page],
     queryFn: () => postWithCommentsQuery({ postId, page }),
-    onSuccess: (data) => {
+    onSuccess: ({ data }) => {
       setMorePagesExist(
         data.comments_details.pagination.current_page <
           data.comments_details.pagination.number_of_pages
@@ -376,7 +374,7 @@ function CommentsModal({ postId, onClose }) {
       });
       setTotalComments(data.comments_details.total_count);
     },
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
     keepPreviousData: true,
     enabled: morePagesExist,
     refetchOnWindowFocus: false,
@@ -384,15 +382,15 @@ function CommentsModal({ postId, onClose }) {
 
   const { mutate } = useMutation({
     mutationFn: createCommentMutation,
-    onSuccess: (response) => {
+    onSuccess: ({ data }) => {
       dispatch(
         alertActions.alert({
-          messages: [response.message],
+          messages: [data.message],
         })
       );
       setComments((prevComments) => [
         {
-          ...response.comment,
+          ...data.comment,
           user_id: {
             profile_image: user.profile_image,
             username: user.username,
@@ -402,7 +400,7 @@ function CommentsModal({ postId, onClose }) {
       ]);
       textArea.current.value = '';
     },
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
   });
 
   const lastCommentRef = useCallback(

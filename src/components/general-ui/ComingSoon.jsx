@@ -1,6 +1,4 @@
-import { useTranslation } from "react-i18next";
-
-import ComingSoonPng from "../../assets/images/coming-soon.png";
+import { useTranslation } from 'react-i18next';
 
 export default function ComingSoon({ title }) {
   const { t } = useTranslation();

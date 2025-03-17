@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FaEnvelope, FaMap, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaMap, FaGithub, FaLinkedin } from 'react-icons/fa';
 
 import Modal from '../../general-ui/Modal';
 import FormInput from '../FormInput';

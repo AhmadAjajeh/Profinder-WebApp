@@ -5,34 +5,32 @@ import { useMutation } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 
 import { authActions } from '../../store/authSlice';
-import { getDirection } from '../../util/lang';
 import googleLogo from '../../assets/images/google.png';
 import { googleLoginMutation } from '../../http/auth';
-import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import { useTranslation } from 'react-i18next';
-import { errorHandlingFunction, setToken, setUser } from '../../util/http';
+import { setToken, setUser } from '../../util/http';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 export default function GoogleButton({}) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const handleError = useErrorHandler();
 
   const { mutate, isLoading } = useMutation({
     mutationFn: googleLoginMutation,
-    onSuccess: (response) => {
-      dispatch(
-        authActions.refreshAuth({ token: response.token, user: response.user })
-      );
-      setToken(response.token);
-      setUser(response.user);
+    onSuccess: ({ data }) => {
+      dispatch(authActions.refreshAuth({ token: data.token, user: data.user }));
+      setToken(data.token);
+      setUser(data.user);
       navigate('/');
     },
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
   });
 
   const login = useGoogleLogin({
-    onSuccess: async (response) => {
-      const accessToken = response.access_token;
+    onSuccess: async ({ data }) => {
+      const accessToken = data.access_token;
 
       const userInfoResponse = await axios.get(
         'https://www.googleapis.com/oauth2/v3/userinfo',

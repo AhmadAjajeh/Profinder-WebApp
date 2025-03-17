@@ -1,5 +1,4 @@
-import AuthIllustration from "../../assets/images/illustration-5.png";
-import { getDirection } from "../../util/lang";
+import AuthIllustration from '../../assets/images/illustration-5.png';
 
 export default function AuthSideImage() {
   return (

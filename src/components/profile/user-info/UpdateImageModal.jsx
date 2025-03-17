@@ -4,18 +4,18 @@ import OneImageUpload from '../../general-ui/OneImageUpload';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { updateUserMutation } from '../../../http/user';
-import { queryClient } from '../../../http/auth';
-import { useNavigate, useParams } from 'react-router-dom';
-import { errorHandlingFunction, setUser } from '../../../util/http';
+import queryClient from '../../../http/queryClient';
+import { useParams } from 'react-router-dom';
+import { setUser } from '../../../util/http';
 import { useDispatch } from 'react-redux';
-import { errorHandlingActions } from '../../../store/errorHandlingSlice';
 import { alertActions } from '../../../store/alertSlice';
 import { authActions } from '../../../store/authSlice';
+import useErrorHandler from '../../../hooks/useErrorHandler';
 
 export function UpdateImageModel({ image, handleClose, label, imageField }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const handleError = useErrorHandler();
 
   const { id } = useParams();
 
@@ -23,21 +23,21 @@ export function UpdateImageModel({ image, handleClose, label, imageField }) {
 
   const { mutate } = useMutation({
     mutationFn: updateUserMutation,
-    onSuccess: (response) => {
+    onSuccess: ({ data }) => {
       dispatch(
         alertActions.alert({
-          messages: [response.message],
+          messages: [data.message],
         })
       );
 
-      setUser(response.user);
-      dispatch(authActions.updateUser(response.user));
+      setUser(data.user);
+      dispatch(authActions.updateUser(data.user));
 
       queryClient.invalidateQueries({ queryKey: ['visit-user', id] });
       queryClient.invalidateQueries({ queryKey: ['profile', id] });
       handleClose();
     },
-    onError: errorHandlingFunction(dispatch, navigate, errorHandlingActions),
+    onError: handleError,
   });
 
   function deleteImage() {

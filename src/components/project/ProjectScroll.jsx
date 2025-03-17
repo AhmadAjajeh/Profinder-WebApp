@@ -1,33 +1,22 @@
 import { forwardRef, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import {
-  Link,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 
 import { FaDollarSign, FaSpinner } from 'react-icons/fa';
-import { SearchIcon, SingleCompany } from '../general-ui/IconsSvg';
+import { SearchIcon } from '../general-ui/IconsSvg';
 
 import NoResult from '../general-ui/NoResult';
 import PagesNav from '../general-ui/PagesNav';
 
-import {
-  buildSearchParams,
-  errorHandlingFunction,
-  getBaseUrl,
-} from '../../util/http';
+import { buildSearchParams, getBaseUrl } from '../../util/http';
 import { getProjectsQuery } from '../../http/home';
-import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import { AiOutlineUser } from 'react-icons/ai';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
-export default function ProjectScroll({}) {
+export default function ProjectScroll() {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const handleError = useErrorHandler();
 
   const { projectId: selectedProjectId } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -42,7 +31,7 @@ export default function ProjectScroll({}) {
   const { isFetching, refetch } = useQuery({
     queryKey: ['projects-scroll', `${page}`, title, minmax.min, minmax.max],
     queryFn: () => getProjectsQuery({ title, ...minmax, page }),
-    onSuccess: (data) => {
+    onSuccess: ({ data }) => {
       setProjects(data.freelance_projects);
       setTotalPages(
         data.pagination.total_count
@@ -51,7 +40,7 @@ export default function ProjectScroll({}) {
       );
     },
 
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
     refetchOnWindowFocus: false,
   });
 

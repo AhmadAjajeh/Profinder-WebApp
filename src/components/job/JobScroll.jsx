@@ -15,21 +15,18 @@ import {
   SearchIcon,
   SingleCompany,
 } from '../general-ui/IconsSvg';
-import {
-  buildSearchParams,
-  errorHandlingFunction,
-  getBaseUrl,
-} from '../../util/http';
+import { buildSearchParams, getBaseUrl } from '../../util/http';
 import { getJobsQuery } from '../../http/home';
-import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import NoResult from '../general-ui/NoResult';
 import PagesNav from '../general-ui/PagesNav';
 import { FaSpinner } from 'react-icons/fa';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 export default function JobScroll({}) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const handleError = useErrorHandler();
 
   const { jobId: selectedJobId } = useParams();
 
@@ -45,7 +42,7 @@ export default function JobScroll({}) {
   const { isFetching, refetch } = useQuery({
     queryKey: ['jobs-scroll', `${page}`, title, location],
     queryFn: () => getJobsQuery({ title, location, page }),
-    onSuccess: (data) => {
+    onSuccess: ({ data }) => {
       setJobs(data.jobs);
       setTotalPages(
         data.pagination.total_count
@@ -54,7 +51,7 @@ export default function JobScroll({}) {
       );
     },
 
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
     refetchOnWindowFocus: false,
   });
 

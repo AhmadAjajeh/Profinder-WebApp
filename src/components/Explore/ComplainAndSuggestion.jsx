@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import TextArea from '../general-ui/TextArea';
 import Input from '../general-ui/Input';
-import ImagesUpload from '../general-ui/ImagesUpload';
 import OneImageUpload from '../general-ui/OneImageUpload';
 
 export default function ComplainAndSuggestion() {

@@ -11,20 +11,20 @@ import { ClockIcon } from '../general-ui/IconsSvg';
 import { AiOutlineUser } from 'react-icons/ai';
 
 import MixedText from '../general-ui/MixedText';
-import JobHunt from '../general-ui/JobHunt';
 import Tag from '../general-ui/Tag';
 
 import { formatDisplayDate, timeAgo } from '../../util/date';
-import { errorHandlingFunction, getBaseUrl } from '../../util/http';
+import { getBaseUrl } from '../../util/http';
 import { getDirection } from '../../util/lang';
 
-import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import { getOneProjectQuery, projectApplyMutation } from '../../http/home';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 export default function ProjectDetails({}) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const handleError = useErrorHandler();
 
   const { projectId } = useParams();
   const [project, setProject] = useState(null);
@@ -36,13 +36,13 @@ export default function ProjectDetails({}) {
   const { isFetching } = useQuery({
     queryKey: ['project-details', projectId],
     queryFn: () => getOneProjectQuery({ id: projectId }),
-    onSuccess: (data) => {
+    onSuccess: ({ data }) => {
       setProject(data.project);
       setApplied(data.project.applied);
       setApplyCount(data.project.applications_count);
     },
 
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
     enabled: projectId !== null,
     refetchOnWindowFocus: false,
   });
@@ -53,7 +53,7 @@ export default function ProjectDetails({}) {
 
   const { mutate, isLoading } = useMutation({
     mutationFn: projectApplyMutation,
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
     onSuccess: () => {
       if (applyCount !== null)
         setApplyCount((state) => (applied ? state - 1 : state + 1));

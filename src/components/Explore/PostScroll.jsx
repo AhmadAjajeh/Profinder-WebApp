@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { getPostQuery } from '../../http/home';
 import Post, { PostShimmer } from './Post';
 import { useDispatch, useSelector } from 'react-redux';
-import { errorHandlingActions } from '../../store/errorHandlingSlice';
-import { errorHandlingFunction } from '../../util/http';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 export default function PostScroll() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const handleError = useErrorHandler();
 
   const event = useSelector((state) => state.event);
 
@@ -38,10 +38,10 @@ export default function PostScroll() {
     }
   }, [event]);
 
-  const { isFetching, error } = useQuery({
+  const { isFetching } = useQuery({
     queryKey: ['posts', page],
     queryFn: () => getPostQuery(page),
-    onSuccess: (data) => {
+    onSuccess: ({ data }) => {
       setMorePagesExist(
         data.pagination.current_page < data.pagination.number_of_pages
       );
@@ -49,7 +49,7 @@ export default function PostScroll() {
         return [...previousPosts, ...data.posts];
       });
     },
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
     keepPreviousData: true,
     enabled: morePagesExist,
     refetchOnWindowFocus: false,

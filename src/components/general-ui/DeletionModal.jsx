@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { FaTrash, FaExclamationCircle } from 'react-icons/fa';
+import { FaExclamationCircle } from 'react-icons/fa';
 
 import Modal from './Modal';
 

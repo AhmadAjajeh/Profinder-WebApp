@@ -12,11 +12,10 @@ import { useMutation } from '@tanstack/react-query';
 import { createProjectMutation } from '../../http/home';
 import { alertActions } from '../../store/alertSlice';
 import { eventActions } from '../../store/dataSlice';
-import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import { useDispatch } from 'react-redux';
-import { errorHandlingFunction } from '../../util/http';
 import { useNavigate } from 'react-router-dom';
 import { FaSpinner } from 'react-icons/fa';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 const initialValidation = {
   title: null,
@@ -30,6 +29,7 @@ export default function NewProject() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const handleErorr = useErrorHandler();
 
   const descriptionRef = useRef(null);
   const formRef = useRef(null);
@@ -39,17 +39,17 @@ export default function NewProject() {
 
   const { mutate: createProject, isLoading } = useMutation({
     mutationFn: createProjectMutation,
-    onSuccess: (response) => {
+    onSuccess: ({ data }) => {
       dispatch(
         alertActions.alert({
-          messages: [response.message],
+          messages: [data.message],
         })
       );
-      dispatch(eventActions.set({ data: response.post, type: 'new-post' }));
+      dispatch(eventActions.set({ data: data.post, type: 'new-post' }));
       formRef.current.reset();
       setTopics([]);
     },
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleErorr,
   });
 
   function handleSubmission(event) {

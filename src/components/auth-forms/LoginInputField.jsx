@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import Icon from 'react-icons-kit';
 import { eye } from 'react-icons-kit/feather/eye';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
-import { getDirection } from '../../util/lang';
 
 export default function InputField({ name, type, placeholder, validation }) {
   const { t } = useTranslation();

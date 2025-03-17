@@ -6,7 +6,6 @@ import { useMutation } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import _ from 'lodash';
 
-import { getDirection } from '../../util/lang';
 import SignupInputField from '../../components/auth-forms/SignupInputField';
 import {
   validateEmail,
@@ -15,10 +14,9 @@ import {
 } from '../../validation/auth';
 import { signup } from '../../http/auth';
 import { alertActions } from '../../store/alertSlice';
-import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import { activationActions } from '../../store/activationCodeSlice';
-import { errorHandlingFunction } from '../../util/http';
 import { FaSpinner } from 'react-icons/fa';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 const initialValidationState = {
   username: null,
@@ -32,14 +30,15 @@ export default function SignupForm() {
   const [validation, setValidation] = useState(initialValidationState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const handleError = useErrorHandler();
 
   const { mutate, isLoading } = useMutation({
     mutationFn: signup,
-    onSuccess: (response) => {
-      dispatch(alertActions.alert({ messages: [response.message] }));
+    onSuccess: ({ data }) => {
+      dispatch(alertActions.alert({ messages: [data.message] }));
       navigate('/auth/check-code');
     },
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
   });
 
   function handleSignUp(event) {

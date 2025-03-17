@@ -13,21 +13,24 @@ import { errorHandlingActions } from '../../store/errorHandlingSlice';
 import { getDirection } from '../../util/lang';
 import SmallLogoImage from '../../components/header-components/SmallLogoImage';
 import { errorHandlingFunction } from '../../util/http';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 export default function ActivationPage() {
   const { email } = useSelector((state) => state.activation);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const handleError = useErrorHandler();
+
   const [validation, setValidation] = useState(null);
 
   const { mutate, isLoading } = useMutation({
     mutationFn: activate,
-    onSuccess: (response) => {
+    onSuccess: ({ data }) => {
       dispatch(activationActions.clearEmail());
-      dispatch(alertActions.alert({ messages: [response.message] }));
+      dispatch(alertActions.alert({ messages: [data.message] }));
       navigate('/auth/login');
     },
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
   });
 
   const handleSubmit = (event) => {

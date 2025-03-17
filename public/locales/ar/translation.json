@@ -14,6 +14,7 @@
   "something_went_wrong": "حدث خطأ ما!",
   "enter_your_username": "أدخل اسم المستخدم",
   "confirm_your_password": "أكد كلمة المرور",
+  "an_error_occurred_while_trying_to_reach_the_server": "حدث خطأ أثناء الوصول للسيرفر",
   "signup": "سجل",
   "email": "البريد الإلكتروني",
   "username": "اسم المستخدم",

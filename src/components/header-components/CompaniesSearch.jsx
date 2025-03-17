@@ -1,19 +1,21 @@
 import { useTranslation } from 'react-i18next';
 import { SingleCompany } from '../general-ui/IconsSvg';
 import PagesNav from '../general-ui/PagesNav';
-import { FaBuilding, FaSpinner } from 'react-icons/fa';
+import { FaSpinner } from 'react-icons/fa';
 import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { searchComapniesQuery } from '../../http/home';
-import { errorHandlingActions } from '../../store/errorHandlingSlice';
+
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { errorHandlingFunction, getBaseUrl } from '../../util/http';
+import { getBaseUrl } from '../../util/http';
+import useErrorHandler from '../../hooks/useErrorHandler';
 
 export default function CompaniesSearch() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const handleError = useErrorHandler();
 
   const [name, setName] = useState('');
   const [page, setPage] = useState(1);
@@ -25,11 +27,11 @@ export default function CompaniesSearch() {
   const { isFetching } = useQuery({
     queryKey: ['company-search', name, page],
     queryFn: () => searchComapniesQuery({ name, page }),
-    onSuccess: (data) => {
+    onSuccess: ({ data }) => {
       setComapnies(data.companies);
       setTotalPages(data.pagination.number_of_pages || null);
     },
-    onError: errorHandlingFunction(dispatch, errorHandlingActions, navigate),
+    onError: handleError,
     refetchOnWindowFocus: false,
     enabled: name.length > 2,
   });
