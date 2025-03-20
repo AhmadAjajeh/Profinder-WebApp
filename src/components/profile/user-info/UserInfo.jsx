@@ -2,13 +2,7 @@ import { useState } from 'react';
 import EditButton from '../../../components/general-ui/EditButton';
 import { UpdateImageModel } from './UpdateImageModal';
 import { AnimatePresence } from 'framer-motion';
-import {
-  FaEnvelope,
-  FaPen,
-  FaGithub,
-  FaLinkedin,
-  FaUser,
-} from 'react-icons/fa';
+import { FaEnvelope, FaPen, FaUser } from 'react-icons/fa';
 import { getBaseUrl } from '../../../util/http';
 import UserInfoModal from './UserInforModal';
 
@@ -19,9 +13,6 @@ export default function UserInfo({
   username,
   email,
   bio,
-  address,
-  github,
-  linkedin,
   fullname,
 }) {
   const [modal, setModal] = useState('');
@@ -50,10 +41,16 @@ export default function UserInfo({
       )}
 
       {modal === 'user-info' && (
-        <UserInfoModal handleClose={handleCloseModal} />
+        <UserInfoModal
+          handleClose={handleCloseModal}
+          fullname={fullname}
+          bio={bio}
+        />
       )}
     </AnimatePresence>
   );
+
+  if (!username) return <UserInfoShimmer />;
 
   return (
     <div className="w-full  mx-auto relative">
@@ -128,54 +125,41 @@ export default function UserInfo({
             <FaEnvelope className="text-gray-600 dark:text-gray-300" />
             <p className="text-gray-600 dark:text-gray-200 text-sm">{email}</p>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-          {/* Address */}
-          {address && (
-            <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300 mb-1">
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-              <span className="text-sm">{address}</span>
-            </div>
-          )}
+function UserInfoShimmer() {
+  return (
+    <div className="w-full mx-auto relative">
+      {/* Background Image Shimmer */}
+      <div className="relative h-64 w-full bg-gray-200 dark:bg-elementGray animate-pulse" />
 
-          {/* Social Links */}
-          <div className="flex gap-4">
-            <a
-              href={linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 flex items-center gap-1 text-[14px]"
-            >
-              <FaLinkedin className="w-5 h-5" />
-              LinkedIn
-            </a>
-            <a
-              href={github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-700 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white flex items-center gap-1  text-[14px]"
-            >
-              <FaGithub className="w-5 h-5" />
-              GitHub
-            </a>
+      {/* Profile Image Shimmer */}
+      <div className="absolute transform -translate-y-24 md:-translate-y-16 left-1/2 md:left-auto md:rtl:right-8 md:ltr:left-8 md:translate-x-0 -translate-x-1/2">
+        <div className="w-32 h-32 rounded-full bg-gray-300 dark:bg-gray-600 animate-pulse" />
+      </div>
+
+      {/* Content Shimmer */}
+      <div className="flex space-x-1 rtl:space-x-reverse bg-white dark:bg-elementBlack rounded-b-lg shadow-md">
+        <div className="bg-logoOrange min-h-full min-w-28 hidden md:flex md:rtl:mr-[40px] md:ltr:ml-[40px]" />
+
+        <div className="mx-4 max-w-3xl md:ltr:ml-40 md:rtl:mr-40 px-6 pt-16 md:pt-8 pb-4">
+          {/* Name Shimmer */}
+          <div className="h-7 w-48 bg-gray-300 dark:bg-gray-600 rounded animate-pulse mb-3" />
+
+          {/* Bio Shimmer */}
+          <div className="space-y-2 mb-3">
+            <div className="h-4 w-full bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+            <div className="h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+          </div>
+
+          {/* Email Shimmer */}
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-5 h-5 bg-gray-300 dark:bg-gray-600 rounded animate-pulse" />
+            <div className="h-4 w-40 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
           </div>
         </div>
       </div>

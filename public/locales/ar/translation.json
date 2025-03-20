@@ -133,6 +133,12 @@
   "bio": "السيرة الذاتية",
   "email_address": "عنوان البريد الإلكتروني",
   "linked_profile": "حساب LinkedIn",
+  "certifications": "الشهادات",
+  "edit_certification": "تعديل الشهادة",
+  "view_certification": "عرض الشهادة",
+  "add_certification": "إضافة شهادة",
+  "add_new_certfications": "إضافة شهادات جديدة",
+  "no_certifications_yet": "لا توجد شهادات بعد",
   "back_to_home_page": "العودة إلى الصفحة الرئيسية",
   "an_error_occurred": "حدث خطأ",
   "github_profile": "حساب GitHub",
@@ -147,5 +153,7 @@
   "address": "العنوان",
   "project_title_placeholder": "تطوير تطبيق ويب كامل المكدس",
   "project_description_placeholder": "تطوير تطبيق ويب متجاوب وقابل للتوسع باستخدام React و Node.js. يشمل مصادقة المستخدم، تكامل قاعدة البيانات، وواجهات برمجة تطبيقات RESTful.",
-  "project_delivery_days_placeholder": "10 أيام"
+  "project_delivery_days_placeholder": "10 أيام",
+  "fullname_should_be_between_3_and_50": "يجب أن يكون الاسم الكامل بين 3 و 50 حرفاً",
+  "bio_should_be_between_0_and_2048": "يجب ألا تتجاوز السيرة الذاتية 2048 حرفاً"
 }

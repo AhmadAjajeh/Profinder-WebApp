@@ -13,3 +13,7 @@ export function profileQuery({ id }) {
 export function visitUserQuery({ id }) {
   return axiosInstance.get(`users/${id}/visit`);
 }
+
+export function updateProfileInfoMutation(data) {
+  return axiosInstance.put('users/profiles/', data);
+}

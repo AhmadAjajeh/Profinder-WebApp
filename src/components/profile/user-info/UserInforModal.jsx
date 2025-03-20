@@ -1,22 +1,34 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FaMap, FaGithub, FaLinkedin } from 'react-icons/fa';
 
 import Modal from '../../general-ui/Modal';
 import FormInput from '../FormInput';
+import { useMutation } from '@tanstack/react-query';
+import { updateProfileInfoMutation } from '../../../http/profile';
+import queryClient from '../../../http/queryClient';
+import useErrorHandler from '../../../hooks/useErrorHandler';
+import { range } from '../../../util/validation';
 
-function UserInfoModal({ handleClose }) {
+function UserInfoModal({ handleClose, fullname, bio }) {
   const { t } = useTranslation();
-
-  function handleChange() {}
-  function handleSubmit() {}
+  const handleError = useErrorHandler();
 
   const [formData, setFormData] = useState({
-    fullname: '',
-    bio: '',
-    address: '',
-    linkedin: '',
-    github: '',
+    full_name: fullname,
+    bio,
+  });
+  const [validation, setValidation] = useState({
+    full_name: null,
+    bio: null,
+  });
+
+  const { mutate } = useMutation({
+    mutationFn: updateProfileInfoMutation,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['visit-user']);
+      handleClose();
+    },
+    onError: handleError,
   });
 
   function updateFormData(e) {
@@ -25,6 +37,26 @@ function UserInfoModal({ handleClose }) {
       ...state,
       [name]: value,
     }));
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    const { full_name, bio } = formData;
+    const newValidation = {};
+    if (!range(full_name, 3, 50)) {
+      newValidation.full_name = 'fullname_should_be_between_3_and_50';
+    }
+    if (!range(bio, 0, 2048)) {
+      newValidation.bio = 'bio_should_be_between_0_and_2048';
+    }
+
+    if (Object.keys(newValidation).length !== 0) {
+      setValidation(newValidation);
+      return;
+    }
+
+    mutate(formData);
   }
 
   return (
@@ -38,7 +70,7 @@ function UserInfoModal({ handleClose }) {
         visible: { opacity: 1, scale: 1 },
       }}
     >
-      <div className="w-[330px] md:w-auto max-w-2xl mx-auto">
+      <div className="w-[330px] md:w-[500px] mx-auto">
         <div className="bg-white dark:bg-elementBlack  max-h-[650px] overflow-y-scroll rounded-2xl shadow-xl p-8">
           <h1 className="text-xl font-bold text-logoOrange text-center mb-8">
             {t('professional_profile')}
@@ -48,11 +80,12 @@ function UserInfoModal({ handleClose }) {
             <FormInput
               type="text"
               id="text"
-              name="fullname"
+              name="full_name"
               placeholder={t('name_placeholder')}
               label={t('full_name')}
-              value={formData.fullname}
+              value={formData.full_name}
               handleChange={updateFormData}
+              validation={validation.full_name}
             />
 
             <div>
@@ -71,41 +104,11 @@ function UserInfoModal({ handleClose }) {
                 placeholder={t('summary_placeholder')}
                 value={formData.bio}
               />
-            </div>
-
-            <FormInput
-              handleChange={updateFormData}
-              type="address"
-              id="address"
-              name="address"
-              icon={<FaMap className="text-gray-500" />}
-              placeholder={t('location_placeholder')}
-              label={t('address')}
-              value={formData.address}
-            />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <FormInput
-                handleChange={updateFormData}
-                type="url"
-                id="linkedin"
-                name="linkedin"
-                icon={<FaLinkedin className="text-gray-500" />}
-                placeholder={t('linkedin_placeholder')}
-                label={t('linked_profile')}
-                value={formData.linkedin}
-              />
-
-              <FormInput
-                handleChange={updateFormData}
-                type="url"
-                id="github"
-                name="github"
-                icon={<FaGithub className="text-gray-500" />}
-                placeholder={t('github_placeholder')}
-                label={t('github_profile')}
-                value={formData.github}
-              />
+              {validation.bio && (
+                <div className="text-red-500 text-sm font-light">
+                  {t(validation.bio)}
+                </div>
+              )}
             </div>
 
             <div className="pt-4">

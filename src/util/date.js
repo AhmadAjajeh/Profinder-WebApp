@@ -39,3 +39,10 @@ export function formatDisplayDate(dateString) {
   // Convert to readable format
   return date.toLocaleDateString(undefined, options);
 }
+
+export const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const month = date.toLocaleString('default', { month: 'short' });
+  const year = date.getFullYear();
+  return `${month} ${year}`;
+};

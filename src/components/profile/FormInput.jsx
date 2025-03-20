@@ -9,6 +9,7 @@ export default function FormInput({
   label,
   placeholder,
   value,
+  validation,
 }) {
   const { t } = useTranslation();
 
@@ -35,6 +36,9 @@ export default function FormInput({
           className="block w-full pl-10 rounded-md border-gray-300  bg-gray-100 dark:bg-elementGray dark:text-white px-4 py-2 placeholder:text-[12px] font-light text-sm"
           placeholder={placeholder}
         />
+        {validation && (
+          <div className="text-red-500 text-sm font-light">{t(validation)}</div>
+        )}
       </div>
     </div>
   );
