@@ -16,80 +16,74 @@ export default function Certifications({ myProfile, certifications }) {
   const [height, setHeight] = useState(0);
   const sliderRef = useRef(null);
 
-  useEffect(() => {
-    if (sliderRef.current) {
-      const updateHeight = () => {
-        setHeight(sliderRef.current.clientHeight);
-      };
-
-      updateHeight(); // Set initial height
-      window.addEventListener('resize', updateHeight); // Adjust on resize
-
-      return () => window.removeEventListener('resize', updateHeight);
-    }
-  }, []);
-
   const settings = {
     infinite: false,
     speed: 500,
-    slidesToShow: 4, //Adjust based on how many you want to show at once
+    slidesToShow: 4,
     slidesToScroll: 1,
     arrows: true,
     responsive: [
       {
-        breakpoint: 1024, // Tablet
+        breakpoint: 1440,
+        settings: { slidesToShow: 4 },
+      },
+      {
+        breakpoint: 1064,
         settings: { slidesToShow: 3 },
       },
       {
-        breakpoint: 800, // Mobile
+        breakpoint: 768,
         settings: { slidesToShow: 2 },
       },
       {
-        breakpoint: 480, // Mobile
+        breakpoint: 480,
         settings: { slidesToShow: 1 },
       },
     ],
   };
 
   return (
-    <div className="w-full bg-white h-[600px]  dark:bg-elementBlack p-4 shadow-md rounded-md border border-gray-300 dark:border-darkBorder">
-      <div className="text-white bg-logoOrange px-2 py-1 mb-2 w-fit flex items-center gap-1">
-        <FontAwesomeIcon icon={faAward} className="w-4 h-4  text-white" />
-        <div className="font-light">{t('certifications')}</div>
-      </div>
-      {certifications.length !== 0 && (
-        <div
-          className="w-full mx-auto relative"
-          ref={sliderRef}
-          style={{ height }}
-        >
-          <Slider
-            prevArrow={<PrevArrow />}
-            nextArrow={<NextArrow />}
-            {...settings}
-            className="w-full h-full px-2"
+    <div className="relative  w-full bg-white h-[600px]  dark:bg-elementBlack shadow-md rounded-md border border-gray-300 dark:border-darkBorder">
+      <div className="absolute  bg-logoOrange min-h-[600px] min-w-28 max-w-28 hidden md:flex md:rtl:mr-[40px] md:ltr:ml-[40px]"></div>
+      <div className="py-4 h-full">
+        <div className="sticky z-10 flex flex-row items-center justify-center gap-1 mx-[50px]">
+          <FontAwesomeIcon icon={faAward} className="text-white w-5 h-5" />
+          <div className="w-full h-fit text-white">{t('certifications')}</div>
+        </div>
+        {certifications.length !== 0 && (
+          <div
+            className="w-full mx-auto relative px-4"
+            ref={sliderRef}
+            style={{ height }}
           >
-            {certifications.map((cert) => (
-              <div key={cert._id} className="p-2 flex h-full">
-                <CertificationCard certification={cert} />
-              </div>
-            ))}
-          </Slider>
-        </div>
-      )}
-      {certifications.length === 0 && (
-        <div className="w-full p-5 flex flex-col space-y-3 text-logoOrange text-center items-center justify-center">
-          <Certification className="w-[300px]" />
-          <div>{t('no_certifications_yet')}</div>
-          {myProfile && <EditButton text={t('add_new_certfications')} />}
-        </div>
-      )}
+            <Slider
+              prevArrow={<PrevArrow />}
+              nextArrow={<NextArrow />}
+              {...settings}
+              className="w-full h-full px-2"
+            >
+              {certifications.map((cert) => (
+                <div key={cert._id} className="p-2 flex h-full">
+                  <CertificationCard certification={cert} />
+                </div>
+              ))}
+            </Slider>
+          </div>
+        )}
+        {certifications.length === 0 && (
+          <div className="w-full min-h-full p-5 flex flex-col space-y-3 text-logoOrange text-center items-center justify-center">
+            <Certification className="w-[300px]" />
+            <div>{t('no_certifications_yet')}</div>
+            {myProfile && <EditButton text={t('add_new_certfications')} />}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
 const PrevArrow = (props) => {
-  const { className, style, onClick } = props;
+  const { onClick } = props;
   return (
     <div
       onClick={onClick}
@@ -101,7 +95,7 @@ const PrevArrow = (props) => {
 };
 
 const NextArrow = (props) => {
-  const { className, style, onClick } = props;
+  const { onClick } = props;
   return (
     <div
       onClick={onClick}

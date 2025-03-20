@@ -20,7 +20,7 @@ export default function CertificationCard({ certification, myProfile }) {
         visible: { opacity: 1, scale: 1 },
       }}
     >
-      <div className="relative max-w-[340px]  sm:max-w-[400px] border border-gray-300 dark:border-darkBorder shadow-lg p-3 rounded-md flex">
+      <div className="relative max-w-[340px] bg-white dark:bg-elementBlack sm:max-w-[400px] border border-gray-300 dark:border-darkBorder shadow-lg p-3 rounded-md flex">
         <div className="flex flex-col justify-between h-full w-full">
           <div>
             <FontAwesomeIcon
@@ -50,7 +50,7 @@ export default function CertificationCard({ certification, myProfile }) {
   );
 
   return (
-    <div className="relative w-full h-[500px] border border-gray-300 dark:border-darkBorder shadow-lg p-3 rounded-md flex">
+    <div className="relative w-full h-[500px] bg-white dark:bg-elementBlack border border-gray-300 dark:border-darkBorder shadow-lg p-3 rounded-md flex">
       {showModal && modal}
       <div className="flex flex-col justify-between h-full w-full">
         <div>
@@ -65,7 +65,7 @@ export default function CertificationCard({ certification, myProfile }) {
               className="aspect-square "
             />
           </div>
-          <div className="-mx-2 text-logoOrange font-semibold text-center md:text-[14px] lg:text-[15px] mb-1">
+          <div className="-mx-2 text-logoOrange font-semibold text-center md:text-[14px] lg:text-[20px] mb-1">
             {certification.title}
           </div>
           <div className="md:text-[12px] text-center text-gray-500 dark:text-gray-300 mb-2">
