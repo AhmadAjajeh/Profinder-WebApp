@@ -112,10 +112,10 @@ function SideNavElement({ icon, text, path }) {
       <NavLink
         to={path}
         className={({ isActive }) =>
-          `grid grid-cols-5 py-1 rounded-md gap-2 items-center  dark:hover:text-logoOrange opacity-100 transition-all ${
+          `grid grid-cols-5 py-1 rounded-md gap-2 items-center   opacity-100 transition-all ${
             isActive
-              ? 'text-white'
-              : 'text-black dark:text-white hover:text-logoOrange'
+              ? 'text-white '
+              : 'text-black dark:text-white hover:text-logoOrange dark:hover:text-logoOrange'
           }`
         }
       >
