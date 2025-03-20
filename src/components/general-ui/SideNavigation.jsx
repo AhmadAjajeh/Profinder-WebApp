@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import UserImage from './UserImage';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useMatch } from 'react-router-dom';
 import {
   CompaniesIcon,
   CopyIcon,
@@ -19,7 +19,7 @@ export default function SideNavigation() {
   const { t } = useTranslation();
 
   return (
-    <div class="flex flex-col bg-white  dark:bg-elementBlack transition-all duration-300  rounded-md  p-3 border border-gray-300 dark:border-darkBorder h-fit w-full  ">
+    <div class="flex flex-col absolute -z-20 bg-white  dark:bg-elementBlack transition-all duration-300  rounded-md  p-3 border border-gray-300 dark:border-darkBorder h-fit w-full  ">
       {/* <!-- user identity --> */}
       <div class="flex flex-row items-center jusitfy-center space-x-2 rtl:space-x-reverse mb-6">
         <div className="mb-2 min-w-12">
@@ -40,7 +40,7 @@ export default function SideNavigation() {
       </div>
 
       {/* <!-- side bar navigation --> */}
-      <div class="flex  flex-col space-y-5 text-[13px] ltr:tracking-wide text-right">
+      <div class="flex  flex-col space-y-3 text-[13px] ltr:tracking-wide text-right">
         <SideNavElement
           icon={<HomeIcon style="w-6 fill-current" />}
           text="home_page"
@@ -101,17 +101,27 @@ export default function SideNavigation() {
 
 function SideNavElement({ icon, text, path }) {
   const { t } = useTranslation();
+
+  const isActive = useMatch(path);
+
   return (
-    <NavLink
-      to={path}
-      className={({ isActive }) =>
-        `grid grid-cols-5 gap-2 items-center hover:text-logoOrange dark:hover:text-logoOrange  transition-all ${
-          isActive ? 'text-logoOrange' : 'text-black dark:text-white'
-        }`
-      }
-    >
-      <div className="col-span-1 flex justify-center">{icon}</div>
-      <div className="col-span-4 text-start ">{t(text)}</div>
-    </NavLink>
+    <div className="relative">
+      {isActive && (
+        <div className="bg-logoOrange rounded-md w-full h-full absolute -z-10 opacity-50 dark:opacity-100"></div>
+      )}
+      <NavLink
+        to={path}
+        className={({ isActive }) =>
+          `grid grid-cols-5 py-1 rounded-md gap-2 items-center  dark:hover:text-logoOrange opacity-100 transition-all ${
+            isActive
+              ? 'text-white'
+              : 'text-black dark:text-white hover:text-logoOrange'
+          }`
+        }
+      >
+        <div className="col-span-1 flex justify-center">{icon}</div>
+        <div className="col-span-4 text-start ">{t(text)}</div>
+      </NavLink>
+    </div>
   );
 }
