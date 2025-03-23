@@ -1,6 +1,6 @@
 import { Link, useRouteError } from 'react-router-dom';
 
-import error from '../assets/images/error.png';
+import errorImage from '../assets/images/error.png';
 import { useTranslation } from 'react-i18next';
 
 export default function MainErrorPage() {
@@ -11,7 +11,7 @@ export default function MainErrorPage() {
 
   return (
     <div className="mx-auto w-fit flex flex-col space-y-5 mt-16 px-4">
-      <img src={error} className="w-full sm:w-[600px]" />
+      <img src={errorImage} className="w-full sm:w-[600px]" />
       <div className="mx-auto w-fit text-center">
         <div>{t('something_went_wrong')}</div>
         <Link className="text-logoOrange" to="/home">
