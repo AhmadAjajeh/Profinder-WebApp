@@ -23,7 +23,7 @@ export default function ProfilePage() {
     ? getBaseUrl() + user?.background_image
     : null;
 
-  useQuery({
+  const { isFetching } = useQuery({
     queryKey: ['visit-user', id],
     queryFn: () => visitUserQuery({ id }),
     onSuccess: ({ data }) => {
@@ -47,6 +47,7 @@ export default function ProfilePage() {
       <Certifications
         certifications={profile.certifications || []}
         myProfile={myProfile}
+        isFetching={isFetching}
       />
       <div>testing</div>
     </div>

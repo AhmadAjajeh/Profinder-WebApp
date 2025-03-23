@@ -1,20 +1,26 @@
 import { useTranslation } from 'react-i18next';
-import CertificationCard from './CertificationCard';
 import React, { useRef, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
-
 import { faAward } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+
+import CertificationCard, {
+  CertificationCardShimmer,
+} from './CertificationCard';
 import Certification from '../../general-ui/Certification';
 import EditButton from '../../general-ui/EditButton';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
 import CertificationForm from './CertificationForm';
 import { AnimatePresence } from 'framer-motion';
 
-export default function Certifications({ myProfile, certifications }) {
+export default function Certifications({
+  myProfile,
+  certifications,
+  isFetching,
+}) {
   const { t } = useTranslation();
-  console.log(certifications);
+
   const [showModal, setShowModal] = useState(false);
   const sliderRef = useRef(null);
 
@@ -45,7 +51,7 @@ export default function Certifications({ myProfile, certifications }) {
   };
 
   return (
-    <div className="relative   w-full bg-white h-[600px]  dark:bg-elementBlack shadow-md rounded-md border border-gray-300 dark:border-darkBorder">
+    <div className="relative w-full bg-white h-[600px] dark:bg-elementBlack shadow-md rounded-md border border-gray-300 dark:border-darkBorder">
       <AnimatePresence>
         {showModal && <CertificationForm onClose={() => setShowModal(false)} />}
       </AnimatePresence>
@@ -62,7 +68,24 @@ export default function Certifications({ myProfile, certifications }) {
           <FontAwesomeIcon icon={faAward} className="w-5 h-5" />
           <div className="w-fit h-fit text-[15px] ">{t('certifications')}</div>
         </div>
-        {certifications.length !== 0 && (
+        {isFetching && (
+          <div className="flex w-full gap-5 items-center px-6">
+            <div className="w-1/2 md:w-1/3 lg:w-1/4">
+              <CertificationCardShimmer />
+            </div>
+            <div className="w-1/2 md:w-1/3 lg:w-1/4">
+              <CertificationCardShimmer />
+            </div>
+            <div className="hidden md:flex w-1/3 lg:w-1/4">
+              <CertificationCardShimmer />
+            </div>
+            <div className="hidden lg:flex w-1/4">
+              <CertificationCardShimmer />
+            </div>
+          </div>
+        )}
+
+        {!isFetching && certifications.length !== 0 && (
           <div className="w-full mx-auto relative px-4" ref={sliderRef}>
             <Slider
               prevArrow={<PrevArrow />}
@@ -81,7 +104,7 @@ export default function Certifications({ myProfile, certifications }) {
             </Slider>
           </div>
         )}
-        {certifications.length === 0 && (
+        {!isFetching && certifications.length === 0 && (
           <div className="w-full min-h-full p-5 flex flex-col space-y-3 text-logoOrange text-center items-center justify-center">
             <Certification className="w-[300px]" />
             <div>{t('no_certifications_yet')}</div>
@@ -95,23 +118,23 @@ export default function Certifications({ myProfile, certifications }) {
 const PrevArrow = (props) => {
   const { onClick } = props;
   return (
-    <div
+    <button
       onClick={onClick}
       className={`absolute top-[250px] z-10 -left-[13px] rounded-full text-white p-1 w-fit bg-logoOrange `}
     >
       <ArrowLeft class="arrows" style={{ width: 16, height: 16 }} />
-    </div>
+    </button>
   );
 };
 
 const NextArrow = (props) => {
   const { onClick } = props;
   return (
-    <div
+    <button
       onClick={onClick}
       className={` absolute top-[250px] z-10 -right-[14px] rounded-full text-white p-1 w-fit bg-logoOrange `}
     >
       <ArrowRight class="arrows" style={{ width: 16, height: 16 }} />
-    </div>
+    </button>
   );
 };

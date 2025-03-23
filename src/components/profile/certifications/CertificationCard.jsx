@@ -178,3 +178,17 @@ export default function CertificationCard({ certification, myProfile }) {
     </div>
   );
 }
+
+export function CertificationCardShimmer() {
+  return (
+    <div className="flex flex-col justify-between h-full w-full animate-pulse">
+      <div>
+        <div className="w-full aspect-square mb-3 bg-gray-300 dark:bg-gray-700 rounded-md" />
+        <div className="bg-gray-300 dark:bg-gray-700 h-6 w-3/4 mx-auto mb-1 rounded" />
+        <div className="bg-gray-300 dark:bg-gray-700 h-4 w-1/2 mx-auto mb-2 rounded" />
+        <div className="bg-gray-300 dark:bg-gray-700 h-10 w-full mx-auto mb-2 rounded" />
+      </div>
+      <div className="bg-gray-300 dark:bg-gray-700 h-8 w-full p-2 rounded" />
+    </div>
+  );
+}
