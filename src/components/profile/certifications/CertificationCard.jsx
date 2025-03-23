@@ -20,8 +20,10 @@ export default function CertificationCard({ certification, myProfile }) {
   const handleError = useErrorHandler();
 
   const [modal, setModal] = useState('');
-  const [image, setImage] = useState(certification.certification_image);
-
+  const [image, setImage] = useState(
+    certification.certification_image || 'no-image'
+  );
+  console.log(certification.title, image);
   const { mutateAsync: deleteCertification } = useMutation({
     mutationFn: deleteCertificationMutation,
     onSuccess: () => {
@@ -57,16 +59,22 @@ export default function CertificationCard({ certification, myProfile }) {
               icon={faAward}
               className="w-8 h-8 absolute top-4 right-4  text-logoOrange"
             />
-            {image ? (
+            {image !== 'failed' && (
               <img
                 src={getBaseUrl() + image}
                 alt={certification.title}
                 className="w-full h-full"
                 loading="lazy"
               />
-            ) : (
+            )}
+            {image === 'failed' && (
               <div className="w-full min-h-[250px] bg-elementDarkerLightGray dark:bg-elementGray text-black dark:text-white font-light flex items-center justify-center">
                 Failed to fetch
+              </div>
+            )}
+            {!image && (
+              <div className="w-full min-h-[250px] bg-elementDarkerLightGray dark:bg-elementGray text-black dark:text-white font-light flex items-center justify-center">
+                No Image Preview
               </div>
             )}
             <div className="-mx-2 text-logoOrange font-semibold text-center text-[16px] mb-1">
@@ -141,17 +149,23 @@ export default function CertificationCard({ certification, myProfile }) {
             className="w-8 h-8 absolute top-4 right-4  text-logoOrange"
           />
           <div className="w-full aspect-square mb-3">
-            {image ? (
+            {image !== 'failed' && image !== 'no-image' && (
               <img
                 src={getBaseUrl() + image}
                 alt={certification.title}
                 className="w-full h-full"
                 loading="lazy"
-                onError={() => setImage(null)}
+                onError={() => setImage('failed')}
               />
-            ) : (
-              <div className="w-full min-h-full bg-elementDarkerLightGray dark:bg-elementGray text-dark dark:text-white font-light flex items-center justify-center">
+            )}
+            {image === 'failed' && (
+              <div className="w-full min-h-[250px] bg-elementDarkerLightGray dark:bg-elementGray text-black dark:text-white font-light flex items-center justify-center">
                 Failed to fetch
+              </div>
+            )}
+            {image === 'no-image' && (
+              <div className="w-full min-h-[250px] bg-elementDarkerLightGray dark:bg-elementGray text-black dark:text-white font-light flex items-center justify-center">
+                No Image Preview
               </div>
             )}
           </div>
