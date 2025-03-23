@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import UserImage from './UserImage';
-import { NavLink, useMatch } from 'react-router-dom';
+import { NavLink, useLocation, useMatch } from 'react-router-dom';
 import {
   CompaniesIcon,
   CopyIcon,
@@ -102,7 +102,8 @@ export default function SideNavigation() {
 function SideNavElement({ icon, text, path }) {
   const { t } = useTranslation();
 
-  const isActive = useMatch(path);
+  const location = useLocation();
+  const isActive = location.pathname.startsWith(path);
 
   return (
     <div className="relative">
@@ -112,10 +113,10 @@ function SideNavElement({ icon, text, path }) {
       <NavLink
         to={path}
         className={({ isActive }) =>
-          `grid grid-cols-5 py-1 rounded-md gap-2 items-center  dark:hover:text-logoOrange opacity-100 transition-all ${
+          `grid grid-cols-5 py-1 rounded-md gap-2 items-center   opacity-100 transition-all ${
             isActive
-              ? 'text-white'
-              : 'text-black dark:text-white hover:text-logoOrange'
+              ? 'text-white '
+              : 'text-black dark:text-white hover:text-logoOrange dark:hover:text-logoOrange'
           }`
         }
       >
