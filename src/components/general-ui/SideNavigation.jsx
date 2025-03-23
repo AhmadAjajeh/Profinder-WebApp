@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import UserImage from './UserImage';
-import { NavLink, useMatch } from 'react-router-dom';
+import { NavLink, useLocation, useMatch } from 'react-router-dom';
 import {
   CompaniesIcon,
   CopyIcon,
@@ -102,7 +102,8 @@ export default function SideNavigation() {
 function SideNavElement({ icon, text, path }) {
   const { t } = useTranslation();
 
-  const isActive = useMatch(path);
+  const location = useLocation();
+  const isActive = location.pathname.startsWith(path);
 
   return (
     <div className="relative">
