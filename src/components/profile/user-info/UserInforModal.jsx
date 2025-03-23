@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Modal from '../../general-ui/Modal';
-import FormInput from '../FormInput';
 import { useMutation } from '@tanstack/react-query';
 import { updateProfileInfoMutation } from '../../../http/profile';
 import queryClient from '../../../http/queryClient';
@@ -47,8 +46,8 @@ function UserInfoModal({ handleClose, fullname, bio }) {
     if (!range(full_name, 3, 50)) {
       newValidation.full_name = 'fullname_should_be_between_3_and_50';
     }
-    if (!range(bio, 0, 2048)) {
-      newValidation.bio = 'bio_should_be_between_0_and_2048';
+    if (!range(bio, 16, 2048)) {
+      newValidation.bio = 'bio_should_be_between_16_and_2048';
     }
 
     if (Object.keys(newValidation).length !== 0) {
@@ -71,22 +70,36 @@ function UserInfoModal({ handleClose, fullname, bio }) {
       }}
     >
       <div className="w-[330px] md:w-[500px] mx-auto">
-        <div className="bg-white dark:bg-elementBlack  max-h-[650px] overflow-y-scroll rounded-2xl shadow-xl p-8">
+        <div className="bg-white dark:bg-elementBlack  max-h-[650px]  rounded-2xl shadow-xl p-8">
           <h1 className="text-xl font-bold text-logoOrange text-center mb-8">
             {t('professional_profile')}
           </h1>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            <FormInput
-              type="text"
-              id="text"
-              name="full_name"
-              placeholder={t('name_placeholder')}
-              label={t('full_name')}
-              value={formData.full_name}
-              handleChange={updateFormData}
-              validation={validation.full_name}
-            />
+            <div className="relative">
+              <label
+                htmlFor="text"
+                className="mb-1 block text-sm font-medium   dark:text-white"
+              >
+                {t('full_name')}
+              </label>
+              <div className=" relative rounded-md shadow-sm">
+                <input
+                  type="text"
+                  id="text"
+                  name="full_name"
+                  value={formData.full_name || ''}
+                  onChange={updateFormData}
+                  className="block w-full focus:outline-none focus:ring-1 ring-logoOrange pl-10 rounded-md border border-gray-300 dark:border-darkBorder dark:bg-elementGray dark:text-white px-4 py-2 placeholder:text-[12px] font-light text-sm"
+                  placeholder={t('name_placeholder')}
+                />
+                {validation.full_name && (
+                  <div className="text-red-500 text-sm font-light">
+                    {t(validation.full_name)}
+                  </div>
+                )}
+              </div>
+            </div>
 
             <div>
               <label
@@ -99,8 +112,9 @@ function UserInfoModal({ handleClose, fullname, bio }) {
                 name="bio"
                 id="bio"
                 rows={3}
+                style={{ height: 200 }}
                 onChange={updateFormData}
-                className="block w-full rounded-md border-gray-300 shadow-sm  bg-gray-100 dark:bg-elementGray dark:text-white px-4 py-2 placeholder:text-[12px] font-light text-sm"
+                className="block w-full rounded-md resize-none focus:outline-none focus:ring-1 ring-logoOrange border border-gray-300 dark:border-darkBorder shadow-sm dark:bg-elementGray dark:text-white px-4 py-2 placeholder:text-[12px] font-light text-sm"
                 placeholder={t('summary_placeholder')}
                 value={formData.bio}
               />

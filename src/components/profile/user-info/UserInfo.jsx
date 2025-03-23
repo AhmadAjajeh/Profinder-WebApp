@@ -90,9 +90,9 @@ export default function UserInfo({
         {myProfile && (
           <button
             onClick={() => setModal('profile-image')}
-            className="absolute bg-gray-300 p-1 rounded-full  top-24 rtl:right-3 ltr:left-3 border border-gray-500"
+            className="absolute bg-gray-700 p-1 rounded-full  top-24 rtl:right-3 ltr:left-3 border border-gray-500"
           >
-            <FaPen className="w-3 h-3 text-gray-700" />
+            <FaPen className="w-3 h-3 text-gray-300" />
           </button>
         )}
       </div>

@@ -17,3 +17,15 @@ export function visitUserQuery({ id }) {
 export function updateProfileInfoMutation(data) {
   return axiosInstance.put('users/profiles/', data);
 }
+
+export function cerateCertificationMutation(formData) {
+  return axiosInstance.post('users/profiles/certifications', formData);
+}
+
+export function updateCertificationMutation({ formData, id }) {
+  return axiosInstance.put(`users/profiles/certifications/${id}`, formData);
+}
+
+export function deleteCertificationMutation(id) {
+  return axiosInstance.delete(`users/profiles/certifications/${id}`);
+}

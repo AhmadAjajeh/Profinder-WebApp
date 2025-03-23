@@ -66,6 +66,7 @@
   "months": "شهور",
   "days": "أيام",
   "hours": "ساعات",
+  "save": "حفظ",
   "minutes": "دقائق",
   "comments": "تعليقات",
   "leave_a_comment": "اترك تعليقًا",
@@ -155,5 +156,19 @@
   "project_description_placeholder": "تطوير تطبيق ويب متجاوب وقابل للتوسع باستخدام React و Node.js. يشمل مصادقة المستخدم، تكامل قاعدة البيانات، وواجهات برمجة تطبيقات RESTful.",
   "project_delivery_days_placeholder": "10 أيام",
   "fullname_should_be_between_3_and_50": "يجب أن يكون الاسم الكامل بين 3 و 50 حرفاً",
-  "bio_should_be_between_0_and_2048": "يجب ألا تتجاوز السيرة الذاتية 2048 حرفاً"
+  "bio_should_be_between_16_and_2048": "السيرة الذاتية يجب ان تكون بين 16 و 2048 حرفا",
+  "expiration_date": "تاريخ الانتهاء",
+  "issue_date": "تاريخ الإصدار",
+  "certification_title": "عنوان الشهادة",
+  "drag_and_drop_or_click_to_select_a_file": "اسحب وأفلت أو انقر لتحديد ملف",
+  "saving": "جاري الحفظ",
+  "organization": "المنظمة",
+  "certification_image": "صورة الشهادة",
+  "must_be_at_least_3_chars": "يجب أن يكون على الأقل 3 أحرف",
+  "must_be_less_than_255": "يجب أن يكون أقل من 255 حرفًا",
+  "must_be_at_least_25_chars": "يجب أن يكون على الأقل 25 حرفًا",
+  "must_be_less_than_1000_chars": "يجب أن يكون أقل من 1000 حرف",
+  "issue_date_is_required": "تاريخ الإصدار مطلوب",
+  "expiration_date_must_be_greater_than_the_issue_date": "يجب أن يكون تاريخ الانتهاء أكبر من تاريخ الإصدار",
+  "this_field_is_required": "هذا الحقل مطلوب"
 }

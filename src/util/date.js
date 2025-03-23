@@ -41,6 +41,8 @@ export function formatDisplayDate(dateString) {
 }
 
 export const formatDate = (dateString) => {
+  if (!dateString) return i18next.t('unknown');
+
   const date = new Date(dateString);
   const month = date.toLocaleString('default', { month: 'short' });
   const year = date.getFullYear();

@@ -154,5 +154,20 @@
   "project_description_placeholder": "Develop a responsive and scalable web application using React and Node.js. Includes user authentication, database integration, and RESTful APIs.",
   "project_delivery_days_placeholder": "10 days",
   "fullname_should_be_between_3_and_50": "Full name should be between 3 and 50 characters",
-  "bio_should_be_between_0_and_2048": "Bio should not exceed 2048 characters"
+  "bio_should_be_between_16_and_2048": "Bio should be between 16 and 2048 characters",
+  "expiration_date": "Expiration Date",
+  "issue_date": "Issue Date",
+  "certification_title": "Certification Title",
+  "organization": "Organization",
+  "certification_image": "Certification Image",
+  "drag_and_drop_or_click_to_select_a_file": "Drag and drop or click to select a file",
+  "saving": "Saving",
+  "save": "Save",
+  "must_be_at_least_3_chars": "Must be at least 3 characters",
+  "must_be_less_than_255": "Must be less than 255 characters",
+  "must_be_at_least_25_chars": "Must be at least 25 characters",
+  "must_be_less_than_1000_chars": "Must be less than 1000 characters",
+  "issue_date_is_required": "Issue date is required",
+  "expiration_date_must_be_greater_than_the_issue_date": "Expiration date must be greater than the issue date",
+  "this_field_is_required": "This field is required"
 }

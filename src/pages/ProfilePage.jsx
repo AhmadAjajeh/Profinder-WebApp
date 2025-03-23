@@ -33,8 +33,6 @@ export default function ProfilePage() {
     onError: handleError,
   });
 
-  console.log(profile.certifications);
-
   return (
     <div className="w-full overflow-hidden flex flex-col space-y-5">
       <UserInfo

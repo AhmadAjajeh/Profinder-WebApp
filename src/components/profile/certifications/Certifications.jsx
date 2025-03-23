@@ -1,19 +1,21 @@
 import { useTranslation } from 'react-i18next';
 import CertificationCard from './CertificationCard';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
-// import 'slick-carousel/slick/slick-theme.css';
+
 import { faAward } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Certification from '../../general-ui/Certification';
 import EditButton from '../../general-ui/EditButton';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import CertificationForm from './CertificationForm';
+import { AnimatePresence } from 'framer-motion';
 
 export default function Certifications({ myProfile, certifications }) {
   const { t } = useTranslation();
-
-  const [height, setHeight] = useState(0);
+  console.log(certifications);
+  const [showModal, setShowModal] = useState(false);
   const sliderRef = useRef(null);
 
   const settings = {
@@ -32,7 +34,7 @@ export default function Certifications({ myProfile, certifications }) {
         settings: { slidesToShow: 3 },
       },
       {
-        breakpoint: 768,
+        breakpoint: 800,
         settings: { slidesToShow: 2 },
       },
       {
@@ -43,19 +45,25 @@ export default function Certifications({ myProfile, certifications }) {
   };
 
   return (
-    <div className="relative  w-full bg-white h-[600px]  dark:bg-elementBlack shadow-md rounded-md border border-gray-300 dark:border-darkBorder">
-      <div className="absolute  bg-logoOrange min-h-[600px] min-w-28 max-w-28 hidden md:flex md:rtl:mr-[40px] md:ltr:ml-[40px]"></div>
-      <div className="py-4 h-full">
-        <div className="sticky z-10 flex flex-row items-center justify-center gap-1 mx-[50px]">
-          <FontAwesomeIcon icon={faAward} className="text-white w-5 h-5" />
-          <div className="w-full h-fit text-white">{t('certifications')}</div>
+    <div className="relative   w-full bg-white h-[600px]  dark:bg-elementBlack shadow-md rounded-md border border-gray-300 dark:border-darkBorder">
+      <AnimatePresence>
+        {showModal && <CertificationForm onClose={() => setShowModal(false)} />}
+      </AnimatePresence>
+      {myProfile && (
+        <EditButton
+          handleClick={() => setShowModal(true)}
+          text={t('add_new_certfications')}
+          className="absolute top-2 rtl:left-2 ltr:right-2"
+        />
+      )}
+      <div className="absolute bg-logoOrange min-h-[600px] min-w-28 max-w-28 hidden md:flex md:rtl:mr-[40px] md:ltr:ml-[40px]"></div>
+      <div className=" h-full flex items-center justify-center">
+        <div className="absolute w-fit flex flex-row items-center justify-center gap-1 top-[10px] ltr:left-[10px] rtl:right-[10px] md:rtl:right-[50px] md:ltr:left-[50px] text-logoOrange  md:text-white">
+          <FontAwesomeIcon icon={faAward} className="w-5 h-5" />
+          <div className="w-fit h-fit text-[15px] ">{t('certifications')}</div>
         </div>
         {certifications.length !== 0 && (
-          <div
-            className="w-full mx-auto relative px-4"
-            ref={sliderRef}
-            style={{ height }}
-          >
+          <div className="w-full mx-auto relative px-4" ref={sliderRef}>
             <Slider
               prevArrow={<PrevArrow />}
               nextArrow={<NextArrow />}
@@ -64,7 +72,10 @@ export default function Certifications({ myProfile, certifications }) {
             >
               {certifications.map((cert) => (
                 <div key={cert._id} className="p-2 flex h-full">
-                  <CertificationCard certification={cert} />
+                  <CertificationCard
+                    certification={cert}
+                    myProfile={myProfile}
+                  />
                 </div>
               ))}
             </Slider>
@@ -74,7 +85,6 @@ export default function Certifications({ myProfile, certifications }) {
           <div className="w-full min-h-full p-5 flex flex-col space-y-3 text-logoOrange text-center items-center justify-center">
             <Certification className="w-[300px]" />
             <div>{t('no_certifications_yet')}</div>
-            {myProfile && <EditButton text={t('add_new_certfications')} />}
           </div>
         )}
       </div>
