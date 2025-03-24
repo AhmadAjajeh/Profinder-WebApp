@@ -147,5 +147,6 @@
   "address": "العنوان",
   "project_title_placeholder": "تطوير تطبيق ويب كامل المكدس",
   "project_description_placeholder": "تطوير تطبيق ويب متجاوب وقابل للتوسع باستخدام React و Node.js. يشمل مصادقة المستخدم، تكامل قاعدة البيانات، وواجهات برمجة تطبيقات RESTful.",
-  "project_delivery_days_placeholder": "10 أيام"
+  "project_delivery_days_placeholder": "10 أيام",
+  "no_companies_found_matching_your_search": "لم يتم العثور على شركات تطابق بحثك"
 }

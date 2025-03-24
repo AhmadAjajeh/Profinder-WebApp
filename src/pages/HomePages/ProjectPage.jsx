@@ -50,7 +50,7 @@ export default function ProjectPage() {
         <div className="bg-white dark:bg-elementBlack w-[340px] sm:w-[400px] lg:w-full  rounded-md border border-gray-300 dark:border-darkBorder shadow-sm dark:text-white h-[630px] flex items-center justify-center">
           {parentPage ? (
             <div className="w-full h-full flex flex-col justify-center p-3 items-center">
-              <div className="text-gray-600 font-light border-gray-300  bg-gray-200 dark:bg-gray-700 dark:text-gray-300 p-3 rounded-md text-center w-full">
+              <div className="text-gray-600 font-light bg-lightBackground dark:bg-elementGray dark:text-gray-300 p-3 rounded-md text-center w-full">
                 {t('select_a_project_to_view_its_details')}
               </div>
             </div>

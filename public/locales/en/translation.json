@@ -146,5 +146,6 @@
   "back_to_home_page": "Back to Home Page",
   "project_title_placeholder": "Full-Stack Web Application Development",
   "project_description_placeholder": "Develop a responsive and scalable web application using React and Node.js. Includes user authentication, database integration, and RESTful APIs.",
-  "project_delivery_days_placeholder": "10 days"
+  "project_delivery_days_placeholder": "10 days",
+  "no_companies_found_matching_your_search": "No companies found matching your search"
 }

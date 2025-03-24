@@ -115,7 +115,7 @@ export default function NewProject() {
 
   return (
     <div className="flex flex-col space-y-3 h-full w-full">
-      <div className="px-6 py-4 bg-gradient-to-r bg-logoOrange rounded-t-md">
+      <div className="px-6 py-4 bg-logoOrange rounded-t-md">
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
           <MdCreate className="h-6 w-6 text-white" />
           <h1 className="text-xl font-semibold text-white">
@@ -162,14 +162,14 @@ export default function NewProject() {
                   <Input
                     name="min"
                     placeholder={t('from')}
-                    className="w-16 mt-0.5 text-sm rounded-md border border-gray-300 dark:border-darkBorder p-0.5 font-light"
+                    className="w-16 mt-0.5 text-sm rounded-md bg-inherit border border-gray-300 dark:border-darkBorder p-0.5 font-light"
                   />
                 </div>
                 <div className=" flex flex-row space-x-1 rtl:space-x-reverse">
                   <Input
                     name="max"
                     placeholder={t('to')}
-                    className="w-16 mt-0.5 text-sm rounded-md border border-gray-300 dark:border-darkBorder p-0.5 font-light"
+                    className="w-16 mt-0.5 text-sm rounded-md bg-inherit border border-gray-300 dark:border-darkBorder p-0.5 font-light"
                   />
                 </div>
                 <div className=" flex flex-row space-x-1 rtl:space-x-reverse">
@@ -177,7 +177,7 @@ export default function NewProject() {
                     name="currency"
                     placeholder={t('currency')}
                     maxLength={3}
-                    className="w-16 mt-0.5 text-sm rounded-md border border-gray-300 dark:border-darkBorder p-0.5 font-light"
+                    className="w-16 mt-0.5 text-sm rounded-md bg-inherit border border-gray-300 dark:border-darkBorder p-0.5 font-light"
                   />
                 </div>
               </div>
@@ -200,7 +200,7 @@ export default function NewProject() {
               <Input
                 name="working_interval"
                 className={
-                  'border border-gray-300 dark:border-darkBorder rounded-md p-1 w-24 text-sm font-light'
+                  'bg-inherit border border-gray-300 dark:border-darkBorder rounded-md p-1 w-24 text-sm font-light'
                 }
                 placeholder={t('project_delivery_days_placeholder')}
               />
