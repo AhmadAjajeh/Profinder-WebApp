@@ -106,7 +106,7 @@ export default function JobDetails({}) {
               </div>
             </div>
           </div>
-          <div className="flex flex-col space-y-5 overflow-y-scroll h-full text-xs lg:text-sm  p-2 border shadow-sm  border-gray-300 dark:border-darkBorder">
+          <div className="flex flex-col space-y-5 overflow-y-auto h-full text-xs lg:text-sm  p-2 border shadow-sm  border-gray-300 dark:border-darkBorder">
             {/* title */}
             <div className="flex flex-col space-y-1">
               <div className="flex flex-row items-center  space-x-3 rtl:space-x-reverse">

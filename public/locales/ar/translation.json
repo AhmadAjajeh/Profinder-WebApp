@@ -155,6 +155,7 @@
   "project_title_placeholder": "تطوير تطبيق ويب كامل المكدس",
   "project_description_placeholder": "تطوير تطبيق ويب متجاوب وقابل للتوسع باستخدام React و Node.js. يشمل مصادقة المستخدم، تكامل قاعدة البيانات، وواجهات برمجة تطبيقات RESTful.",
   "project_delivery_days_placeholder": "10 أيام",
+  "no_companies_found_matching_your_search": "لم يتم العثور على شركات تطابق بحثك",
   "fullname_should_be_between_3_and_50": "يجب أن يكون الاسم الكامل بين 3 و 50 حرفاً",
   "bio_should_be_between_16_and_2048": "السيرة الذاتية يجب ان تكون بين 16 و 2048 حرفا",
   "expiration_date": "تاريخ الانتهاء",

@@ -13,8 +13,6 @@ import useErrorHandler from '../../hooks/useErrorHandler';
 
 export default function CompaniesSearch() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const handleError = useErrorHandler();
 
   const [name, setName] = useState('');
@@ -55,7 +53,7 @@ export default function CompaniesSearch() {
           input.current.value = '';
         }}
       >
-        <div className="hidden group relative md:flex space-x-2 rtl:space-x-reverse items-center border focus-within:shadow-md focus-within:py-1.5 focus-within:px-3 border-gray-300 dark:border-darkBorder rounded-md px-2 py-1 shadow-sm   dark:shadow-darkBorder transition-all">
+        <div className="hidden group relative md:flex space-x-2 rtl:space-x-reverse items-center border focus-within:shadow-lg focus-within:py-1.5 focus-within:px-3 border-gray-300 dark:border-darkBorder rounded-md px-2 py-1 shadow-sm  shadow-gray-400 dark:shadow-black transition-all">
           <div>
             <svg
               className="w-4 h-4 text-gray-500 dark:text-slate-200 font-light"
@@ -88,7 +86,7 @@ export default function CompaniesSearch() {
 
       {searching && name !== '' && (
         <div className="fixed w-[300px] top-[70px] dark:text-white bg-white dark:bg-elementBlack border border-gray-300 dark:border-darkBorder">
-          <div className="w-full max-h-[500px] overflow-y-scroll">
+          <div className="w-full max-h-[500px] overflow-y-auto">
             {companies.length > 0 ? (
               <div className="flex flex-col">
                 {companies.map((company) => (
@@ -105,8 +103,10 @@ export default function CompaniesSearch() {
                 <FaSpinner className="w-10 h-10 animate-spin text-logoOrange" />
               </div>
             ) : (
-              <div className="text-center py-8 text-md ">
-                No companies found matching your search.
+              <div className="flex justify-center items-center h-[104px] w-full">
+                <div className="text-sm max-w-md text-gray-600 dark:text-gray-300 bg-lightBackground dark:bg-elementGray  p-3 rounded-md">
+                  {t('no_companies_found_matching_your_search')}
+                </div>
               </div>
             )}
           </div>
@@ -130,8 +130,8 @@ function Company({ company }) {
             className="w-full h-full object-cover text-xs"
           />
         ) : (
-          <div className="bg-gray-300 dark:bg-gray-500 p-2 w-full h-full flex items-center">
-            <SingleCompany style="w-12 h-12 text-gray-500 dark:text-gray-700 " />
+          <div className="bg-lightBackground dark:bg-elementGray p-2 w-full h-full flex items-center">
+            <SingleCompany style="w-12 h-12 text-gray-500 dark:text-gray-400 " />
           </div>
         )}
       </div>
