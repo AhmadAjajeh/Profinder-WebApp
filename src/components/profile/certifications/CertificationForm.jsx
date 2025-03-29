@@ -40,7 +40,7 @@ export default function CertificationForm({ onClose, certification }) {
   const { mutateAsync: createCertification } = useMutation({
     mutationFn: cerateCertificationMutation,
     onSuccess: () => {
-      queryClient.invalidateQueries(['visit-user']);
+      queryClient.invalidateQueries({ queryKey: ['visit-user'] });
       onClose();
     },
     onError: handleError,
@@ -49,7 +49,7 @@ export default function CertificationForm({ onClose, certification }) {
   const { mutateAsync: updateCertification } = useMutation({
     mutationFn: updateCertificationMutation,
     onSuccess: () => {
-      queryClient.invalidateQueries(['visit-user']);
+      queryClient.invalidateQueries({ queryKey: ['visit-user'] });
       onClose();
     },
     onError: handleError,

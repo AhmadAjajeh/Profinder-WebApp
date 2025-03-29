@@ -31,6 +31,7 @@ export default function ProfilePage() {
       setProfile(data.user.profile_id);
     },
     onError: handleError,
+    refetchOnWindowFocus: false,
   });
 
   return (

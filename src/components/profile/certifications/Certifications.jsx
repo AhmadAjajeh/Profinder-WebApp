@@ -55,6 +55,7 @@ export default function Certifications({
       <AnimatePresence>
         {showModal && <CertificationForm onClose={() => setShowModal(false)} />}
       </AnimatePresence>
+
       {myProfile && (
         <EditButton
           handleClick={() => setShowModal(true)}
@@ -68,6 +69,7 @@ export default function Certifications({
           <FontAwesomeIcon icon={faAward} className="w-5 h-5" />
           <div className="w-fit h-fit text-[15px] ">{t('certifications')}</div>
         </div>
+
         {isFetching && (
           <div className="flex w-full gap-5 items-center px-6">
             <div className="w-1/2 md:w-1/3 lg:w-1/4">
@@ -104,6 +106,7 @@ export default function Certifications({
             </Slider>
           </div>
         )}
+
         {!isFetching && certifications.length === 0 && (
           <div className="w-full min-h-full p-5 flex flex-col space-y-3 text-logoOrange text-center items-center justify-center">
             <Certification className="w-[300px]" />
