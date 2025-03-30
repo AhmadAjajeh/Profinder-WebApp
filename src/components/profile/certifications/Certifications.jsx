@@ -66,7 +66,7 @@ export default function Certifications({
       <div className="absolute bg-logoOrange min-h-[600px] min-w-28 max-w-28 hidden md:flex md:rtl:mr-[40px] md:ltr:ml-[40px]"></div>
       <div className=" h-full flex items-center justify-center">
         <div className="absolute w-fit flex flex-row items-center justify-center gap-1 top-[10px] ltr:left-[10px] rtl:right-[10px] md:rtl:right-[50px] md:ltr:left-[50px] text-logoOrange  md:text-white">
-          <FontAwesomeIcon icon={faAward} className="w-5 h-5" />
+          <FontAwesomeIcon icon={faAward} className="w-6 h-6" />
           <div className="w-fit h-fit text-[15px] ">{t('certifications')}</div>
         </div>
 

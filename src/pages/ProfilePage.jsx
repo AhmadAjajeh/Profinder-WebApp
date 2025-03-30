@@ -8,6 +8,7 @@ import { getBaseUrl } from '../util/http';
 import UserInfo from '../components/profile/user-info/UserInfo';
 import useErrorHandler from '../hooks/useErrorHandler';
 import Certifications from '../components/profile/certifications/Certifications';
+import Projects from '../components/profile/projects/Projects';
 
 export default function ProfilePage() {
   const handleError = useErrorHandler();
@@ -50,7 +51,12 @@ export default function ProfilePage() {
         myProfile={myProfile}
         isFetching={isFetching}
       />
-      <div>testing</div>
+      <Projects
+        projects={profile.projects || []}
+        myProfile={myProfile}
+        isFetching={isFetching}
+      />
+      <div>test</div>
     </div>
   );
 }
