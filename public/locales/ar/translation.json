@@ -171,5 +171,11 @@
   "must_be_less_than_1000_chars": "يجب أن يكون أقل من 1000 حرف",
   "issue_date_is_required": "تاريخ الإصدار مطلوب",
   "expiration_date_must_be_greater_than_the_issue_date": "يجب أن يكون تاريخ الانتهاء أكبر من تاريخ الإصدار",
-  "this_field_is_required": "هذا الحقل مطلوب"
+  "this_field_is_required": "هذا الحقل مطلوب",
+  "start_date": "تاريخ البدء",
+  "end_date": "تاريخ الانتهاء",
+  "see_details": "عرض التفاصيل",
+  "less": "أقل",
+  "more_details": "مزيد من التفاصيل",
+  "add_new_projects": "إضافة مشاريع جديدة"
 }
