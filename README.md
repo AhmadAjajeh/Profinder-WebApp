@@ -2,7 +2,7 @@
 
 **ProFinder** is a **React-based training project** developed independently as part of my learning journey. It serves as the **frontend for a job and freelance portal**, allowing users to explore career opportunities and freelance gigs. This is a **prototype** that focuses on frontend technologies and UI/UX design — **not a fully functional application** on its own.
 
-> 🔧 The backend for this project is available in a separate repository: [ProFinder API](https://github.com/your-username/profinder-api)
+> 🔧 The backend for this project is available in a separate repository: [ProFinder API](https://github.com/AhmadAjajeh/Profinder-API)
 
 ---
 
@@ -21,7 +21,7 @@ This project demonstrates a wide range of modern frontend tools and libraries:
 - 🎬 **Lottie** – Rich, animated illustrations for engaging visuals.
 - 💫 **Framer Motion** – Smooth animations and transitions throughout the interface.
 - 🌐 **Axios** – Simplified API communication with promise-based HTTP requests.
-
+- 🧾 **React Hook Form** – Performant, flexible form management with minimal re-renders.
 ---
 
 ## 🌍 Multilingual & Themed UI
