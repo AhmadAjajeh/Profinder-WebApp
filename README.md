@@ -57,12 +57,14 @@ This project is for **learning and portfolio purposes** and is **not intended fo
 ![screenshot-2025-04-07-13-52-43](https://github.com/user-attachments/assets/49795b98-9248-46a0-bc2c-2f5da901932f)
 ![screenshot-2025-04-07-15-45-51](https://github.com/user-attachments/assets/e2aa5ab2-2172-4fc2-ae6b-935f3fbe6c78)
 ![screenshot-2025-04-07-15-45-59](https://github.com/user-attachments/assets/df6c7641-cf24-4fcf-98fb-ad2162ee50d9)
-
+![screenshot-2025-04-07-16-12-47](https://github.com/user-attachments/assets/aaa37737-dd44-4b4c-9931-d64540448c01)
+![screenshot-2025-04-07-16-12-50](https://github.com/user-attachments/assets/cbdf20f3-b8f9-49fa-88da-05ae533fe609)
 
 ![screenshot-2025-04-07-13-54-36](https://github.com/user-attachments/assets/66cbef48-b411-4be2-8d72-3a88f37b1d3f)
 ![screenshot-2025-04-07-13-54-41](https://github.com/user-attachments/assets/53db7eea-2c0b-4a33-afe0-cdd33779fa29)
 ![screenshot-2025-04-07-13-54-58](https://github.com/user-attachments/assets/7ebed0a6-b2e7-486c-b597-3d7116f33dcb)
 ![screenshot-2025-04-07-13-55-08](https://github.com/user-attachments/assets/82978e1f-adb8-42fc-8db4-93ccdeb498e4)
+
 
 ![screenshot-2025-04-07-15-46-26](https://github.com/user-attachments/assets/3bdccb48-f050-4bf2-83b2-f25cc65ca1cf)
 ![screenshot-2025-04-07-15-46-31](https://github.com/user-attachments/assets/8d80d285-223a-4208-b21e-6b26312a34ae)
@@ -112,7 +114,5 @@ This project is for **learning and portfolio purposes** and is **not intended fo
 ![screenshot-2025-04-07-15-54-31](https://github.com/user-attachments/assets/e2ab2b18-47af-4693-86d8-929bdb67f4a5)
 ![screenshot-2025-04-07-15-54-38](https://github.com/user-attachments/assets/dda3eb7c-d8ff-4ea6-a799-2b89871c7fcd)
 ![screenshot-2025-04-07-15-54-41](https://github.com/user-attachments/assets/e4bcd2d2-e35c-4215-a8ef-f74f7ba7e3c1)
-![screenshot-2025-04-07-16-12-47](https://github.com/user-attachments/assets/aaa37737-dd44-4b4c-9931-d64540448c01)
-![screenshot-2025-04-07-16-12-50](https://github.com/user-attachments/assets/cbdf20f3-b8f9-49fa-88da-05ae533fe609)
 ![screenshot-2025-04-07-16-18-19](https://github.com/user-attachments/assets/68c88ad4-60b1-4bfa-9194-a8b4af9f562c)
 ![screenshot-2025-04-07-16-18-22](https://github.com/user-attachments/assets/3b1d81b7-bd98-4f16-8819-c743ce27d575)
